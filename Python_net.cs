@@ -37,12 +37,19 @@ public class Python_net : MonoBehaviour
         {
 
 
+            if (stream.DataAvailable)
+            {
+                receivedBuffer = new byte[100];
+                stream.Read(receivedBuffer, 0, receivedBuffer.Length); // stream에 있던 바이트배열 내려서 새로 선언한 바이트배열에 넣기
+                string msg = Encoding.UTF8.GetString(receivedBuffer, 0, receivedBuffer.Length); // byte[] to string
+                Debug.Log("recognition Result :" + msg);
             
+            }
 
 
 
 
-            if (Input.GetKeyDown(KeyCode.Q))
+                if (Input.GetKeyDown(KeyCode.Q))
             {
                 //reader.Close();
                 client.Close();
@@ -52,8 +59,8 @@ public class Python_net : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.A))
             {
-                
 
+                data_write();
             }
             
 
@@ -93,22 +100,16 @@ public class Python_net : MonoBehaviour
     void data_write()
     {
 
-            receivedBuffer = new byte[100];
-            stream.Read(receivedBuffer, 0, receivedBuffer.Length); // stream에 있던 바이트배열 내려서 새로 선언한 바이트배열에 넣기
-            string msg = Encoding.UTF8.GetString(receivedBuffer, 0, receivedBuffer.Length); // byte[] to string
-            Debug.Log(msg);
-            string temp = Regex.Replace(msg, @"\D", "");
-            int num = int.Parse(temp);
-            Debug.Log(num);
-
-            if (num > 5)
-            {
-                var data = Encoding.UTF8.GetBytes("close");
-                stream.Write(data, 0, data.Length);
-            }
-
-
+        var byteArray = new byte[ld_bcadata.Length * 4];
+        Buffer.BlockCopy(ld_bcadata, 0, byteArray, 0, byteArray.Length);
         
+
+
+        //var data = Encoding.UTF8.GetBytes("close");
+        stream.Write(byteArray, 0, ld_bcadata.Length * 4);
+        
+
+
     }
 
 
