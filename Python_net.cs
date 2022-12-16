@@ -25,7 +25,7 @@ public class Python_net : MonoBehaviour
         Debug.Log("The BCA putted array");
         CheckReceive();
     }
-
+    // git test
     // Update is called once per frame
     void Update()
     {
