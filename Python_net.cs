@@ -18,13 +18,17 @@ public class Python_net : MonoBehaviour
     NetworkStream stream;
     string load_path= "Assets/Metaverse_BCA/BCA_test_data_label0_datacnt_7.txt";
     float[] ld_bcadata;
+    bool stream_write = false;
+    int send_cnt = 0;
+    int data_Frm;
+
     // Start is called before the first frame update
     void Start()
     {
         ld_bcadata = ReadBCA_Data(load_path);
         Debug.Log("The BCA putted array");
 
-
+        data_Frm = ld_bcadata.Length / 12;
 
         CheckReceive();
     }
@@ -42,7 +46,7 @@ public class Python_net : MonoBehaviour
                 receivedBuffer = new byte[100];
                 stream.Read(receivedBuffer, 0, receivedBuffer.Length); // stream에 있던 바이트배열 내려서 새로 선언한 바이트배열에 넣기
                 string msg = Encoding.UTF8.GetString(receivedBuffer, 0, receivedBuffer.Length); // byte[] to string
-                Debug.Log("recognition Result :" + msg);
+                Debug.Log("recognition Result :" + int.Parse(msg));
             
             }
 
@@ -60,12 +64,17 @@ public class Python_net : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.A))
             {
 
-                data_write();
+                stream_write = true;
             }
             
 
         }
 
+        if(stream_write)
+        {
+            data_write_frm();
+
+        }
 
 
 
@@ -99,19 +108,37 @@ public class Python_net : MonoBehaviour
 
     void data_write()
     {
-
         var byteArray = new byte[ld_bcadata.Length * 4];
         Buffer.BlockCopy(ld_bcadata, 0, byteArray, 0, byteArray.Length);
-        
+
 
 
         //var data = Encoding.UTF8.GetBytes("close");
         stream.Write(byteArray, 0, ld_bcadata.Length * 4);
-        
+    }
+
+    void data_write_frm()
+    {
+        if (send_cnt < data_Frm)
+        {
+
+            Debug.Log("cur frm send : " + send_cnt);
+            var byteArray = new byte[12 * 4];
+            Buffer.BlockCopy(ld_bcadata, send_cnt * 12*4, byteArray, 0, byteArray.Length);
+
+            var floatArray2 = new float[byteArray.Length / 4];
+            Buffer.BlockCopy(byteArray, 0, floatArray2, 0, byteArray.Length);
+            Debug.Log(floatArray2[0]);
+
+            //var data = Encoding.UTF8.GetBytes("close");
+            stream.Write(byteArray, 0, 12 * 4);
+            send_cnt++;
+        }
+       
+
 
 
     }
-
 
 
 
