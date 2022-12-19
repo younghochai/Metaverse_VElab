@@ -21,6 +21,9 @@ public class Python_net : MonoBehaviour
     bool stream_write = false;
     int send_cnt = 0;
     int data_Frm;
+    public List<Vector3> cur_plpose_vec = new List<Vector3>();
+
+    public bool data_load_Available = false;
 
     // Start is called before the first frame update
     void Start()
