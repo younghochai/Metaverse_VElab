@@ -52,11 +52,11 @@ public class Python_net : MonoBehaviour
                 Debug.Log("recognition Result :" + int.Parse(msg));
             
             }
+        
 
 
 
-
-                if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 //reader.Close();
                 client.Close();
@@ -69,18 +69,73 @@ public class Python_net : MonoBehaviour
 
                 stream_write = true;
             }
-            
+
 
         }
 
-        if(stream_write)
+        if (stream_write)
         {
             data_write_frm();
 
         }
 
 
+        caldata_write_frm();
 
+
+    }
+
+    float[] vec2BCA()
+    {
+        List<float> buf = new List<float>();
+
+        if (cur_plpose_vec.Count>6)
+        {
+            Vector3 coordX = (cur_plpose_vec[3] - cur_plpose_vec[0]).normalized;
+            Vector3 coordY = new Vector3(0,1,0);
+            Vector3 coordZ = Vector3.Cross(coordX, coordY);
+
+
+            Vector3 RUA = (cur_plpose_vec[1] - cur_plpose_vec[0]).normalized;
+            Vector3 RLA = (cur_plpose_vec[2] - cur_plpose_vec[1]).normalized;
+            Vector3 LUA = (cur_plpose_vec[4] - cur_plpose_vec[3]).normalized;
+            Vector3 LLA = (cur_plpose_vec[5] - cur_plpose_vec[4]).normalized;
+
+            buf.Add(coordX.x);
+            buf.Add(coordX.y);
+            buf.Add(coordX.z);
+
+            buf.Add(coordY.x);
+            buf.Add(coordY.y);
+            buf.Add(coordY.z);
+
+            buf.Add(coordZ.x);
+            buf.Add(coordZ.y);
+            buf.Add(coordZ.z);
+
+            buf.Add(RUA.x);
+            buf.Add(RUA.y);
+            buf.Add(RUA.z);
+
+            buf.Add(RLA.x);
+            buf.Add(RLA.y);
+            buf.Add(RLA.z);
+
+            buf.Add(LUA.x);
+            buf.Add(LUA.y);
+            buf.Add(LUA.z);
+
+            buf.Add(LLA.x);
+            buf.Add(LLA.y);
+            buf.Add(LLA.z);
+
+            cur_plpose_vec.RemoveRange(0, 6);
+        }
+
+
+
+
+        return buf.ToArray();
 
 
     }
@@ -119,6 +174,29 @@ public class Python_net : MonoBehaviour
         //var data = Encoding.UTF8.GetBytes("close");
         stream.Write(byteArray, 0, ld_bcadata.Length * 4);
     }
+    void caldata_write_frm()
+    {
+        if (data_load_Available)
+        {
+            float[] cal_data = vec2BCA();
+
+            Debug.Log("cur frm send : " + send_cnt);
+            var byteArray = new byte[21 * 4];
+            Buffer.BlockCopy(cal_data, 0, byteArray, 0, byteArray.Length);
+
+            //var floatArray2 = new float[byteArray.Length / 4];
+            //Buffer.BlockCopy(byteArray, 0, floatArray2, 0, byteArray.Length);
+            //Debug.Log(floatArray2[0]);
+
+            //var data = Encoding.UTF8.GetBytes("close");
+            stream.Write(byteArray, 0, 12 * 4);
+            send_cnt++;
+        }
+
+
+
+
+    }
 
     void data_write_frm()
     {
@@ -143,7 +221,7 @@ public class Python_net : MonoBehaviour
 
     }
 
-
+    
 
     void CheckReceive()
     {
