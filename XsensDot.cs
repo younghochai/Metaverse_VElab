@@ -434,7 +434,7 @@ public class XsensDot : MonoBehaviour
                 for (int val_idx = 0; val_idx < 4; val_idx++)
                 {
                     data_val[val_idx] = float.Parse(fields[fields_cnt]);
-                    Debug.Log("loaded " + fields[fields_cnt]);
+                    //Debug.Log("loaded " + fields[fields_cnt]);
                     fields_cnt++;
                 }
 
