@@ -1072,9 +1072,6 @@ public class XsensDot : MonoBehaviour
 
 
 
-//        //foreach (XsDotDevice device in deviceList)
-//        //    Console.Write("{0,-42}", device.portInfo().bluetoothAddress().toString());
-//        //Console.Write("\n");
 
 //        bool orientationResetDone = false;
 //        //Debug.Log("init packeEEEt");
