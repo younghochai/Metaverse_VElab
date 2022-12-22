@@ -101,33 +101,50 @@ public class Python_net : MonoBehaviour
             Vector3 LUA = (cur_plpose_vec[4] - cur_plpose_vec[3]).normalized;
             Vector3 LLA = (cur_plpose_vec[5] - cur_plpose_vec[4]).normalized;
 
-            buf.Add(coordX.x);
-            buf.Add(coordX.y);
-            buf.Add(coordX.z);
 
-            buf.Add(coordY.x);
-            buf.Add(coordY.y);
-            buf.Add(coordY.z);
+            buf.Add(Vector3.Angle(coordX, RUA)* Mathf.Deg2Rad);
+            buf.Add(Vector3.Angle(coordY, RUA) * Mathf.Deg2Rad);
+            buf.Add(Vector3.Angle(coordZ, RUA) * Mathf.Deg2Rad);
 
-            buf.Add(coordZ.x);
-            buf.Add(coordZ.y);
-            buf.Add(coordZ.z);
+            buf.Add(Vector3.Angle(coordX, RLA) * Mathf.Deg2Rad);
+            buf.Add(Vector3.Angle(coordY, RLA) * Mathf.Deg2Rad);
+            buf.Add(Vector3.Angle(coordZ, RLA) * Mathf.Deg2Rad);
 
-            buf.Add(RUA.x);
-            buf.Add(RUA.y);
-            buf.Add(RUA.z);
+            buf.Add(Vector3.Angle(coordX, LUA) * Mathf.Deg2Rad);
+            buf.Add(Vector3.Angle(coordY, LUA) * Mathf.Deg2Rad);
+            buf.Add(Vector3.Angle(coordZ, LUA) * Mathf.Deg2Rad);
 
-            buf.Add(RLA.x);
-            buf.Add(RLA.y);
-            buf.Add(RLA.z);
+            buf.Add(Vector3.Angle(coordX, LLA) * Mathf.Deg2Rad);
+            buf.Add(Vector3.Angle(coordY, LLA) * Mathf.Deg2Rad);
+            buf.Add(Vector3.Angle(coordZ, LLA) * Mathf.Deg2Rad);
 
-            buf.Add(LUA.x);
-            buf.Add(LUA.y);
-            buf.Add(LUA.z);
+            //buf.Add(coordX.x);
+            //buf.Add(coordX.y);
+            //buf.Add(coordX.z);
 
-            buf.Add(LLA.x);
-            buf.Add(LLA.y);
-            buf.Add(LLA.z);
+            //buf.Add(coordY.x);
+            //buf.Add(coordY.y);
+            //buf.Add(coordY.z);
+
+            //buf.Add(coordZ.x);
+            //buf.Add(coordZ.y);
+            //buf.Add(coordZ.z);
+
+            //buf.Add(RUA.x);
+            //buf.Add(RUA.y);
+            //buf.Add(RUA.z);
+
+            //buf.Add(RLA.x);
+            //buf.Add(RLA.y);
+            //buf.Add(RLA.z);
+
+            //buf.Add(LUA.x);
+            //buf.Add(LUA.y);
+            //buf.Add(LUA.z);
+
+            //buf.Add(LLA.x);
+            //buf.Add(LLA.y);
+            //buf.Add(LLA.z);
 
             cur_plpose_vec.RemoveRange(0, 6);
         }
@@ -181,7 +198,7 @@ public class Python_net : MonoBehaviour
             float[] cal_data = vec2BCA();
 
             Debug.Log("cur frm send : " + send_cnt);
-            var byteArray = new byte[21 * 4];
+            var byteArray = new byte[12 * 4];
             Buffer.BlockCopy(cal_data, 0, byteArray, 0, byteArray.Length);
 
             //var floatArray2 = new float[byteArray.Length / 4];
