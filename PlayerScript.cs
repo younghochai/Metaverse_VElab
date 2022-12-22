@@ -78,8 +78,6 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     List<Quaternion> sensing_init_quat = new List<Quaternion>();
 
 
-
-
     // Action recognition variable
 
     List<Vector3> init_pose_vector = new List<Vector3>();
@@ -103,9 +101,6 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     {Avatar_state.RAF90, new string[]{"RF", "LF", "YR" } },
     {Avatar_state.RAO90, new string[]{"LS", "YL" } }
     };
-
-
-    
 
 
     public Quaternion frontRotate_DOT;
