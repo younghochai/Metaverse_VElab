@@ -829,7 +829,6 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
             senRot_pel = angle;
             transform.rotation = angle;
 
-            //RUpper_Arm.transform.rotation;
         }
 
 
