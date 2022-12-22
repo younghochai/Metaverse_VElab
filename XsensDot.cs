@@ -880,7 +880,7 @@ public class XsensDot : MonoBehaviour
 //        // Create and attach callback handler to connection manager
 
 //        manager.addXsDotCallbackHandler(callback);
-//        //XsPortInfo portInfo =
+
 
 //        //XsensDotSetup();
 //        // Start a scan and wait until we have found one or more Xsens DOT Devices
