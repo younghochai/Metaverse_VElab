@@ -1038,8 +1038,6 @@ public class XsensDot : MonoBehaviour
 //                //else
 //                //    Debug.Log("Failed to set filter profile!");
 
-//                //Debug.Log("Setting quaternion CSV output");
-//                //device.setLogOptions(XsLogOptions.Euler);
 
 
 
