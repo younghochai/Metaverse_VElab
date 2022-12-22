@@ -540,14 +540,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
             angle_dot = SensorMapping_fix(angle_dot * Revinit_dot, inint_pose_quatnew[joint_idx]);  
             sensing_quat.Add(angle_dot);
 
-
-            //angle_dot = angle_dot * Revinit_dot;
-
-            //angle_dot = angle_dot * frontRotate; * frontRotate
-
-            //Debug.Log("this test angle" + angle_dot+"///"+ inint_pose_quatnew[joint_idx]);
-
-            //Debug.Log("this angle" + angle_dot);
+                  
         }
 
 
