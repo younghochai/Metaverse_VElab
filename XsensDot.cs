@@ -657,11 +657,7 @@ public class XsensDot : MonoBehaviour
 
 }
 
-//}
-///
-/// 
-/// 
-/// 
+
 ////origin back up
 ////  Copyright (c) 2003-2022 Movella Technologies B.V. or subsidiaries worldwide.
 ////  All rights reserved.
