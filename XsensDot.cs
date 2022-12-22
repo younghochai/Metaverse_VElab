@@ -626,10 +626,7 @@ public class XsensDot : MonoBehaviour
 
                     XsEuler euler = packet.orientationEuler();
                     XsQuaternion quaternion = packet.orientationQuaternion();
-
-                    // Quaternion buf= new Quaternion((float)quaternion.x(), (float)quaternion.y(), (float)quaternion.z(), (float)quaternion.w());
                     sensing_data[device.portInfo().bluetoothAddress().toString()] = new Quaternion((float)quaternion.x(), (float)quaternion.y(), (float)quaternion.z(), (float)quaternion.w());
-
 
                 }
 
