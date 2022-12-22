@@ -760,7 +760,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
                     seninitRot_RUA = new Quaternion(in_data.x, in_data.y, in_data.z, in_data.w);
                     seninitRot_RUA_bl = false;
                 }
-                Revinit = Quaternion.Inverse(seninitRot_RUA); // 센서의 첫데이터 센서 초기화
+                Revinit = Quaternion.Inverse(seninitRot_RUA); // initialize sensor data
                 relativeAngle = R4; //오른팔    // 오브젝트의 현재 자세                     
             }
 
