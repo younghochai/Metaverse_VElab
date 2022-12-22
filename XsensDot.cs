@@ -603,9 +603,7 @@ public class XsensDot : MonoBehaviour
                 //Debug.Log("Setting quaternion CSV output");
                 //device.setLogOptions(XsLogOptions.Euler);
 
-                //XsString logFileName = new XsString("logfile_" + portInfo.bluetoothAddress().toString().Replace(':', '-') + ".csv");
-                //Debug.Log("Enable logging to: " + logFileName.toString());
-              
+                
 
                 Debug.Log("Putting device into measurement mode. ");
                 if (!device.startMeasurement(XsPayloadMode.ExtendedEuler))
