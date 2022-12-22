@@ -133,22 +133,10 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     int[] atclass_Ar = new int[6]{0,0,0,0,0,0};
     void Start()
     {
-        //Spine = GameObject.Find("abdomenLower");
-        // Right arm part
-        //RightUpperArm = GameObject.Find("rShldrBend");
-        //RightForeArm = GameObject.Find("rForearmBend");
-        //RightHand = GameObject.Find("rHand");
-
-        // Left arm part
-        //LeftUpperArm = GameObject.Find("lShldrBend");
-        //LeftForeArm = GameObject.Find("lForearmBend");
-        //LeftHand = GameObject.Find("lHand");
+  
         XsensDotManager = GameObject.Find("XsensDotManager");
         manager=XsensDotManager.GetComponent<XsensDot>();
-
-       
-
-
+               
         cur_state = Avatar_state.Standing;
     }
 
