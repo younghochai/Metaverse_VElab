@@ -809,10 +809,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
             angle = SensorMapping_fix(target, relativeAngle);
 
             return angle;
-
-            //transform.localRotation = initRotation;
-            //transform.rotation = angle;
-            //senRot_pel = angle;
+               
         }
 
         void MovementParsing_pel(Quaternion in_pelquat)
