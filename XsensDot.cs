@@ -247,22 +247,13 @@ public class XsensDot : MonoBehaviour
         }
 
         // Create and attach callback handler to connection manager
-
         manager.addXsDotCallbackHandler(callback);
-        //XsPortInfo portInfo =
+      
 
         //XsensDotSetup();
         // Start a scan and wait until we have found one or more Xsens DOT Devices
-
         Debug.Log("Scanning for devices...");
-        // manager.enableDeviceDetection();
-        //if (first_sensing)
-        //manager.enableDeviceDetection();
-        //do
-        //{
-        //    Debug.Log("Number of detected DOTs: " + callback.getDetectedDots().size() + ". Press any key to start.");
-        //}
-        //while (callback.getDetectedDots().size() <= 15);
+                
 
     }
 
@@ -272,8 +263,6 @@ public class XsensDot : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.O))
         {
-
-
             // first_sensing = false;
             Debug.Log("Press any key or wait 20 seconds to stop scanning...");
             Debug.Log("Number of detected DOTs: " + callback.getDetectedDots().size() + ". Press any key to start.");
@@ -309,7 +298,6 @@ public class XsensDot : MonoBehaviour
 
         else if (Input.GetKeyDown(KeyCode.P))
         {
-
 
             manager.disableDeviceDetection();
             //Debug.Log("Stopped scanning for devices");
@@ -355,9 +343,6 @@ public class XsensDot : MonoBehaviour
 
             ReadQuaternion("QuaternionDB/DL_test.csv");
         }
-
-
-
 
 
         if (tracking_state)
@@ -563,13 +548,6 @@ public class XsensDot : MonoBehaviour
         //manager.enableDeviceDetection();
 
         //first_sensing = false;
-        //Debug.Log("Press any key or wait 20 seconds to stop scanning...");
-
-
-
-        //Debug.Log("Number of detected DOTs: " + callback.getDetectedDots().size() + ". Press any key to start.");
-
-
 
         manager.disableDeviceDetection();
         Debug.Log("Stopped scanning for devices");
@@ -610,28 +588,6 @@ public class XsensDot : MonoBehaviour
 
                 Debug.Log("Found a device with Tag: " + device.deviceTagName().toString() + "@ address: " + device.portInfo().bluetoothAddress().toString());
 
-                //XsFilterProfileArray filterProfiles = device.getAvailableFilterProfiles();
-
-                //Debug.Log("Available filter profiles: ");
-                //for (uint j = 0; j < filterProfiles.size(); j++)
-                //    Debug.Log(filterProfiles.at(j).label());
-
-                //Debug.Log("Current filter profile: " + device.onboardFilterProfile().label());
-                //if (device.setOnboardFilterProfile(new XsString("General")))
-                //    Debug.Log("Successfully set filter profile to General");
-                //else
-                //    Debug.Log("Failed to set filter profile!");
-
-                //Debug.Log("Setting quaternion CSV output");
-                //device.setLogOptions(XsLogOptions.Euler);
-
-                //XsString logFileName = new XsString("logfile_" + portInfo.bluetoothAddress().toString().Replace(':', '-') + ".csv");
-                //Debug.Log("Enable logging to: " + logFileName.toString());
-                //if (!device.enableLogging(logFileName))
-                //{
-                //    Debug.Log("Failed to enable logging. Reason: " + manager.lastResultText().toString());
-                //    continue;
-                //}
 
                 Debug.Log("Putting device into measurement mode. ");
                 if (!device.startMeasurement(XsPayloadMode.ExtendedEuler))
@@ -654,15 +610,8 @@ public class XsensDot : MonoBehaviour
     {
         // Print SDK version
 
-
-
-        //foreach (XsDotDevice device in deviceList)
-        //    Console.Write("{0,-42}", device.portInfo().bluetoothAddress().toString());
-        //Console.Write("\n");
-        // Debug.Log(Dotaddresslist[0] + Dotaddresslist[3]);
         bool orientationResetDone = false;
 
-        //Console.Write("working packet");
         if (callback.search_packetsAvailable(Dotaddresslist))
         {
             // Debug.Log("init packet");
@@ -677,35 +626,14 @@ public class XsensDot : MonoBehaviour
 
                     XsEuler euler = packet.orientationEuler();
                     XsQuaternion quaternion = packet.orientationQuaternion();
-
-                    // Quaternion buf= new Quaternion((float)quaternion.x(), (float)quaternion.y(), (float)quaternion.z(), (float)quaternion.w());
                     sensing_data[device.portInfo().bluetoothAddress().toString()] = new Quaternion((float)quaternion.x(), (float)quaternion.y(), (float)quaternion.z(), (float)quaternion.w());
 
-                    //sensor_data.Add(buf);
-                    //Debug.Log("Roll: "+ euler.roll() + " Pitch :" + euler.pitch() + "Yaw: "+ euler.yaw());
-                    //Debug.Log("W: " + quaternion.w() + " X: " + quaternion.x() + " Y: " + quaternion.y() + " Z: " + quaternion.z());
-                    //Console.Write("W:{0,7:f2}, X:{1,7:f2}, Y:{2,7:f2} Z:{2,7:f2}| ", quaternion.w(), quaternion.x(), quaternion.y(), quaternion.z());
                 }
 
                 packet.Dispose();
             }
-            //if (!orientationResetDone && (XsTimeStamp.nowMs() - startTime) > 5000)
-            //{
-            //    foreach (XsDotDevice device in deviceList)
-            //    {
-            //        Console.Write("\nResetting heading for device {0}: ", device.portInfo().bluetoothAddress().toString());
-            //        if (device.resetOrientation(XsResetMethod.XRM_Heading))
-            //            Console.Write("OK");
-            //        else
-            //            Console.Write("NOK: {0}", device.lastResultText().toString());
-            //    }
-            //    Debug.Log("");
-            //    orientationResetDone = true;
-            //}
+
         }
-
-
-
     }
 
 
@@ -718,8 +646,7 @@ public class XsensDot : MonoBehaviour
         {
             if (!device.stopMeasurement())
                 Console.Write("Failed to stop measurement.");
-            //if (!device.disableLogging())
-            //    Console.Write("Failed to disable logging.");
+
         }
 
         Debug.Log("Closing ports...");
@@ -730,11 +657,7 @@ public class XsensDot : MonoBehaviour
 
 }
 
-//}
-///
-/// 
-/// 
-/// 
+
 ////origin back up
 ////  Copyright (c) 2003-2022 Movella Technologies B.V. or subsidiaries worldwide.
 ////  All rights reserved.
@@ -957,20 +880,14 @@ public class XsensDot : MonoBehaviour
 //        // Create and attach callback handler to connection manager
 
 //        manager.addXsDotCallbackHandler(callback);
-//        //XsPortInfo portInfo =
+
 
 //        //XsensDotSetup();
 //        // Start a scan and wait until we have found one or more Xsens DOT Devices
 
 //        Debug.Log("Scanning for devices...");
-//        // manager.enableDeviceDetection();
-//        //if (first_sensing)
-//        //manager.enableDeviceDetection();
-//        //do
-//        //{
-//        //    Debug.Log("Number of detected DOTs: " + callback.getDetectedDots().size() + ". Press any key to start.");
-//        //}
-//        //while (callback.getDetectedDots().size() <= 15);
+
+
 
 //    }
 
@@ -1020,7 +937,6 @@ public class XsensDot : MonoBehaviour
 
 
 //            manager.disableDeviceDetection();
-//            //Debug.Log("Stopped scanning for devices");
 //            if (first_setup)
 //            {
 //                first_setup = false;
@@ -1041,8 +957,6 @@ public class XsensDot : MonoBehaviour
 //        if (tracking_state)
 //            XsensDottracking();
 
-
-
 //    }
 
 
@@ -1050,18 +964,6 @@ public class XsensDot : MonoBehaviour
 
 //    void XsensDotSetup()
 //    {
-
-//        //Debug.Log("Scanning for devices...");
-//        ////if(first_sensing)
-//        //manager.enableDeviceDetection();
-
-//        //first_sensing = false;
-//        //Debug.Log("Press any key or wait 20 seconds to stop scanning...");
-
-
-
-//        //Debug.Log("Number of detected DOTs: " + callback.getDetectedDots().size() + ". Press any key to start.");
-
 
 
 //        manager.disableDeviceDetection();
@@ -1100,31 +1002,8 @@ public class XsensDot : MonoBehaviour
 //                deviceList.Add(device);
 //                sensing_data.Add(device.portInfo().bluetoothAddress().toString(), new Quaternion(0, 0, 0, 1));
 
-
 //                Debug.Log("Found a device with Tag: " + device.deviceTagName().toString() + "@ address: " + device.portInfo().bluetoothAddress().toString());
 
-//                //XsFilterProfileArray filterProfiles = device.getAvailableFilterProfiles();
-
-//                //Debug.Log("Available filter profiles: ");
-//                //for (uint j = 0; j < filterProfiles.size(); j++)
-//                //    Debug.Log(filterProfiles.at(j).label());
-
-//                //Debug.Log("Current filter profile: " + device.onboardFilterProfile().label());
-//                //if (device.setOnboardFilterProfile(new XsString("General")))
-//                //    Debug.Log("Successfully set filter profile to General");
-//                //else
-//                //    Debug.Log("Failed to set filter profile!");
-
-//                //Debug.Log("Setting quaternion CSV output");
-//                //device.setLogOptions(XsLogOptions.Euler);
-
-//                //XsString logFileName = new XsString("logfile_" + portInfo.bluetoothAddress().toString().Replace(':', '-') + ".csv");
-//                //Debug.Log("Enable logging to: " + logFileName.toString());
-//                //if (!device.enableLogging(logFileName))
-//                //{
-//                //    Debug.Log("Failed to enable logging. Reason: " + manager.lastResultText().toString());
-//                //    continue;
-//                //}
 
 //                Debug.Log("Putting device into measurement mode. ");
 //                if (!device.startMeasurement(XsPayloadMode.ExtendedEuler))
@@ -1149,9 +1028,6 @@ public class XsensDot : MonoBehaviour
 
 
 
-//        //foreach (XsDotDevice device in deviceList)
-//        //    Console.Write("{0,-42}", device.portInfo().bluetoothAddress().toString());
-//        //Console.Write("\n");
 
 //        bool orientationResetDone = false;
 //        //Debug.Log("init packeEEEt");
@@ -1182,19 +1058,7 @@ public class XsensDot : MonoBehaviour
 
 //                packet.Dispose();
 //            }
-//            //if (!orientationResetDone && (XsTimeStamp.nowMs() - startTime) > 5000)
-//            //{
-//            //    foreach (XsDotDevice device in deviceList)
-//            //    {
-//            //        Console.Write("\nResetting heading for device {0}: ", device.portInfo().bluetoothAddress().toString());
-//            //        if (device.resetOrientation(XsResetMethod.XRM_Heading))
-//            //            Console.Write("OK");
-//            //        else
-//            //            Console.Write("NOK: {0}", device.lastResultText().toString());
-//            //    }
-//            //    Debug.Log("");
-//            //    orientationResetDone = true;
-//            //}
+
 //        }
 
 
