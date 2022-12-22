@@ -548,9 +548,6 @@ public class XsensDot : MonoBehaviour
         //manager.enableDeviceDetection();
 
         //first_sensing = false;
-        //Debug.Log("Press any key or wait 20 seconds to stop scanning...");
-
-
 
         manager.disableDeviceDetection();
         Debug.Log("Stopped scanning for devices");
