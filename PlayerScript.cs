@@ -775,7 +775,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
                 relativeAngle = R5;
             }
 
-            else if (joint_idx == 4) //왼팔
+            else if (joint_idx == 4) //left Arm
             {
 
                 if (seninitRot_LUA_bl)
@@ -787,7 +787,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
                 relativeAngle = R7;
             }
 
-            else if (joint_idx == 5) //왼팔 관절
+            else if (joint_idx == 5) // left arm joint
             {
 
                 if (seninitRot_LLA_bl)
