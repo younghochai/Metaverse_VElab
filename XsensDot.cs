@@ -605,11 +605,7 @@ public class XsensDot : MonoBehaviour
 
                 //XsString logFileName = new XsString("logfile_" + portInfo.bluetoothAddress().toString().Replace(':', '-') + ".csv");
                 //Debug.Log("Enable logging to: " + logFileName.toString());
-                //if (!device.enableLogging(logFileName))
-                //{
-                //    Debug.Log("Failed to enable logging. Reason: " + manager.lastResultText().toString());
-                //    continue;
-                //}
+              
 
                 Debug.Log("Putting device into measurement mode. ");
                 if (!device.startMeasurement(XsPayloadMode.ExtendedEuler))
