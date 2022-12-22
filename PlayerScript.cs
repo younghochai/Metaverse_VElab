@@ -305,7 +305,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
                 if (loaded_data_frame == frame_length - 1)
                 {
-                    //이전 프레임 데이터 초기화
+                    //Previous frame reset
                     prev_loaded_pose.Clear();
 
                     Debug.Log("play load done" + loaded_data_frame);
