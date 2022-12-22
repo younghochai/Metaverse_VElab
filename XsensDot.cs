@@ -299,7 +299,6 @@ public class XsensDot : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.P))
         {
 
-
             manager.disableDeviceDetection();
             //Debug.Log("Stopped scanning for devices");
             if (first_setup)
@@ -344,9 +343,6 @@ public class XsensDot : MonoBehaviour
 
             ReadQuaternion("QuaternionDB/DL_test.csv");
         }
-
-
-
 
 
         if (tracking_state)
