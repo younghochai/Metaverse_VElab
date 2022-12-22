@@ -983,9 +983,6 @@ public class XsensDot : MonoBehaviour
 
 
 
-//        //Debug.Log("Number of detected DOTs: " + callback.getDetectedDots().size() + ". Press any key to start.");
-
-
 
 //        manager.disableDeviceDetection();
 //        Debug.Log("Stopped scanning for devices");
@@ -1023,9 +1020,7 @@ public class XsensDot : MonoBehaviour
 //                deviceList.Add(device);
 //                sensing_data.Add(device.portInfo().bluetoothAddress().toString(), new Quaternion(0, 0, 0, 1));
 
-
 //                Debug.Log("Found a device with Tag: " + device.deviceTagName().toString() + "@ address: " + device.portInfo().bluetoothAddress().toString());
-
 
 
 //                Debug.Log("Putting device into measurement mode. ");
