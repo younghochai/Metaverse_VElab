@@ -632,8 +632,7 @@ public class XsensDot : MonoBehaviour
 
                 packet.Dispose();
             }
-            //if (!orientationResetDone && (XsTimeStamp.nowMs() - startTime) > 5000)
-            //{
+            
             //    foreach (XsDotDevice device in deviceList)
             //    {
             //        Console.Write("\nResetting heading for device {0}: ", device.portInfo().bluetoothAddress().toString());
@@ -644,7 +643,7 @@ public class XsensDot : MonoBehaviour
             //    }
             //    Debug.Log("");
             //    orientationResetDone = true;
-            //}
+       
         }
 
 
