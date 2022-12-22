@@ -633,16 +633,8 @@ public class XsensDot : MonoBehaviour
                 packet.Dispose();
             }
             
-  
-            //        Console.Write("\nResetting heading for device {0}: ", device.portInfo().bluetoothAddress().toString());
-    
- 
-       
         }
-
-
-
-    }
+            }
 
 
     void disconnect_DOT()
