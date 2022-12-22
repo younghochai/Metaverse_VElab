@@ -65,7 +65,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     Quaternion senRot_pel, senRot_spine, senRot_RUA, senRot_RLA, senRot_LUA, senRot_LLA;
     Quaternion refRot_pel, refRot_spine, refRot_RUA, refRot_RLA, refRot_LUA, refRot_LLA;
 
-    // 센서 초기값 쿼터니온
+
     Quaternion seninit_pel, seninitRot_spine, seninitRot_RUA, seninitRot_RLA, seninitRot_LUA, seninitRot_LLA;
 
     bool[] first_frm = new bool[6] { true, true, true, true, true, true };
