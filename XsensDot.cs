@@ -595,12 +595,7 @@ public class XsensDot : MonoBehaviour
                 //    Debug.Log(filterProfiles.at(j).label());
 
                 //Debug.Log("Current filter profile: " + device.onboardFilterProfile().label());
-                //if (device.setOnboardFilterProfile(new XsString("General")))
-                //    Debug.Log("Successfully set filter profile to General");
-                //else
-                //    Debug.Log("Failed to set filter profile!");
-
-                               
+                                              
 
                 Debug.Log("Putting device into measurement mode. ");
                 if (!device.startMeasurement(XsPayloadMode.ExtendedEuler))
