@@ -610,9 +610,6 @@ public class XsensDot : MonoBehaviour
     {
         // Print SDK version
 
-
-        //Console.Write("\n");
-        // Debug.Log(Dotaddresslist[0] + Dotaddresslist[3]);
         bool orientationResetDone = false;
 
         //Console.Write("working packet");
