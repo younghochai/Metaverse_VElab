@@ -865,7 +865,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
             angleY = Angle.y * Degree2Radian;
             angleZ = Angle.z * Degree2Radian;
 
-            //둘다 ZXY순서
+            //Both ZXY Order
             /* q1 = Mathf.Sin(angleX / 2.0f) * Mathf.Sin(angleY / 2.0f) * Mathf.Sin(angleZ / 2.0f) + Mathf.Cos(angleX / 2.0f) * Mathf.Cos(angleY / 2.0f) * Mathf.Cos(angleZ / 2.0f);
              q2 = Mathf.Sin(angleY / 2.0f) * Mathf.Sin(angleZ / 2.0f) * Mathf.Cos(angleX / 2.0f) + Mathf.Sin(angleX / 2.0f) * Mathf.Cos(angleY / 2.0f) * Mathf.Cos(angleZ / 2.0f);
              q3 = Mathf.Sin(angleY / 2.0f) * Mathf.Cos(angleX / 2.0f) * Mathf.Cos(angleZ / 2.0f) - Mathf.Sin(angleX / 2.0f) * Mathf.Sin(angleZ / 2.0f) * Mathf.Cos(angleY / 2.0f);
@@ -876,7 +876,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
             q3 = -Mathf.Sin(angleX / 2.0f) * Mathf.Sin(angleZ / 2.0f) * Mathf.Cos(angleY / 2.0f) + Mathf.Sin(angleY / 2.0f) * Mathf.Cos(angleX / 2.0f) * Mathf.Cos(angleZ / 2.0f);
             q4 = -Mathf.Sin(angleX / 2.0f) * Mathf.Sin(angleY / 2.0f) * Mathf.Cos(angleZ / 2.0f) + Mathf.Sin(angleZ / 2.0f) * Mathf.Cos(angleX / 2.0f) * Mathf.Cos(angleY / 2.0f);*/
 
-            //XYZ순서
+            //XYZ Order
             q1 = Mathf.Sin(angleX / 2.0f) * Mathf.Sin(angleY / 2.0f) * Mathf.Sin(angleZ / 2.0f) + Mathf.Cos(angleX / 2.0f) * Mathf.Cos(angleY / 2.0f) * Mathf.Cos(angleZ / 2.0f);
             q2 = -Mathf.Sin(angleY / 2.0f) * Mathf.Sin(angleZ / 2.0f) * Mathf.Cos(angleX / 2.0f) + Mathf.Sin(angleX / 2.0f) * Mathf.Cos(angleZ / 2.0f) * Mathf.Cos(angleY / 2.0f);
             q3 = Mathf.Sin(angleY / 2.0f) * Mathf.Cos(angleZ / 2.0f) * Mathf.Cos(angleX / 2.0f) + Mathf.Sin(angleZ / 2.0f) * Mathf.Sin(angleX / 2.0f) * Mathf.Cos(angleY / 2.0f);
