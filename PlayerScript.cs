@@ -499,21 +499,22 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
         for (int joint_idx = 0; joint_idx < address_joint_idx.Count; joint_idx++)
         {
-            
 
-                Quaternion Revinit_dot = Quaternion.Inverse(manager.load_quat_list[action_class][joint_idx][0]);
-                Quaternion angle_dot = (manager.load_quat_list[action_class][joint_idx][frame_cnt]);
-                angle_dot = angle_dot * Revinit_dot;
+
+            Quaternion Revinit_dot = Quaternion.Inverse(manager.load_quat_list[action_class][joint_idx][0]);
+            Quaternion angle_dot = (manager.load_quat_list[action_class][joint_idx][frame_cnt]);
+            angle_dot = angle_dot * Revinit_dot;
             //angle_dot = angle_dot * frontRotate_DOT;
 
             //Debug.Log("this point" + manager.load_quat_list[action_class][joint_idx][frame_cnt]);
             Quaternion frontValue = EulerToQuat(new Vector3(0, 0, -90));
 
-            angle_dot = Quaternion.Inverse(frontValue)*angle_dot * frontValue;
+            // coordinate Y axis change 
+            angle_dot = Quaternion.Inverse(frontValue) * angle_dot * frontValue;
             angle_dot = SensorMapping_fix(angle_dot, inint_pose_quatnew[joint_idx]);
-                // Debug.Log("this angle" + angle_dot);
-                load_quat.Add(angle_dot);
-            
+            // Debug.Log("this angle" + angle_dot);
+            load_quat.Add(angle_dot);
+
         }
         //Debug.Log("load quat _data insight" + load_quat[2]);
 
