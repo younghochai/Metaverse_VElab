@@ -263,8 +263,6 @@ public class XsensDot : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.O))
         {
-
-
             // first_sensing = false;
             Debug.Log("Press any key or wait 20 seconds to stop scanning...");
             Debug.Log("Number of detected DOTs: " + callback.getDetectedDots().size() + ". Press any key to start.");
