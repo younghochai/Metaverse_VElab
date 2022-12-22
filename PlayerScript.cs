@@ -309,15 +309,12 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
                     prev_loaded_pose.Clear();
 
                     Debug.Log("play load done" + loaded_data_frame);
-                    //loaded_data_frame
                     bl_loading_data = false;
                     loaded_data_frame = 0;
                     first_frame = true;
                     prev_loaded_pose = load_quat.ToList();
 
-                 
-
-                }
+                 }
 
                 load_quat.Clear();
             }
@@ -350,13 +347,9 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
                     LeftForeArm.transform.rotation = senRot_LLA;
 
                     //load_quat
-                    //Debug.Log("load quat _data before" + load_quat[2]);
-
+                   
                     int frame_length = manager.load_quat_list[action_class][0].Count;
-                    //load_quat.Clear();
-
-                    //Debug.Log("Loading" + senRot_RUA);
-                    //Debug.Log("load quat count" + load_quat.Count);
+              
 
                     loaded_data_frame++;
 
@@ -396,8 +389,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
                     }
 
                     MovementParsing_sensing_Dot();
-                    //MovementParsing();
-
+               
                     senRot_pel = sensing_quat[0];
 
                     senRot_RUA = sensing_quat[2];
