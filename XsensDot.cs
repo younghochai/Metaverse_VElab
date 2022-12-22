@@ -892,8 +892,7 @@ public class XsensDot : MonoBehaviour
 //        //do
 //        //{
 //        //    Debug.Log("Number of detected DOTs: " + callback.getDetectedDots().size() + ". Press any key to start.");
-//        //}
-//        //while (callback.getDetectedDots().size() <= 15);
+
 
 //    }
 
