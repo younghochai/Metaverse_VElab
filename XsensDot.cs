@@ -255,14 +255,7 @@ public class XsensDot : MonoBehaviour
         // Start a scan and wait until we have found one or more Xsens DOT Devices
 
         Debug.Log("Scanning for devices...");
-        // manager.enableDeviceDetection();
-        //if (first_sensing)
-        //manager.enableDeviceDetection();
-        //do
-        //{
-        //    Debug.Log("Number of detected DOTs: " + callback.getDetectedDots().size() + ". Press any key to start.");
-        //}
-        //while (callback.getDetectedDots().size() <= 15);
+                
 
     }
 
