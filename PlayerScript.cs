@@ -143,7 +143,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
     void Awake()
     {
-        // 닉네임
+        // Nick name color
         NickNameText.text = PV.IsMine ? PhotonNetwork.NickName : PV.Owner.NickName;
         NickNameText.color = PV.IsMine ? Color.green : Color.red;
     }
