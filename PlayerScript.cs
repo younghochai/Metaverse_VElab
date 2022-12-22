@@ -925,7 +925,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
         {
             initQT = new Quaternion((float)quatX, (float)quatY, (float)quatZ, (float)quatW);
 
-            northValue = EulerToQuat(new Vector3(0, -90, 0));  //뒤집어지면 zx 부호를 바꾸자
+            northValue = EulerToQuat(new Vector3(0, -90, 0));  //zx sign reverse
 
             frontRotate = initQT * Quaternion.Inverse(northValue);
 
