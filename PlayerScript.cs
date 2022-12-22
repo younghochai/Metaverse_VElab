@@ -761,10 +761,10 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
                     seninitRot_RUA_bl = false;
                 }
                 Revinit = Quaternion.Inverse(seninitRot_RUA); // initialize sensor data
-                relativeAngle = R4; //오른팔    // 오브젝트의 현재 자세                     
+                relativeAngle = R4; //Right Arm                   
             }
 
-            else if (joint_idx == 3) //오른팔 관절
+            else if (joint_idx == 3) //Right arm joint
             {
                 if (seninitRot_RLA_bl)
                 {
