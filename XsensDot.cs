@@ -630,9 +630,7 @@ public class XsensDot : MonoBehaviour
                     // Quaternion buf= new Quaternion((float)quaternion.x(), (float)quaternion.y(), (float)quaternion.z(), (float)quaternion.w());
                     sensing_data[device.portInfo().bluetoothAddress().toString()] = new Quaternion((float)quaternion.x(), (float)quaternion.y(), (float)quaternion.z(), (float)quaternion.w());
 
-                   
-                    //Debug.Log("W: " + quaternion.w() + " X: " + quaternion.x() + " Y: " + quaternion.y() + " Z: " + quaternion.z());
-                    //Console.Write("W:{0,7:f2}, X:{1,7:f2}, Y:{2,7:f2} Z:{2,7:f2}| ", quaternion.w(), quaternion.x(), quaternion.y(), quaternion.z());
+
                 }
 
                 packet.Dispose();
