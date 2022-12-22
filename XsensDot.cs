@@ -612,7 +612,6 @@ public class XsensDot : MonoBehaviour
 
         bool orientationResetDone = false;
 
-        //Console.Write("working packet");
         if (callback.search_packetsAvailable(Dotaddresslist))
         {
             // Debug.Log("init packet");
