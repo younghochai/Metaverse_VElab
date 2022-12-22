@@ -280,8 +280,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
                 }
                 //Debug.Log("load quat before prev cnt" + load_quat.Count);
                 MovementParsing_Dot_simple(action_class, loaded_data_frame); // change simple version
-                //Debug.Log("load quat before prev cnt" + load_quat.Count);
-
+                
                 senRot_pel = load_quat[0];
 
                 senRot_RUA = load_quat[2];
@@ -297,14 +296,11 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
              
                 //load_quat
-                //Debug.Log("load quat _data before" + load_quat[2]);
-
+             
                 int frame_length = manager.load_quat_list[action_class][0].Count;
                 //load_quat.Clear();
 
-                //Debug.Log("Loading" + senRot_RUA);
-                //Debug.Log("load quat count" + load_quat.Count);
-
+             
                 loaded_data_frame++;
 
                 if (loaded_data_frame == frame_length - 1)
