@@ -633,8 +633,7 @@ public class XsensDot : MonoBehaviour
                 packet.Dispose();
             }
             
-            //    foreach (XsDotDevice device in deviceList)
-            //    {
+  
             //        Console.Write("\nResetting heading for device {0}: ", device.portInfo().bluetoothAddress().toString());
             //        if (device.resetOrientation(XsResetMethod.XRM_Heading))
             //            Console.Write("OK");
