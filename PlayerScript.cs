@@ -71,7 +71,6 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     bool[] first_frm = new bool[6] { true, true, true, true, true, true };
 
 
-    //List<Quaternion> inint_quat_inverse=new List<Quaternion>();
     List<Quaternion> load_quat = new List<Quaternion>();
     List<Quaternion> prev_loaded_pose = new List<Quaternion>();
     List<Quaternion> inint_pose_quatnew = new List<Quaternion>();
