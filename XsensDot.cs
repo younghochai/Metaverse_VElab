@@ -975,8 +975,7 @@ public class XsensDot : MonoBehaviour
 //    {
 
 //        //Debug.Log("Scanning for devices...");
-//        ////if(first_sensing)
-//        //manager.enableDeviceDetection();
+
 
 //        manager.disableDeviceDetection();
 //        Debug.Log("Stopped scanning for devices");
