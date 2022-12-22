@@ -632,9 +632,9 @@ public class XsensDot : MonoBehaviour
 
                 packet.Dispose();
             }
-            
+
         }
-            }
+    }
 
 
     void disconnect_DOT()
@@ -646,8 +646,7 @@ public class XsensDot : MonoBehaviour
         {
             if (!device.stopMeasurement())
                 Console.Write("Failed to stop measurement.");
-            //if (!device.disableLogging())
-            //    Console.Write("Failed to disable logging.");
+
         }
 
         Debug.Log("Closing ports...");
