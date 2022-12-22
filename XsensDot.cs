@@ -552,10 +552,6 @@ public class XsensDot : MonoBehaviour
 
 
 
-        //Debug.Log("Number of detected DOTs: " + callback.getDetectedDots().size() + ". Press any key to start.");
-
-
-
         manager.disableDeviceDetection();
         Debug.Log("Stopped scanning for devices");
 
