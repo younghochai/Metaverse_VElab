@@ -641,8 +641,7 @@ public class XsensDot : MonoBehaviour
             //        else
             //            Console.Write("NOK: {0}", device.lastResultText().toString());
             //    }
-            //    Debug.Log("");
-            //    orientationResetDone = true;
+    
        
         }
 
