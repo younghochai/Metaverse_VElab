@@ -611,9 +611,6 @@ public class XsensDot : MonoBehaviour
         // Print SDK version
 
 
-
-        //foreach (XsDotDevice device in deviceList)
-        //    Console.Write("{0,-42}", device.portInfo().bluetoothAddress().toString());
         //Console.Write("\n");
         // Debug.Log(Dotaddresslist[0] + Dotaddresslist[3]);
         bool orientationResetDone = false;
