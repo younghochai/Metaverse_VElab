@@ -890,8 +890,7 @@ public class XsensDot : MonoBehaviour
 //        //if (first_sensing)
 //        //manager.enableDeviceDetection();
 //        //do
-//        //{
-//        //    Debug.Log("Number of detected DOTs: " + callback.getDetectedDots().size() + ". Press any key to start.");
+
 
 
 //    }
