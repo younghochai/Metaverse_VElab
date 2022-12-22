@@ -703,9 +703,6 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
             init_pose_vector.Add(UpperArm);
             init_pose_vector.Add(LowerArm);
 
-
-
-
         }
 
 
