@@ -176,19 +176,6 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
                 inint_pose_quatnew.Add(LeftUpperArm.transform.rotation);
                 inint_pose_quatnew.Add(LeftForeArm.transform.rotation);
 
-                // back up origin
-                // 10. 11
-                //R1 = transform.rotation;
-                //R2 = Spine.transform.rotation * Quaternion.Inverse(Hips.transform.rotation);
-                ////R3 = Head.transform.rotation * Quaternion.Inverse(Spine.transform.rotation);
-                //R4 = RightUpperArm.transform.rotation * Quaternion.Inverse(Spine.transform.rotation);
-                //R5 = RightForeArm.transform.rotation * Quaternion.Inverse(RightUpperArm.transform.rotation);
-                ////R6 = RightHand.transform.rotation * Quaternion.Inverse(RightForeArm.transform.rotation);
-                //R7 = LeftUpperArm.transform.rotation * Quaternion.Inverse(Spine.transform.rotation);
-                //R8 = LeftForeArm.transform.rotation * Quaternion.Inverse(LeftUpperArm.transform.rotation);
-
-
-
                 StartCoroutine(Tracking());
             }
 
