@@ -887,9 +887,6 @@ public class XsensDot : MonoBehaviour
 
 //        Debug.Log("Scanning for devices...");
 
-//        //if (first_sensing)
-
-
 
 
 //    }
