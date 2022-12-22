@@ -1026,9 +1026,6 @@ public class XsensDot : MonoBehaviour
 
 //                Debug.Log("Found a device with Tag: " + device.deviceTagName().toString() + "@ address: " + device.portInfo().bluetoothAddress().toString());
 
-//                //XsFilterProfileArray filterProfiles = device.getAvailableFilterProfiles();
-
-
 
 
 //                Debug.Log("Putting device into measurement mode. ");
