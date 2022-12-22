@@ -465,11 +465,10 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
         void MovementParsing_Dot(int[] action_class, int frame_cnt)
         {
-            //Debug.Log(address_joint_idx.Count);
-
+            
             for (int joint_idx = 0; joint_idx < address_joint_idx.Count; joint_idx++)
             {
-                //relativeAngle = inint_pose_quatnew[joint_idx];
+                
                 int action_cls_j = action_class[joint_idx];
                 if (action_cls_j == 0)
                 {
