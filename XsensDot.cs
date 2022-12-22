@@ -937,7 +937,6 @@ public class XsensDot : MonoBehaviour
 
 
 //            manager.disableDeviceDetection();
-//            //Debug.Log("Stopped scanning for devices");
 //            if (first_setup)
 //            {
 //                first_setup = false;
@@ -957,8 +956,6 @@ public class XsensDot : MonoBehaviour
 
 //        if (tracking_state)
 //            XsensDottracking();
-
-
 
 //    }
 
