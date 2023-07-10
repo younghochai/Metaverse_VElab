@@ -235,24 +235,24 @@ public class XsensDot : MonoBehaviour
 
     void Start()
     {
-        xsensdot_pc_sdk.xsdotsdkDllVersion(version);
-        Debug.Log("Using Xsens DOT SDK version: " + version.toXsString().toString());
+        ////xsensdot_pc_sdk.xsdotsdkDllVersion(version);
+        //Debug.Log("Using Xsens DOT SDK version: " + version.toXsString().toString());
 
-        Debug.Log("Creating Xsens DOT Connection Manager object...");
+        //Debug.Log("Creating Xsens DOT Connection Manager object...");
 
-        if (manager == null)
-        {
-            Debug.Log("Manager could not be constructed, exiting..");
-            return;
-        }
+        //if (manager == null)
+        //{
+        //    Debug.Log("Manager could not be constructed, exiting..");
+        //    return;
+        //}
 
-        // Create and attach callback handler to connection manager
-        manager.addXsDotCallbackHandler(callback);
+        //// Create and attach callback handler to connection manager
+        //manager.addXsDotCallbackHandler(callback);
       
 
-        //XsensDotSetup();
-        // Start a scan and wait until we have found one or more Xsens DOT Devices
-        Debug.Log("Scanning for devices...");
+        ////XsensDotSetup();
+        //// Start a scan and wait until we have found one or more Xsens DOT Devices
+        //Debug.Log("Scanning for devices...");
                 
 
     }
