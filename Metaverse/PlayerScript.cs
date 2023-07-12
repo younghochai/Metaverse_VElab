@@ -28,6 +28,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
     public GameObject XsensDotManager;
 
+    public GameObject XsensManager;
 
     public bool _00B43808 = false;
     public bool _00B438AE = false;
@@ -46,7 +47,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
     public XsensDot manager;
 
-
+    public XsensManage AW_manager;
 
     public Rigidbody RB;
     public PhotonView PV;
@@ -136,7 +137,9 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
   
         XsensDotManager = GameObject.Find("XsensDotManager");
         manager=XsensDotManager.GetComponent<XsensDot>();
-               
+
+        XsensManager = GameObject.Find("XsensManager");
+        AW_manager = XsensManager.GetComponent<XsensManage>();
         cur_state = Avatar_state.Standing;
     }
 
