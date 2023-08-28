@@ -142,7 +142,7 @@ public class playscript : MonoBehaviour
             sensorQuatCaliList[i] = Quaternion.Inverse(sensorQuatList[i]);
         }
     }
-    public void ALIGN_COORDINATE() 
+    public void ALIGN_COORDINATE() //IMU Heading reset.
     {
         Debug.Log("Coordinate Aligned.");
 
