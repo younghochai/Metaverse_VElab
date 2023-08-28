@@ -60,7 +60,6 @@ sysinfo.txt
 *.aab
 *.unitypackage
 *.app
-
 # Crashlytics generated file
 crashlytics-build.properties
 
@@ -70,3 +69,30 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+#JINWOO'S REPO
+*.meta
+*.md
+/MotionCapture/SMPL_X_UNITY/Assets/Materials/
+/MotionCapture/SMPL_X_UNITY/Assets/Scenes/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX-Validation/
+/MotionCapture/SMPL_X_UNITY/Assets/Standard Assets/
+
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/Scripts/TempScript/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/Scripts/wrap_csharp64/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/Materials/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/Models/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/Plugins/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/prefabs/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/Resources/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/Textures/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/ThirdParty/
+
+
+/MotionCapture/SMPL_X_UNITY/Library/
+/MotionCapture/SMPL_X_UNITY/Logs/
+/MotionCapture/SMPL_X_UNITY/obj/
+/MotionCapture/SMPL_X_UNITY/ProjectSettings/
+/MotionCapture/SMPL_X_UNITY/scripts/
+/MotionCapture/SMPL_X_UNITY/UserSettings/
+/MotionCapture/SMPL_X_UNITY/Temp/
