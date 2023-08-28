@@ -62,6 +62,7 @@ public class SMPLX : MonoBehaviour
     public List<List<Quaternion>> L_load_data, R_load_data;
     public List<List<List<Quaternion>>> L_pose_data, R_pose_data;
 
+    // Github
 
     bool is_Coroutine = false;
 
