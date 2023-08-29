@@ -28,7 +28,10 @@ public class playscript : MonoBehaviour
                                                     "left_hip", "left_knee" };
     string[] _Senser8JointNames_UP_RIGHT_PART = new string[] {
                                                     "pelvis", "spine1","spine2","spine3",
-                                                    "right_collar","right_shoulder", "right_elbow","right_wrist","right_hip","left_hip"};
+                                                    "right_collar","right_shoulder", "right_elbow","right_wrist","right_hip","left_hip"}; // 뒤의 두개는 더미.
+    string[] _Senser8JointNames_UP_LEFT_PART = new string[] {
+                                                    "pelvis", "spine1","spine2","spine3",
+                                                    "left_collar","left_shoulder", "left_elbow","left_wrist","right_hip","left_hip"};// 뒤의 두개는 더미.
     int number_of_IMU = 10;
     bool is_play_avatar = false;
     double QW1, QX1, QY1, QZ1;
