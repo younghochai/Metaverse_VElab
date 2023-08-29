@@ -195,14 +195,11 @@ public class playscript : MonoBehaviour
         {
             Debug.Log("Keyboard: C is pressed.\n T-Pose 상태의 센서 정보를 저장하였습니다.");
             //혼자서 T포즈를 위해 지연시간 추가.
-            timer += Time.deltaTime;
-            //Debug.LogFormat("{0}", timer);
-            if (timer > 3)
-            {
-                GET_CALIB_POSE();
-                timer = 0;
-            }
-            //GET_CALIB_POSE();
+          
+            Debug.Log("포즈를 취해주십시오...");
+            //Thread.Sleep(3000);
+            GET_CALIB_POSE();
+
 
             for (int i = 0; i < number_of_IMU; i++)
             {
