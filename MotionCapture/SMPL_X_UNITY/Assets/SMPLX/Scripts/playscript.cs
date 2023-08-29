@@ -110,6 +110,7 @@ public class playscript : MonoBehaviour
             {
                 Quaternion coord = Quaternion.Euler(-90.0f, 180.0f - coordinate_Z[i], 0.0f);
                 Quaternion coord_I = Quaternion.Inverse(coord);
+                
                 smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser10JointNames[i], coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I);
 
             }
@@ -193,7 +194,16 @@ public class playscript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             Debug.Log("Keyboard: C is pressed.\n T-Pose 상태의 센서 정보를 저장하였습니다.");
-            GET_CALIB_POSE();
+            //혼자서 T포즈를 위해 지연시간 추가.
+            timer += Time.deltaTime;
+            //Debug.LogFormat("{0}", timer);
+            if (timer > 3)
+            {
+                GET_CALIB_POSE();
+                timer = 0;
+            }
+            //GET_CALIB_POSE();
+
             for (int i = 0; i < number_of_IMU; i++)
             {
                 Debug.LogFormat("{0}번 센서 캘리브레이션: W: {1}, X: {2}, Y: {3}, Z: {4}",
