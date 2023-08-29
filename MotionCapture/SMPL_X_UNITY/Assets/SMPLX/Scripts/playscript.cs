@@ -20,12 +20,15 @@ public class playscript : MonoBehaviour
     public GameObject smpldata;
 
     //JEONG JINWOO NEW VAR 
-    string[] _Senser10JointNames = new string[] { 
-                                                    "pelvis", "spine2", 
-                                                    "right_shoulder", "right_elbow", 
-                                                    "left_shoulder", "left_elbow", 
-                                                    "right_hip", "right_knee", 
+    string[] _Senser10JointNames = new string[] {
+                                                    "pelvis", "spine2",
+                                                    "right_shoulder", "right_elbow",
+                                                    "left_shoulder", "left_elbow",
+                                                    "right_hip", "right_knee",
                                                     "left_hip", "left_knee" };
+    string[] _Senser8JointNames_UP_RIGHT_PART = new string[] {
+                                                    "pelvis", "spine1","spine2","spine3",
+                                                    "right_collar","right_shoulder", "right_elbow","right_wrist"};
     int number_of_IMU = 10;
     bool is_play_avatar = false;
     double QW1, QX1, QY1, QZ1;
@@ -67,7 +70,7 @@ public class playscript : MonoBehaviour
     bool is_recording = false;
 
     //JEONG JINWOO NEW VAR
-    public void GET_SENSOR_QDATA() // 오른손만 추적할 거라서 센서 두개만 들고 옵니다. 풀 트래킹할거면 다른 함수 쓰던가 반복문 쓰던가
+    public void GET_SENSOR_QDATA() 
     {
 
 
@@ -111,7 +114,9 @@ public class playscript : MonoBehaviour
                 Quaternion coord = Quaternion.Euler(-90.0f, 180.0f - coordinate_Z[i], 0.0f);
                 Quaternion coord_I = Quaternion.Inverse(coord);
                 
-                smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser10JointNames[i], coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I);
+                //smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser10JointNames[i], coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I);
+                smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser8JointNames_UP_RIGHT_PART[i], coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I);
+
 
             }
 
@@ -197,7 +202,6 @@ public class playscript : MonoBehaviour
             //혼자서 T포즈를 위해 지연시간 추가.
           
             Debug.Log("포즈를 취해주십시오...");
-            //Thread.Sleep(3000);
             GET_CALIB_POSE();
 
 
