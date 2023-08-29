@@ -28,7 +28,7 @@ public class playscript : MonoBehaviour
                                                     "left_hip", "left_knee" };
     string[] _Senser8JointNames_UP_RIGHT_PART = new string[] {
                                                     "pelvis", "spine1","spine2","spine3",
-                                                    "right_collar","right_shoulder", "right_elbow","right_wrist"};
+                                                    "right_collar","right_shoulder", "right_elbow","right_wrist","right_hip","left_hip"};
     int number_of_IMU = 10;
     bool is_play_avatar = false;
     double QW1, QX1, QY1, QZ1;
