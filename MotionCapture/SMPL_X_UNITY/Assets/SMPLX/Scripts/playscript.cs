@@ -229,16 +229,18 @@ public class playscript : MonoBehaviour
             Debug.Log("Keyboard: P is pressed.\nPrint all Sensor Data in Euler Angle.");
             for (int i = 0; i < number_of_IMU; i++)
             {
-                Vector3 Print_current_ori = Quaternion.ToEulerAngles(sensorQuatList[i]);
-                CoordinateRotate.x = (float)ConvertRadiansToDegrees(Print_current_ori.x);
-                CoordinateRotate.y = (float)ConvertRadiansToDegrees(Print_current_ori.y);
-                CoordinateRotate.z = (float)ConvertRadiansToDegrees(Print_current_ori.z);
+                //Vector3 Print_current_ori = Quaternion.ToEulerAngles(sensorQuatList[i]);
+                //CoordinateRotate.x = (float)ConvertRadiansToDegrees(Print_current_ori.x);
+                //CoordinateRotate.y = (float)ConvertRadiansToDegrees(Print_current_ori.y);
+                //CoordinateRotate.z = (float)ConvertRadiansToDegrees(Print_current_ori.z);
 
-                Debug.LogFormat("{0}번 센서 Calib이후 값: X: {1}, Y: {2}, Z: {3}", i,
+                //Debug.LogFormat("{0}번 센서 Calib이후 값: X: {1}, Y: {2}, Z: {3}", i,
 
-                                                                           CoordinateRotate.x,
-                                                                            CoordinateRotate.y,
-                                                                            CoordinateRotate.z);
+                //                                                           CoordinateRotate.x,
+                //                                                            CoordinateRotate.y,
+                //                                                            CoordinateRotate.z);
+
+                smpldata.GetComponent<SMPLX>().PrintLocalRotation(_Senser8JointNames_UP_RIGHT_PART[i]);
             }
         }
         else if (Input.GetKeyDown(KeyCode.S))
