@@ -66,7 +66,11 @@ public class XsensManage : MonoBehaviour
 
     Thread thread;
     [SerializeField]
+
+
     public List<XsensDevice> sensors = new List<XsensDevice>();
+
+
     // Use this for initialization
     void Start()
     {
@@ -472,7 +476,7 @@ public class XsensManage : MonoBehaviour
         }
         if (e.Packet.containsFreeAcceleration()) 
         {
-            //Debug.Log("가속도 데이터 있다고?????...");
+            //Debug.Log("가속도 데이터 존재.");
             XsVector free_acc = e.Packet.freeAcceleration();
             //XsVector free_acc = e.Packet.calibratedAcceleration();
 
