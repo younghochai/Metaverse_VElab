@@ -352,6 +352,11 @@ public class SMPLX : MonoBehaviour
         //joint.localRotation = Quaternion.Inverse(jointParent.rotation) * Quaternion.Inverse(Quaternion.Euler(180.0f, 180.0f, 0.0f)) * quatWorld * new Quaternion(0.0f, 0.0f, 1.0f, 0.0f);
 
     }
+    public void PrintLocalRotation(string name)
+    {
+        Transform joint = _transformFromName[name];
+        Debug.LogFormat("{0}의 로컬 회전 값\nW: {1}, X: {2}, Y: {3}, Z: {4}", name, joint.localRotation.w, joint.localRotation.x, joint.localRotation.y, joint.localRotation.z);
+    }
 
     public void SetHandPose(HandPose pose)
     {
