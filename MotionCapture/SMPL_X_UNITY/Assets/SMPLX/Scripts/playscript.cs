@@ -114,7 +114,11 @@ public class playscript : MonoBehaviour
             for (int i = 0; i < number_of_IMU; i++) 
 
             {
+                //Quaternion coord = Quaternion.Euler(-90.0f, 180.0f - coordinate_Z[i], 0.0f);
                 Quaternion coord = Quaternion.Euler(-90.0f, 180.0f - coordinate_Z[i], 0.0f);
+
+
+
                 Quaternion coord_I = Quaternion.Inverse(coord);
                 
                 //smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser10JointNames[i], coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I);
@@ -124,8 +128,6 @@ public class playscript : MonoBehaviour
             }
 
         }
-
-
     }
     private void SaveCSV()
     {
@@ -229,7 +231,7 @@ public class playscript : MonoBehaviour
             Debug.Log("Keyboard: P is pressed.\nPrint all Sensor Data in Euler Angle.");
             for (int i = 0; i < number_of_IMU; i++)
             {
-                //Vector3 Print_current_ori = Quaternion.ToEulerAngles(sensorQuatList[i]);
+                //Vector3 Print_current_ori = Quaternion.ToEulerAngles(sensorQuatList[i] * sensorQuatCaliList[i]);
                 //CoordinateRotate.x = (float)ConvertRadiansToDegrees(Print_current_ori.x);
                 //CoordinateRotate.y = (float)ConvertRadiansToDegrees(Print_current_ori.y);
                 //CoordinateRotate.z = (float)ConvertRadiansToDegrees(Print_current_ori.z);
@@ -240,8 +242,14 @@ public class playscript : MonoBehaviour
                 //                                                            CoordinateRotate.y,
                 //                                                            CoordinateRotate.z);
 
-                smpldata.GetComponent<SMPLX>().PrintLocalRotation(_Senser8JointNames_UP_RIGHT_PART[i]);
+                Vector3 xyzprint =  smpldata.GetComponent<SMPLX>().PrintLocalRotation(_Senser8JointNames_UP_RIGHT_PART[i]);
+                Debug.LogFormat("{0}부분 회전 값: X: {1}, Y: {2}, Z: {3}", _Senser8JointNames_UP_RIGHT_PART[i],
+
+                                                                           xyzprint.x,
+                                                                            xyzprint.y,
+                                                                            xyzprint.z);
             }
+
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {

@@ -58,7 +58,16 @@ public class SMPLX : MonoBehaviour
     private Vector3[] _jointPositions = null;
     private Quaternion[] _jointRotations = null;
 
-    string[] _bodyJointNames = new string[] { "pelvis","left_hip","right_hip","spine1","left_knee","right_knee","spine2","left_ankle","right_ankle","spine3", "left_foot","right_foot","neck","left_collar","right_collar","head","left_shoulder","right_shoulder","left_elbow", "right_elbow","left_wrist","right_wrist","jaw","left_eye_smplhf","right_eye_smplhf","left_index1","left_index2","left_index3","left_middle1","left_middle2","left_middle3","left_pinky1","left_pinky2","left_pinky3","left_ring1","left_ring2","left_ring3","left_thumb1","left_thumb2","left_thumb3","right_index1","right_index2","right_index3","right_middle1","right_middle2","right_middle3","right_pinky1","right_pinky2","right_pinky3","right_ring1","right_ring2","right_ring3","right_thumb1","right_thumb2","right_thumb3" };
+    string[] _bodyJointNames = new string[] { "pelvis","left_hip","right_hip","spine1","left_knee","right_knee",
+                                                "spine2","left_ankle","right_ankle","spine3", "left_foot","right_foot","neck",
+                                                "left_collar","right_collar","head","left_shoulder","right_shoulder","left_elbow", 
+                                                "right_elbow","left_wrist","right_wrist","jaw","left_eye_smplhf","right_eye_smplhf",
+                                                "left_index1","left_index2","left_index3","left_middle1","left_middle2","left_middle3",
+                                                "left_pinky1","left_pinky2","left_pinky3","left_ring1","left_ring2","left_ring3",
+                                                "left_thumb1","left_thumb2","left_thumb3","right_index1","right_index2","right_index3",
+                                                "right_middle1","right_middle2","right_middle3","right_pinky1","right_pinky2","right_pinky3",
+                                                "right_ring1","right_ring2","right_ring3","right_thumb1","right_thumb2","right_thumb3" };
+
     string[] _handLeftJointNames = new string[] { "left_index1","left_index2","left_index3","left_middle1","left_middle2","left_middle3","left_pinky1","left_pinky2","left_pinky3","left_ring1","left_ring2","left_ring3","left_thumb1","left_thumb2","left_thumb3" } ;
     string[] _handRightJointNames = new string[] { "right_index1","right_index2","right_index3","right_middle1","right_middle2","right_middle3","right_pinky1","right_pinky2","right_pinky3","right_ring1","right_ring2","right_ring3","right_thumb1","right_thumb2","right_thumb3" } ;
     float[] _handFlatLeft = new float[] { 0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
@@ -335,13 +344,21 @@ public class SMPLX : MonoBehaviour
         Transform jointParent = joint.parent;
 
         joint.localRotation = Quaternion.Inverse(jointParent.rotation) * Quaternion.Inverse(Quaternion.Euler(180.0f, 0.0f, 0.0f)) * quatWorld * new Quaternion(0.0f, 0.0f, 1.0f, 0.0f);//original
+        //joint.localRotation = Quaternion.Inverse(jointParent.rotation) * Quaternion.Inverse(Quaternion.Euler(0.0f, 180.0f, 0.0f)) * quatWorld ;//original
+
 
 
     }
-    public void PrintLocalRotation(string name)
+    public Vector3 PrintLocalRotation(string name)
     {
         Transform joint = _transformFromName[name];
-        Debug.LogFormat("{0}의 로컬 회전 값\nW: {1}, X: {2}, Y: {3}, Z: {4}", name, joint.localRotation.w, joint.localRotation.x, joint.localRotation.y, joint.localRotation.z);
+        //Debug.LogFormat("{0}의 로컬 회전 값\nW: {1}, X: {2}, Y: {3}, Z: {4}", name, joint.localRotation.w, joint.localRotation.x, joint.localRotation.y, joint.localRotation.z);
+        return joint.localEulerAngles;
+    }
+    public void PrintLocalPosition(string name)
+    {
+        Transform joint = _transformFromName[name];
+        Debug.LogFormat("{0}의 로컬 위치 값\nX: {1}, Y: {2}, Z: {3}", name, joint.position.x, joint.position.y, joint.position.z);
     }
 
     public void SetHandPose(HandPose pose)
