@@ -120,59 +120,59 @@ public class playscript : MonoBehaviour
         {
             smpldata = GameObject.Find("smplx-neutral-se");
 
-            //for (int i = 0; i < number_of_IMU; i++) 
+            for (int i = 0; i < number_of_IMU; i++)
 
-            //{
-            //    Quaternion coord = Quaternion.Euler(-90.0f, 180.0f - coordinate_Z[i], 0.0f);//ORIGINAL
-            //    //Quaternion coord = Quaternion.Euler(0.0f, - coordinate_Z[i], 0.0f);
-            //    //Quaternion coord = Quaternion.Euler(90.0f, 0.0f + coordinate_Z[i], 0.0f);
-
-
-
-
-            //    Quaternion coord_I = Quaternion.Inverse(coord);
-
-            //    //smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser10JointNames[i], coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I);
-            //    smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser8JointNames_UP_RIGHT_PART[i], coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I);
-
-
-            //}
-            
-            Quaternion coord = Quaternion.Euler(-90.0f - coordinate_X[0], 180.0f - coordinate_Z[0], 0.0f - coordinate_Y[0]);//ORIGINAL
-            Quaternion coord_I = Quaternion.Inverse(coord);
-            Quaternion testQ1 = sensorQuatList[0] * sensorQuatCaliList[0];
-            Quaternion testQ2 = coord * sensorQuatList[0] * sensorQuatCaliList[0] * coord_I;
-            Quaternion testQ3 = smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation1(_Senser8JointNames_UP_RIGHT_PART[0], testQ2);
-
-            Vector3 testV1 = Quaternion.ToEulerAngles(testQ1);
-            Vector3 testV2 = Quaternion.ToEulerAngles(testQ2);
-            Vector3 testV3 = Quaternion.ToEulerAngles(testQ3);
-            //Q * Q-1
-            testV1.x = (float)ConvertRadiansToDegrees(testV1.x);
-            testV1.y = (float)ConvertRadiansToDegrees(testV1.y);
-            testV1.z = (float)ConvertRadiansToDegrees(testV1.z);
-            //Q * Q-1, Coordinate & heading reset 적용
-            testV2.x = (float)ConvertRadiansToDegrees(testV2.x);
-            testV2.y = (float)ConvertRadiansToDegrees(testV2.y);
-            testV2.z = (float)ConvertRadiansToDegrees(testV2.z);
-            //Q * Q-1, Coordinate & heading reset 적용, 좌표계 회전 적용
-            testV3.x = (float)ConvertRadiansToDegrees(testV3.x);
-            testV3.y = (float)ConvertRadiansToDegrees(testV3.y);
-            testV3.z = (float)ConvertRadiansToDegrees(testV3.z);
-
-            if (is_printPoint)
             {
-                Debug.LogFormat("q*q-1 : \nX: {0}, Y: {1}, Z: {2}", testV1.x.ToString("F3"), testV1.y.ToString("F3"), testV1.z.ToString("F3"));
-                Debug.LogFormat("Heading 보정 값 : \nX: {0}, Y: {1}, Z: {2}", coordinate_X[0].ToString("F3"), coordinate_Y[0].ToString("F3"), coordinate_Z[0].ToString("F3"));
+                Quaternion coord = Quaternion.Euler(-90.0f, 180.0f - coordinate_Z[i], 0.0f);//ORIGINAL
+                //Quaternion coord = Quaternion.Euler(0.0f, - coordinate_Z[i], 0.0f);
+                //Quaternion coord = Quaternion.Euler(90.0f, 0.0f + coordinate_Z[i], 0.0f);
 
-                Debug.LogFormat("전체  : \nX: {0}, Y: {1}, Z: {2}", testV2.x.ToString("F3"), testV2.y.ToString("F3"), testV2.z.ToString("F3"));
-                Debug.LogFormat("진짜  : \nX: {0}, Y: {1}, Z: {2}", testV3.x.ToString("F3"), testV3.y.ToString("F3"), testV3.z.ToString("F3"));
 
-                is_printPoint = false;
+
+
+                Quaternion coord_I = Quaternion.Inverse(coord);
+
+                //smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser10JointNames[i], coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I);
+                smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser8JointNames_UP_RIGHT_PART[i], coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I);
+
+
             }
 
+            //Quaternion coord = Quaternion.Euler(-90.0f - coordinate_X[0], 180.0f - coordinate_Z[0], 0.0f - coordinate_Y[0]);//ORIGINAL
+            //Quaternion coord_I = Quaternion.Inverse(coord);
+            //Quaternion testQ1 = sensorQuatList[0] * sensorQuatCaliList[0];
+            //Quaternion testQ2 = coord * sensorQuatList[0] * sensorQuatCaliList[0] * coord_I;
+            //Quaternion testQ3 = smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation1(_Senser8JointNames_UP_RIGHT_PART[0], testQ2);
+
+            //Vector3 testV1 = Quaternion.ToEulerAngles(testQ1);
+            //Vector3 testV2 = Quaternion.ToEulerAngles(testQ2);
+            //Vector3 testV3 = Quaternion.ToEulerAngles(testQ3);
+            ////Q * Q-1
+            //testV1.x = (float)ConvertRadiansToDegrees(testV1.x);
+            //testV1.y = (float)ConvertRadiansToDegrees(testV1.y);
+            //testV1.z = (float)ConvertRadiansToDegrees(testV1.z);
+            ////Q * Q-1, Coordinate & heading reset 적용
+            //testV2.x = (float)ConvertRadiansToDegrees(testV2.x);
+            //testV2.y = (float)ConvertRadiansToDegrees(testV2.y);
+            //testV2.z = (float)ConvertRadiansToDegrees(testV2.z);
+            ////Q * Q-1, Coordinate & heading reset 적용, 좌표계 회전 적용
+            //testV3.x = (float)ConvertRadiansToDegrees(testV3.x);
+            //testV3.y = (float)ConvertRadiansToDegrees(testV3.y);
+            //testV3.z = (float)ConvertRadiansToDegrees(testV3.z);
+
+            //if (is_printPoint)
+            //{
+            //    Debug.LogFormat("q*q-1 : \nX: {0}, Y: {1}, Z: {2}", testV1.x.ToString("F3"), testV1.y.ToString("F3"), testV1.z.ToString("F3"));
+            //    Debug.LogFormat("Heading 보정 값 : \nX: {0}, Y: {1}, Z: {2}", coordinate_X[0].ToString("F3"), coordinate_Y[0].ToString("F3"), coordinate_Z[0].ToString("F3"));
+
+            //    Debug.LogFormat("전체  : \nX: {0}, Y: {1}, Z: {2}", testV2.x.ToString("F3"), testV2.y.ToString("F3"), testV2.z.ToString("F3"));
+            //    Debug.LogFormat("진짜  : \nX: {0}, Y: {1}, Z: {2}", testV3.x.ToString("F3"), testV3.y.ToString("F3"), testV3.z.ToString("F3"));
+
+            //    is_printPoint = false;
+            //}
+
             //smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser8JointNames_UP_RIGHT_PART[0], coord * sensorQuatList[0] * sensorQuatCaliList[0] * coord_I);
-            smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser8JointNames_UP_RIGHT_PART[0], coord * sensorQuatList[0] * sensorQuatCaliList[0] * coord_I);
+            //smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser8JointNames_UP_RIGHT_PART[0], coord * sensorQuatList[0] * sensorQuatCaliList[0] * coord_I);
 
 
 
