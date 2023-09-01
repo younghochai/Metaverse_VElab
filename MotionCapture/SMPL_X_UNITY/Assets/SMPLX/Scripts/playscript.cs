@@ -34,12 +34,17 @@ public class playscript : MonoBehaviour
                                                     "left_collar","left_shoulder", "left_elbow","left_wrist","right_hip","left_hip"};// 뒤의 두개는 더미.
     int number_of_IMU = 10;
     bool is_play_avatar = false;
+    bool is_printPoint = false;
     double QW1, QX1, QY1, QZ1;
-    List<float> coordinate_Z = new List<float>
-    {
-        0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f
-    };
+
+    List<float> coordinate_X = new List<float>{0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
+    List<float> coordinate_Y= new List<float> { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+    List<float> coordinate_Z = new List<float> { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+
     Vector3 CoordinateRotate = new Vector3(0.0f,0.0f,0.0f);
+    Vector3 testvec1 = new Vector3(0.0f, 0.0f, 0.0f);
+    Vector3 testvec2 = new Vector3(0.0f, 0.0f, 0.0f);
+
     Quaternion q0;
     List<Quaternion> sensorQuatList = new List<Quaternion>
     {
@@ -87,7 +92,11 @@ public class playscript : MonoBehaviour
             QY1 = sensordata.GetComponent<XsensManage>().sensors[i].QuatY;
             QZ1 = sensordata.GetComponent<XsensManage>().sensors[i].QuatZ;
 
-            q0.w = (float)QW1; q0.x = (float)QX1; q0.y = (float)QY1; q0.z = (float)QZ1;                                    
+            q0.w = (float)QW1; 
+            q0.x = (float)QX1; 
+            q0.y = (float)QY1; 
+            q0.z = (float)QZ1;
+            
             sensorQuatList[i] = q0;
 
 
@@ -111,21 +120,63 @@ public class playscript : MonoBehaviour
         {
             smpldata = GameObject.Find("smplx-neutral-se");
 
-            for (int i = 0; i < number_of_IMU; i++) 
+            //for (int i = 0; i < number_of_IMU; i++) 
 
+            //{
+            //    Quaternion coord = Quaternion.Euler(-90.0f, 180.0f - coordinate_Z[i], 0.0f);//ORIGINAL
+            //    //Quaternion coord = Quaternion.Euler(0.0f, - coordinate_Z[i], 0.0f);
+            //    //Quaternion coord = Quaternion.Euler(90.0f, 0.0f + coordinate_Z[i], 0.0f);
+
+
+
+
+            //    Quaternion coord_I = Quaternion.Inverse(coord);
+
+            //    //smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser10JointNames[i], coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I);
+            //    smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser8JointNames_UP_RIGHT_PART[i], coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I);
+
+
+            //}
+            
+            Quaternion coord = Quaternion.Euler(-90.0f - coordinate_X[0], 180.0f - coordinate_Z[0], 0.0f - coordinate_Y[0]);//ORIGINAL
+            Quaternion coord_I = Quaternion.Inverse(coord);
+            Quaternion testQ1 = sensorQuatList[0] * sensorQuatCaliList[0];
+            Quaternion testQ2 = coord * sensorQuatList[0] * sensorQuatCaliList[0] * coord_I;
+            Quaternion testQ3 = smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation1(_Senser8JointNames_UP_RIGHT_PART[0], testQ2);
+
+            Vector3 testV1 = Quaternion.ToEulerAngles(testQ1);
+            Vector3 testV2 = Quaternion.ToEulerAngles(testQ2);
+            Vector3 testV3 = Quaternion.ToEulerAngles(testQ3);
+            //Q * Q-1
+            testV1.x = (float)ConvertRadiansToDegrees(testV1.x);
+            testV1.y = (float)ConvertRadiansToDegrees(testV1.y);
+            testV1.z = (float)ConvertRadiansToDegrees(testV1.z);
+            //Q * Q-1, Coordinate & heading reset 적용
+            testV2.x = (float)ConvertRadiansToDegrees(testV2.x);
+            testV2.y = (float)ConvertRadiansToDegrees(testV2.y);
+            testV2.z = (float)ConvertRadiansToDegrees(testV2.z);
+            //Q * Q-1, Coordinate & heading reset 적용, 좌표계 회전 적용
+            testV3.x = (float)ConvertRadiansToDegrees(testV3.x);
+            testV3.y = (float)ConvertRadiansToDegrees(testV3.y);
+            testV3.z = (float)ConvertRadiansToDegrees(testV3.z);
+
+            if (is_printPoint)
             {
-                //Quaternion coord = Quaternion.Euler(-90.0f, 180.0f - coordinate_Z[i], 0.0f);
-                Quaternion coord = Quaternion.Euler(-90.0f, 180.0f - coordinate_Z[i], 0.0f);
+                Debug.LogFormat("q*q-1 : \nX: {0}, Y: {1}, Z: {2}", testV1.x.ToString("F3"), testV1.y.ToString("F3"), testV1.z.ToString("F3"));
+                Debug.LogFormat("Heading 보정 값 : \nX: {0}, Y: {1}, Z: {2}", coordinate_X[0].ToString("F3"), coordinate_Y[0].ToString("F3"), coordinate_Z[0].ToString("F3"));
 
+                Debug.LogFormat("전체  : \nX: {0}, Y: {1}, Z: {2}", testV2.x.ToString("F3"), testV2.y.ToString("F3"), testV2.z.ToString("F3"));
+                Debug.LogFormat("진짜  : \nX: {0}, Y: {1}, Z: {2}", testV3.x.ToString("F3"), testV3.y.ToString("F3"), testV3.z.ToString("F3"));
 
-
-                Quaternion coord_I = Quaternion.Inverse(coord);
-                
-                //smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser10JointNames[i], coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I);
-                smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser8JointNames_UP_RIGHT_PART[i], coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I);
-
-
+                is_printPoint = false;
             }
+
+            //smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser8JointNames_UP_RIGHT_PART[0], coord * sensorQuatList[0] * sensorQuatCaliList[0] * coord_I);
+            smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser8JointNames_UP_RIGHT_PART[0], coord * sensorQuatList[0] * sensorQuatCaliList[0] * coord_I);
+
+
+
+
 
         }
     }
@@ -171,6 +222,9 @@ public class playscript : MonoBehaviour
                                                                         CoordinateRotate.y,
                                                                         CoordinateRotate.z);
             //모든 센서의 align 정보를 입력.
+
+            coordinate_X[i] = CoordinateRotate.x;
+            coordinate_Y[i] = CoordinateRotate.y;
             coordinate_Z[i] = CoordinateRotate.z;
 
         }
@@ -189,6 +243,10 @@ public class playscript : MonoBehaviour
         // S : 아바타 움직이는 거 시작.
 
 
+        if (Input.GetKeyDown(KeyCode.O)) 
+        {
+            is_printPoint = true;
+        }
         if (Input.GetKeyDown(KeyCode.Comma))
         {
             Debug.Log("Keyboard: , is pressed.\n녹화를 시작합니다.");
@@ -231,23 +289,23 @@ public class playscript : MonoBehaviour
             Debug.Log("Keyboard: P is pressed.\nPrint all Sensor Data in Euler Angle.");
             for (int i = 0; i < number_of_IMU; i++)
             {
-                //Vector3 Print_current_ori = Quaternion.ToEulerAngles(sensorQuatList[i] * sensorQuatCaliList[i]);
-                //CoordinateRotate.x = (float)ConvertRadiansToDegrees(Print_current_ori.x);
-                //CoordinateRotate.y = (float)ConvertRadiansToDegrees(Print_current_ori.y);
-                //CoordinateRotate.z = (float)ConvertRadiansToDegrees(Print_current_ori.z);
+                Vector3 Print_current_ori = Quaternion.ToEulerAngles(sensorQuatList[i] * sensorQuatCaliList[i]);
+                CoordinateRotate.x = (float)ConvertRadiansToDegrees(Print_current_ori.x);
+                CoordinateRotate.y = (float)ConvertRadiansToDegrees(Print_current_ori.y);
+                CoordinateRotate.z = (float)ConvertRadiansToDegrees(Print_current_ori.z);
 
-                //Debug.LogFormat("{0}번 센서 Calib이후 값: X: {1}, Y: {2}, Z: {3}", i,
+                Debug.LogFormat("{0}번 센서 Calib이후 값: X: {1}, Y: {2}, Z: {3}", i,
 
-                //                                                           CoordinateRotate.x,
-                //                                                            CoordinateRotate.y,
-                //                                                            CoordinateRotate.z);
+                                                                           CoordinateRotate.x,
+                                                                            CoordinateRotate.y,
+                                                                            CoordinateRotate.z);
 
-                Vector3 xyzprint =  smpldata.GetComponent<SMPLX>().PrintLocalRotation(_Senser8JointNames_UP_RIGHT_PART[i]);
-                Debug.LogFormat("{0}부분 회전 값: X: {1}, Y: {2}, Z: {3}", _Senser8JointNames_UP_RIGHT_PART[i],
+                //Vector3 xyzprint =  smpldata.GetComponent<SMPLX>().PrintLocalRotation(_Senser8JointNames_UP_RIGHT_PART[i]);
+                //Debug.LogFormat("{0}부분 회전 값: X: {1}, Y: {2}, Z: {3}", _Senser8JointNames_UP_RIGHT_PART[i],
 
-                                                                           xyzprint.x,
-                                                                            xyzprint.y,
-                                                                            xyzprint.z);
+                //                                                           xyzprint.x,
+                //                                                            xyzprint.y,
+                //                                                            xyzprint.z);
             }
 
         }
