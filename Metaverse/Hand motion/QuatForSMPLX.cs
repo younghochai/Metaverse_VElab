@@ -29,12 +29,16 @@ public class QuatForSMPLX : MonoBehaviour
     public List<List<List<Quaternion>>> L_pose_data = new List<List<List<Quaternion>>>();
     public List<List<List<Quaternion>>> R_pose_data = new List<List<List<Quaternion>>>();
     public List<Vector3> pos_list = new List<Vector3>();
-    public Vector3[] wrist_pos;
 
     public bool is_mirrored = true;
 
-    public GameObject line;
-    LineRenderer lineRenderer;
+    public GameObject linePref;
+    [HideInInspector]
+    public LineRenderer lineRenderer;
+
+    public bool isDrew = false;
+
+    ConductingHand handScript;
 
     private string file_path = "C:/Users/pssil/OneDrive/바탕 화면/velab/2023.07-08/SMPLX-Unity/Assets/";
 
@@ -65,8 +69,7 @@ public class QuatForSMPLX : MonoBehaviour
         _transformFromName = smplX._transformFromName;
         is_Coroutine = smplX.is_Coroutine;
 
-        lineRenderer = line.GetComponent<LineRenderer>();
-        line.transform.localPosition = _transformFromName["right_wrist"].transform.position;
+        handScript = GameObject.Find("SteamVR_female_hand_right 1").GetComponent<ConductingHand>();
     }
 
 
@@ -99,15 +102,15 @@ public class QuatForSMPLX : MonoBehaviour
         {
             is_Coroutine = true;
             StartCoroutine(RotationDelay(0));
-            StopCoroutine(RotationDelay(0));
+            //StartCoroutine(handScript.PlayMotion(0));
 
             Debug.Log("Play 'Flat' motion");
         }
-        else if (Input.GetKeyDown(KeyCode.Keypad1)) //|| newPos_wrist.y - oldPos_wrist.y < -0.02f)     // Bent
+        else if (Input.GetKeyDown(KeyCode.Keypad1))     // Bent
         {
             is_Coroutine = true;
             StartCoroutine(RotationDelay(1));
-            StopCoroutine(RotationDelay(1));
+            //StartCoroutine(handScript.PlayMotion(1));
 
             Debug.Log("Play 'Bent' motion");
         }
@@ -115,25 +118,25 @@ public class QuatForSMPLX : MonoBehaviour
         {
             is_Coroutine = true;
             StartCoroutine(RotationDelay(2));
-            StopCoroutine(RotationDelay(2));
+            //StartCoroutine(handScript.PlayMotion(2));
         }
         else if (Input.GetKeyDown(KeyCode.Keypad3))     // O sign
         {
             is_Coroutine = true;
             StartCoroutine(RotationDelay(3));
-            StopCoroutine(RotationDelay(3));
+            //StartCoroutine(handScript.PlayMotion(3));
         }
         else if (Input.GetKeyDown(KeyCode.Keypad4))     // Fist
         {
             is_Coroutine = true;
             StartCoroutine(RotationDelay(4));
-            StopCoroutine(RotationDelay(4));
+            //StopCoroutine(handScript.PlayMotion(4));
         }
         else if (Input.GetKeyDown(KeyCode.Keypad5))     // Feeling 1 (Pinky up)
         {
             is_Coroutine = true;
             StartCoroutine(RotationDelay(5));
-            StopCoroutine(RotationDelay(5));
+            //StopCoroutine(handScript.PlayMotion(5));
 
             Debug.Log("Play 'Feeling 1' motion");
         }
@@ -141,27 +144,27 @@ public class QuatForSMPLX : MonoBehaviour
         {
             is_Coroutine = true;
             StartCoroutine(RotationDelay(6));
-            StopCoroutine(RotationDelay(6));
+            //StopCoroutine(handScript.PlayMotion(6));
         }
         else if (Input.GetKeyDown(KeyCode.Keypad7))     // Feeling 2 (Holding out)
         {
             is_Coroutine = true;
             StartCoroutine(RotationDelay(7));
-            StopCoroutine(RotationDelay(7));
+            //StopCoroutine(handScript.PlayMotion(7));
         }
 
+        //rotateWrist();
 
-        rotateWrist();
 
-
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        // Activate a function 'avator_play_custom' from 'Player.cs' and Instantiate line prefab
+        if (Input.GetKeyDown(KeyCode.N))
         {
-            //saveCSVfile(file_path);
-
-            //Debug.Log("Complete to save a CSV file");
-
-
+            GameObject currentLine = Instantiate(linePref, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+            lineRenderer = currentLine.GetComponent<LineRenderer>();
         }
+        
+        DrawPath(true);
+
         smplX.UpdatePoseCorrectives();
         smplX.UpdateJointPositions(false);
 
@@ -186,13 +189,7 @@ public class QuatForSMPLX : MonoBehaviour
         //List<float> wrist_gap_list = new List<float> { wristGap_pos.x, wristGap_pos.y, wristGap_pos.z };
         //records.Add(wrist_gap_list);
 
-
-        Vector3 current_pos = _transformFromName["right_wrist"].transform.position;
-        pos_list.Add(current_pos);
-
-        lineRenderer.positionCount = pos_list.Count;
-        lineRenderer.SetPositions(pos_list.ToArray());
-
+        
         yield return new WaitForSeconds(1.0f);
 
         //if (Input.GetKeyDown(KeyCode.X))
@@ -204,7 +201,20 @@ public class QuatForSMPLX : MonoBehaviour
         //}
     }
 
+    void DrawPath(bool isDrew)
+    {
+        if (isDrew == true)
+        {
+            Vector3 current_pos = _transformFromName["right_wrist"].transform.position;
+            pos_list.Add(current_pos);
 
+            lineRenderer.positionCount = pos_list.Count;
+            lineRenderer.SetPositions(pos_list.ToArray());
+        }
+    }
+
+
+    // Read quaternion data from CSV file and Add to lists
     void ReadQuaternion(string file_path, int idx)
     {
         List<List<Quaternion>> L_joint_data = new List<List<Quaternion>>();
@@ -298,6 +308,7 @@ public class QuatForSMPLX : MonoBehaviour
     }
 
 
+    // Rotate hand joints(finger joints) by data of hand motion lists
     /* [p]: pose index    [j]: joint index      [f]: frame index */
     public IEnumerator RotationDelay(int p)
     {
@@ -365,6 +376,7 @@ public class QuatForSMPLX : MonoBehaviour
         is_Coroutine = false;
     }
 
+    // Apply to rotate the wrist and map hand motions (considering to elbow rot gap)
     void rotateWrist()
     {
         //_transformFromName["right_wrist"].transform.localRotation = Quaternion.Euler(elbowGap_rot * magnify);
@@ -418,14 +430,6 @@ public class QuatForSMPLX : MonoBehaviour
                     //Debug.Log("Play 'Feeling 2' motion");
                     motion_num.Add(p);
                 }
-
-                //if (wristGap_pos.x > 0 && wristGap_pos.y > 0 && wristGap_pos.z > 0)
-                //{
-                //    p = 3;
-                //    r_joints.localRotation = Quaternion.Slerp(old_rot, R_pose_data[p][j][R_pose_data[p][j].Count - 1], t);
-
-                //    Debug.Log("Play 'O sign' motion");
-                //}
 
                 if (wristGap_pos.x < 0 && wristGap_pos.y < 0 && wristGap_pos.z < 0) // 왼쪽 아래 안쪽 방향
                 {
