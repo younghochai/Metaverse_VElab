@@ -42,8 +42,7 @@ public class playscript : MonoBehaviour
     List<float> coordinate_Z = new List<float> { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
     Vector3 CoordinateRotate = new Vector3(0.0f,0.0f,0.0f);
-    Vector3 testvec1 = new Vector3(0.0f, 0.0f, 0.0f);
-    Vector3 testvec2 = new Vector3(0.0f, 0.0f, 0.0f);
+
 
     Quaternion q0;
     List<Quaternion> sensorQuatList = new List<Quaternion>
@@ -72,6 +71,20 @@ public class playscript : MonoBehaviour
         new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
         new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
     };
+
+    List<Quaternion> final_Input_List = new List<Quaternion>
+    {
+        new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
+        new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
+        new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
+        new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
+        new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
+        new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
+        new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
+        new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
+        new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
+        new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
+    };
     // for save csv
     List<string[]> csvSaveData = new List<string[]>();
     string[] tempQuat;
@@ -83,7 +96,9 @@ public class playscript : MonoBehaviour
 
 
         sensordata = GameObject.Find("Xsens");
-        number_of_IMU = sensordata.GetComponent<XsensManage>().sensors.Count;
+        //number_of_IMU = sensordata.GetComponent<XsensManage>().sensors.Count;
+        number_of_IMU = 6;
+
 
         for (int i = 0; i < number_of_IMU; i++)
         {
@@ -100,15 +115,34 @@ public class playscript : MonoBehaviour
             sensorQuatList[i] = q0;
 
 
+            if (is_play_avatar)
+            {
+                smpldata = GameObject.Find("smplx-neutral-se");
+
+                Quaternion coord = Quaternion.Euler(-90.0f, 180.0f, 0.0f);//ORIGINAL
+                Quaternion coord_I = Quaternion.Inverse(coord);
+                Quaternion heading_reset = Quaternion.Euler(-coordinate_X[i], -coordinate_Z[i], -coordinate_Y[i]);
+                Quaternion heading_reset_I = Quaternion.Inverse(heading_reset);
+
+                final_Input_List[i] = heading_reset * coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I * heading_reset_I;
+
+                smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser10JointNames[i],
+                    heading_reset * coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I * heading_reset_I);
+
+
+            }
             if (is_recording)
             {
                 if (i == 0)
                 {
-                    tempQuat = new string[40];
+                    tempQuat = new string[24];
                 }
 
-                tempQuat[4 * i + 0] = q0.w.ToString(); tempQuat[4 * i + 1] = q0.x.ToString(); tempQuat[4 * i + 2] = q0.y.ToString(); tempQuat[4 * i + 3] = q0.z.ToString();
-                if (i == 9)
+                tempQuat[4 * i + 0] = final_Input_List[i].w.ToString(); 
+                tempQuat[4 * i + 1] = final_Input_List[i].x.ToString(); 
+                tempQuat[4 * i + 2] = final_Input_List[i].y.ToString(); 
+                tempQuat[4 * i + 3] = final_Input_List[i].z.ToString();
+                if (i == 5)
                 {
                     csvSaveData.Add(tempQuat);
 
@@ -116,69 +150,7 @@ public class playscript : MonoBehaviour
             }
         }
 
-        if (is_play_avatar)
-        {
-            smpldata = GameObject.Find("smplx-neutral-se");
 
-            for (int i = 0; i < number_of_IMU; i++)
-
-            {
-                Quaternion coord = Quaternion.Euler(-90.0f, 180.0f - coordinate_Z[i], 0.0f);//ORIGINAL
-                //Quaternion coord = Quaternion.Euler(0.0f, - coordinate_Z[i], 0.0f);
-                //Quaternion coord = Quaternion.Euler(90.0f, 0.0f + coordinate_Z[i], 0.0f);
-
-
-
-
-                Quaternion coord_I = Quaternion.Inverse(coord);
-
-                //smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser10JointNames[i], coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I);
-                smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser8JointNames_UP_RIGHT_PART[i], coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I);
-
-
-            }
-
-            //Quaternion coord = Quaternion.Euler(-90.0f - coordinate_X[0], 180.0f - coordinate_Z[0], 0.0f - coordinate_Y[0]);//ORIGINAL
-            //Quaternion coord_I = Quaternion.Inverse(coord);
-            //Quaternion testQ1 = sensorQuatList[0] * sensorQuatCaliList[0];
-            //Quaternion testQ2 = coord * sensorQuatList[0] * sensorQuatCaliList[0] * coord_I;
-            //Quaternion testQ3 = smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation1(_Senser8JointNames_UP_RIGHT_PART[0], testQ2);
-
-            //Vector3 testV1 = Quaternion.ToEulerAngles(testQ1);
-            //Vector3 testV2 = Quaternion.ToEulerAngles(testQ2);
-            //Vector3 testV3 = Quaternion.ToEulerAngles(testQ3);
-            ////Q * Q-1
-            //testV1.x = (float)ConvertRadiansToDegrees(testV1.x);
-            //testV1.y = (float)ConvertRadiansToDegrees(testV1.y);
-            //testV1.z = (float)ConvertRadiansToDegrees(testV1.z);
-            ////Q * Q-1, Coordinate & heading reset 적용
-            //testV2.x = (float)ConvertRadiansToDegrees(testV2.x);
-            //testV2.y = (float)ConvertRadiansToDegrees(testV2.y);
-            //testV2.z = (float)ConvertRadiansToDegrees(testV2.z);
-            ////Q * Q-1, Coordinate & heading reset 적용, 좌표계 회전 적용
-            //testV3.x = (float)ConvertRadiansToDegrees(testV3.x);
-            //testV3.y = (float)ConvertRadiansToDegrees(testV3.y);
-            //testV3.z = (float)ConvertRadiansToDegrees(testV3.z);
-
-            //if (is_printPoint)
-            //{
-            //    Debug.LogFormat("q*q-1 : \nX: {0}, Y: {1}, Z: {2}", testV1.x.ToString("F3"), testV1.y.ToString("F3"), testV1.z.ToString("F3"));
-            //    Debug.LogFormat("Heading 보정 값 : \nX: {0}, Y: {1}, Z: {2}", coordinate_X[0].ToString("F3"), coordinate_Y[0].ToString("F3"), coordinate_Z[0].ToString("F3"));
-
-            //    Debug.LogFormat("전체  : \nX: {0}, Y: {1}, Z: {2}", testV2.x.ToString("F3"), testV2.y.ToString("F3"), testV2.z.ToString("F3"));
-            //    Debug.LogFormat("진짜  : \nX: {0}, Y: {1}, Z: {2}", testV3.x.ToString("F3"), testV3.y.ToString("F3"), testV3.z.ToString("F3"));
-
-            //    is_printPoint = false;
-            //}
-
-            //smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser8JointNames_UP_RIGHT_PART[0], coord * sensorQuatList[0] * sensorQuatCaliList[0] * coord_I);
-            //smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser8JointNames_UP_RIGHT_PART[0], coord * sensorQuatList[0] * sensorQuatCaliList[0] * coord_I);
-
-
-
-
-
-        }
     }
     private void SaveCSV()
     {
