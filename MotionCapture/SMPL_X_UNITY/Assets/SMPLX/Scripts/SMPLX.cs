@@ -344,6 +344,8 @@ public class SMPLX : MonoBehaviour
         Transform jointParent = joint.parent;
 
         joint.localRotation = Quaternion.Inverse(jointParent.rotation) * Quaternion.Inverse(Quaternion.Euler(180.0f, 0.0f, 0.0f)) * quatWorld * new Quaternion(0.0f, 0.0f, 1.0f, 0.0f);//original
+        //joint.localRotation = Quaternion.Inverse(jointParent.rotation) * quatWorld * Quaternion.Euler(0.0f, 180.0f, 0.0f);
+
         //joint.localRotation = Quaternion.Inverse(jointParent.rotation) * quatWorld;// * new Quaternion(0.0f, 0.0f, 1.0f, 0.0f) * new Quaternion(1.0f, 0.0f, 0.0f, 0.0f);
 
 
@@ -356,6 +358,7 @@ public class SMPLX : MonoBehaviour
         Transform jointParent = joint.parent;
 
         joint.localRotation = Quaternion.Inverse(jointParent.rotation) * Quaternion.Inverse(Quaternion.Euler(180.0f, 0.0f, 0.0f)) * quatWorld * new Quaternion(0.0f, 0.0f, 1.0f, 0.0f);//original
+
         //joint.localRotation = Quaternion.Inverse(jointParent.rotation) * quatWorld;// * new Quaternion(0.0f, 0.0f, 1.0f, 0.0f) * new Quaternion(1.0f, 0.0f, 0.0f, 0.0f);
 
         return joint.localRotation;
