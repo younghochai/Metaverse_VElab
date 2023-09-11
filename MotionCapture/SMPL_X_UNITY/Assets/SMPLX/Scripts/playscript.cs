@@ -142,7 +142,7 @@ public class playscript : MonoBehaviour
                 tempQuat[4 * i + 1] = final_Input_List[i].x.ToString(); 
                 tempQuat[4 * i + 2] = final_Input_List[i].y.ToString(); 
                 tempQuat[4 * i + 3] = final_Input_List[i].z.ToString();
-                if (i == 5)
+                if (i == number_of_IMU-1)
                 {
                     csvSaveData.Add(tempQuat);
 
@@ -152,7 +152,7 @@ public class playscript : MonoBehaviour
 
 
     }
-    private void SaveCSV()
+    private void SaveCSV()// 
     {
 
         DateTime now = DateTime.Now; // 현재 날짜와 시간 가져오기
