@@ -115,8 +115,8 @@ public class playscript : MonoBehaviour
 
         smpldata = GameObject.Find("smplx-neutral-se");
         sensordata = GameObject.Find("Xsens");
-        //number_of_IMU = sensordata.GetComponent<XsensDot>().sensing_data.Count;
-        number_of_IMU = 6;
+        number_of_IMU = sensordata.GetComponent<XsensDot>().sensing_data.Count;
+        //number_of_IMU = 6;
 
 
         for (int i = 0; i < number_of_IMU; i++)
