@@ -47,9 +47,10 @@ public class CSVPlayer : MonoBehaviour
     {
         if(zDown)
         {
-            string prefix = "D:/Unity/SMPLX-Unity_DOT/";   //root file path  
+            //string prefix = "D:/Unity/SMPLX-Unity_DOT/";   //root file path  
+            string prefix = "D:/Velab_github/Metaverse_VElab/MotionCapture/SMPLX-Unity_DOT/";   //root file path  
 
-            TXTReader(prefix + "43_5times.csv");
+            TXTReader(prefix + "0912bothhand.csv");
 
             //Debug.Log("TXT file load done");
             Debug.Log("CSV file load done");
@@ -74,7 +75,7 @@ public class CSVPlayer : MonoBehaviour
                 smpl_module.SetWorld2LocalJointRotation(_bodyCustomJointNames[i], load_quat_list[0][i][frame_cnt]);
             }
             smpl_module.UpdateJointPositions(false);
-            yield return new WaitForSeconds(.025f);
+            yield return new WaitForSeconds(.0166667f);
         }
         yield break;
     }
