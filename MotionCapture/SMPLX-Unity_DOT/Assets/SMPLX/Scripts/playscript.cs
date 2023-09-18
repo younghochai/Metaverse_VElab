@@ -50,8 +50,9 @@ public class playscript : MonoBehaviour
 
     Quaternion q0;
     Quaternion input_sensor_csv_data;
+    Vector3 QuatToEuler = new Vector3(0.0f, 0.0f, 0.0f);
 
-List < Quaternion> sensorQuatList = new List<Quaternion>
+    List< Quaternion> sensorQuatList = new List<Quaternion>
     {
         new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
         new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
@@ -202,21 +203,30 @@ List < Quaternion> sensorQuatList = new List<Quaternion>
             {
                 if (i == 0)
                 {
-                    tempQuat = new string[24];
+                    tempQuat = new string[18];
                 }
-                
+
                 //tempQuat[4 * i + 0] = q0.w.ToString(); 
                 //tempQuat[4 * i + 1] = q0.x.ToString(); 
                 //tempQuat[4 * i + 2] = q0.y.ToString(); 
                 //tempQuat[4 * i + 3] = q0.z.ToString();
 
-                tempQuat[4 * i + 0] = final_Input_List[i].w.ToString();
-                tempQuat[4 * i + 1] = final_Input_List[i].x.ToString();
-                tempQuat[4 * i + 2] = final_Input_List[i].y.ToString();
-                tempQuat[4 * i + 3] = final_Input_List[i].z.ToString();
-                if (i == 5)
+                //tempQuat[4 * i + 0] = final_Input_List[i].w.ToString();
+                //tempQuat[4 * i + 1] = final_Input_List[i].x.ToString();
+                //tempQuat[4 * i + 2] = final_Input_List[i].y.ToString();
+                //tempQuat[4 * i + 3] = final_Input_List[i].z.ToString();
+                ///////////////////////////////////////////////////////////////////////////////
+                Transform joint = smpldata.GetComponent<SMPLX>()._transformFromName[_Senser10JointNames[i]];
+                QuatToEuler.x = joint.localEulerAngles.x;
+                QuatToEuler.y = joint.localEulerAngles.y;
+                QuatToEuler.z = joint.localEulerAngles.z;
+                tempQuat[3 * i + 0] = QuatToEuler.x.ToString();
+                tempQuat[3 * i + 1] = QuatToEuler.y.ToString();
+                tempQuat[3 * i + 2] = QuatToEuler.z.ToString();
+                if (i == number_of_IMU - 1)
                 {
                     csvSaveData.Add(tempQuat);
+
                 }
             }
         }

@@ -42,6 +42,8 @@ public class playscript : MonoBehaviour
     List<float> coordinate_Z = new List<float> { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
     Vector3 CoordinateRotate = new Vector3(0.0f,0.0f,0.0f);
+    Vector3 QuatToEuler = new Vector3(0.0f, 0.0f, 0.0f);
+
 
 
     Quaternion q0;
@@ -96,6 +98,8 @@ public class playscript : MonoBehaviour
 
 
         sensordata = GameObject.Find("Xsens");
+        smpldata = GameObject.Find("smplx-neutral-se");
+
         //number_of_IMU = sensordata.GetComponent<XsensManage>().sensors.Count;
         number_of_IMU = 6;
 
@@ -117,7 +121,6 @@ public class playscript : MonoBehaviour
 
             if (is_play_avatar)
             {
-                smpldata = GameObject.Find("smplx-neutral-se");
 
                 Quaternion coord = Quaternion.Euler(-90.0f, 180.0f, 0.0f);//ORIGINAL
                 Quaternion coord_I = Quaternion.Inverse(coord);
@@ -135,13 +138,33 @@ public class playscript : MonoBehaviour
             {
                 if (i == 0)
                 {
-                    tempQuat = new string[24];
+                    //tempQuat = new string[24];
+                    tempQuat = new string[18];
+
+
                 }
 
-                tempQuat[4 * i + 0] = final_Input_List[i].w.ToString(); 
-                tempQuat[4 * i + 1] = final_Input_List[i].x.ToString(); 
-                tempQuat[4 * i + 2] = final_Input_List[i].y.ToString(); 
-                tempQuat[4 * i + 3] = final_Input_List[i].z.ToString();
+                //tempQuat[4 * i + 0] = final_Input_List[i].w.ToString(); 
+                //tempQuat[4 * i + 1] = final_Input_List[i].x.ToString(); 
+                //tempQuat[4 * i + 2] = final_Input_List[i].y.ToString(); 
+                //tempQuat[4 * i + 3] = final_Input_List[i].z.ToString();
+
+                //////////////////////////////csv 각도만 쓰는거임///////////////////////////
+                //Vector3 csv_Q_to_E = Quaternion.ToEulerAngles(final_Input_List[i]);
+                //QuatToEuler.x = (float)ConvertRadiansToDegrees(csv_Q_to_E.x);
+                //QuatToEuler.y = (float)ConvertRadiansToDegrees(csv_Q_to_E.y);
+                //QuatToEuler.z = (float)ConvertRadiansToDegrees(csv_Q_to_E.z);
+                //tempQuat[3 * i + 0] = QuatToEuler.x.ToString();
+                //tempQuat[3 * i + 1] = QuatToEuler.y.ToString();
+                //tempQuat[3 * i + 2] = QuatToEuler.z.ToString();
+                ///////////////////////////////////////////////////////////////////////////////
+                Transform joint = smpldata.GetComponent<SMPLX>()._transformFromName[_Senser10JointNames[i]];
+                QuatToEuler.x = joint.localEulerAngles.x;
+                QuatToEuler.y = joint.localEulerAngles.y;
+                QuatToEuler.z = joint.localEulerAngles.z;
+                tempQuat[3 * i + 0] = QuatToEuler.x.ToString();
+                tempQuat[3 * i + 1] = QuatToEuler.y.ToString();
+                tempQuat[3 * i + 2] = QuatToEuler.z.ToString();
                 if (i == number_of_IMU-1)
                 {
                     csvSaveData.Add(tempQuat);
