@@ -981,10 +981,25 @@ public class XsensDot : MonoBehaviour
                     //Debug.Log("W: " + quaternion.w() + " X: " + quaternion.x() + " Y: " + quaternion.y() + " Z: " + quaternion.z());
                     //Console.Write("W:{0,7:f2}, X:{1,7:f2}, Y:{2,7:f2} Z:{2,7:f2}| ", quaternion.w(), quaternion.x(), quaternion.y(), quaternion.z());
                 }
-                else
-                {
+                //if (packet.containsFreeAcceleration())
+                //if (packet.containsFreeAcceleration())
+                //{
+                //    XsVector3 acc = packet.freeAcceleration();
+                //    //Vector3 test1 = acc.toVector();
+                //    Debug.Log(acc.value(0));
+                //    Debug.Log(acc.value(1));
+                //    Debug.Log(acc.value(2));
+                //    Debug.Log(acc.value(3));
+                //    //Debug.Log(acc.data());
+                //    //Debug.Log(acc.toVector());
+
+
+
+                //}
+                //else
+                //{
                     //Debug.Log("패킷에 오리엔테이션 데이터가 없습니다...");
-                }
+                //}
 
                 //packet.Dispose();
             }
