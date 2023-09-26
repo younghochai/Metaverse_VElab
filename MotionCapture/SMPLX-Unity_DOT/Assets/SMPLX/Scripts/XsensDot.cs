@@ -286,7 +286,7 @@ public class XsensDot : MonoBehaviour
         // Start a scan and wait until we have found one or more Xsens DOT Devices
 
         Debug.Log("Scanning for devices...");
-        printMessage = GameObject.Find("print_msg").GetComponent<Text>();
+        printMessage = GameObject.Find("print_msg_1").GetComponent<Text>();
         printMessage.text = "hello this is initial message.";
 
         // manager.enableDeviceDetection();
