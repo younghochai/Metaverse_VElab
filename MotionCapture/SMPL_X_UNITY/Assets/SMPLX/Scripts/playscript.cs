@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.IO;
-
 
 
 
@@ -33,7 +34,7 @@ public class playscript : MonoBehaviour
                                                     "pelvis", "spine1","spine2","spine3",
                                                     "left_collar","left_shoulder", "left_elbow","left_wrist","right_hip","left_hip"};// 뒤의 두개는 더미.
     int number_of_IMU = 10;
-    bool is_play_avatar = false;
+    public bool is_play_avatar = false;
     bool is_printPoint = false;
     double QW1, QX1, QY1, QZ1;
 
@@ -92,6 +93,7 @@ public class playscript : MonoBehaviour
     string[] tempQuat;
     bool is_recording = false;
 
+
     //JEONG JINWOO NEW VAR
     public void GET_SENSOR_QDATA() 
     {
@@ -131,6 +133,9 @@ public class playscript : MonoBehaviour
 
                 smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser10JointNames[i],
                     heading_reset * coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I * heading_reset_I);
+
+
+
 
 
             }
@@ -317,6 +322,7 @@ public class playscript : MonoBehaviour
         timer = 0.0f;
         waitingTime = 0.01667f;
         //waitingTime = 2.0f;
+
     }
 
     // Update is called once per frame
