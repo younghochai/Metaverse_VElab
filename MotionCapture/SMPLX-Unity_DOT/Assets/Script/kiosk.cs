@@ -123,7 +123,6 @@ public class kiosk : MonoBehaviour
         C5 = Resources.Load<Material>("5_Dessert");
 
         start = Resources.Load<Material>("Materials/KioskMenuMaterial/Ready");
-        is_ready = GameObject.Find("Xsens").GetComponent<motion_gesture>().is_ready_to_order;
         //Debug.Log("어서오세요. 원하는 카테고리를 선택해주세요");
         is_step0 = true;
 
@@ -134,10 +133,11 @@ public class kiosk : MonoBehaviour
     {
         kioskIMG = GameObject.Find("Screen").GetComponent<MeshRenderer>();
         gesture_direction = GameObject.Find("Xsens").GetComponent<motion_gesture>().direction;
+        is_ready = GameObject.Find("Xsens").GetComponent<motion_gesture>().is_ready_to_order;
 
         if (is_step0) 
         {
-            Debug.Log("키오스크의 시작입니다. 어서오세요!. 시작하시려면 좌우로 손을 흔들어주세요.");
+            //Debug.Log("키오스크의 시작입니다. 어서오세요!. 시작하시려면 좌우로 손을 흔들어주세요.");
             kioskIMG.material = start;
 
             if (is_ready) 

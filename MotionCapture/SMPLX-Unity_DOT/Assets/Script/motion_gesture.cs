@@ -225,7 +225,7 @@ public class motion_gesture : MonoBehaviour
             printMessage_2.text = testmsg;
 
 
-            if (temp_for_check.y > 0.4) { start_counter++; }
+            if (temp_for_check.y > 0.38) { start_counter++; }
             else { start_counter = 0; }
 
             if (start_counter > 30) // 30프레임동안 손 위로 들고 있으면 흔들기 준비자세(짧다!)
@@ -244,7 +244,7 @@ public class motion_gesture : MonoBehaviour
             {
                 edge_counter++;
             }
-            if (angle < 10 && edge_counter > middle_counter) 
+            if (angle < 15 && edge_counter > middle_counter) 
             {
                 middle_counter++;
                 wave_counter++;
