@@ -36,7 +36,7 @@ public class playscript : MonoBehaviour
                                                     "pelvis", "spine1","spine2","spine3",
                                                     "left_collar","left_shoulder", "left_elbow","left_wrist","right_hip","left_hip"};// 뒤의 두개는 더미.
     int number_of_IMU = 10;
-    bool is_play_avatar = false;
+    public bool is_play_avatar = false;
     bool is_printPoint = false;
     double QW1, QX1, QY1, QZ1;
 
@@ -383,7 +383,7 @@ public class playscript : MonoBehaviour
         timer = 0.0f;
         waitingTime = 0.01667f;
         //waitingTime = 2.0f;
-        printMessage = GameObject.Find("print_msg").GetComponent<Text>();
+        printMessage = GameObject.Find("print_msg_1").GetComponent<Text>();
     }
 
     // Update is called once per frame
