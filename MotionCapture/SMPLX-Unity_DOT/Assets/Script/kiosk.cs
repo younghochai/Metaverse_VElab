@@ -120,6 +120,10 @@ public class kiosk : MonoBehaviour
     void COMMAND_WITH_ARROWS()
     {
         //화살표키로 디렉션 값 주기.
+        if (Input.GetKeyDown(KeyCode.UpArrow)) { }
+        if (Input.GetKeyDown(KeyCode.DownArrow)) { }
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) { }
+        if (Input.GetKeyDown(KeyCode.RightArrow)) { }
     }
     // Start is called before the first frame update
     void Start()
