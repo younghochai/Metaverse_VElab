@@ -211,7 +211,7 @@ public class kiosk : MonoBehaviour
         }
         if (is_step4) 
         {
-            //결제 수단을 선택해주세요.
+            //결제 수단을 선택해주세요...
         }
 
     }
