@@ -57,6 +57,7 @@ public class kiosk : MonoBehaviour
     //Material C3_1, C3_2, C3_3, C3_4, C3_5;
     //Material C4_1, C4_2, C4_3, C4_4, C4_5;
     //Material C5_1, C5_2, C5_3, C5_4, C5_5;
+    //for test.
 
 
     void step1_2_SELECT_CATEGORY(string direction, Dictionary<int, string> category_OR_menu, int step_num) 
