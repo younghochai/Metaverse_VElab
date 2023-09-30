@@ -47,9 +47,11 @@ public class kiosk : MonoBehaviour
     public string gesture_direction = "";
     string selected_menu = "";
     string current_menu;
+
     bool is_step0, is_step1, is_step2, is_step3, is_step4, is_step5 = false;
     bool is_duplicate = false;
     bool is_ready = false;
+    bool is_played = false;
     Renderer kioskIMG;
     Material start;
     Material C1, C2, C3, C4, C5;
@@ -132,38 +134,73 @@ public class kiosk : MonoBehaviour
     }
     void in_cart()
     {
-
-        //1. 현재 장바구니에 있는 메뉴들을 불러줍니다. 
-        //만약 딕셔너리가 비었다면 없다고 출력하고 초기 메뉴로 넘어갑니다.
-        if (cart.Keys.Count == 0)
+        if (!is_played) 
         {
-            Debug.Log("현재 장바구니가 비어있습니다. 주문을 위해 초기 메뉴로 이동합니다.");
-            is_step0 = false; is_step2 = false; is_step3 = false; is_step4 = false;
-            is_step1 = true;
-
-            change_counter = 0;
-            MenuIndex = 0;
-        }
-        else 
-        {
-            Debug.Log("현재 장바구니에 있는 메뉴들은 다음과 같습니다.");
-            foreach (var key in cart.Keys) 
+            //1. 현재 장바구니에 있는 메뉴들을 불러줍니다. 
+            //만약 딕셔너리가 비었다면 없다고 출력하고 초기 메뉴로 넘어갑니다.
+            if (cart.Keys.Count == 0)
             {
-                Debug.LogFormat("{0} : {1}개",key, cart[key]);
+                Debug.Log("현재 장바구니가 비어있습니다. 주문을 위해 초기 메뉴로 이동합니다.");
+                is_step0 = false; is_step2 = false; is_step3 = false; is_step4 = false;
+                is_step1 = true;
+
+                change_counter = 0;
+                MenuIndex = 0;
             }
-            Debug.Log("초기 메뉴로 돌아갑니다.");
-
-        }
-
-        //2. 그 후 그 메뉴와 수량에 대한 총 가격을 출력합니다.
-        if (cart.Keys.Count != 0) 
-        {
-            foreach (var key in cart.Keys) 
+            else
             {
-                total_sum_price += Total_Menu_price[key] * cart[key];
+                Debug.Log("현재 장바구니에 있는 메뉴들은 다음과 같습니다.");
+                foreach (var key in cart.Keys)
+                {
+                    Debug.LogFormat("{0} : {1}개", key, cart[key]);
+                }
+                Debug.Log("초기 메뉴로 돌아갑니다.");
+
             }
-            Debug.LogFormat("결제 총 금액: {0}",total_sum_price);
-            total_sum_price = 0;
+
+            //2. 그 후 그 메뉴와 수량에 대한 총 가격을 출력합니다.
+            if (cart.Keys.Count != 0)
+            {
+                foreach (var key in cart.Keys)
+                {
+                    total_sum_price += Total_Menu_price[key] * cart[key];
+                }
+                Debug.LogFormat("결제 총 금액: {0}", total_sum_price);
+                //total_sum_price = 0;
+
+            }
+        }
+        if (is_played) //장바구니 리스트 한번 플레이 되고. 선택지를 넣는 곳.
+        {
+            if (gesture_direction == "Up") 
+            {
+                Debug.Log("위쪽 디렉션이 입력되었습니다.초기 메뉴로 돌아갑니다.");
+
+                is_step4 = false; is_step5 = true;
+            }
+            if (gesture_direction == "Down") 
+            {
+                Debug.Log("아래쪽 디렉션이 입력되었습니다.초기 메뉴로 돌아갑니다.");
+                is_step4 = false; is_step5 = true;
+
+            }
+            if (gesture_direction == "Left") 
+            {
+                Debug.Log("왼쪽 디렉션이 입력되었습니다.초기 메뉴로 돌아갑니다.");
+                is_step4 = false; is_step5 = true;
+
+            }
+            if (gesture_direction == "Right") 
+            {
+                Debug.Log("오른쪽 디렉션이 입력되었습니다.초기 메뉴로 돌아갑니다.");
+                is_step4 = false; is_step5 = true;
+
+            }
+
+
+
+
+
 
         }
 
