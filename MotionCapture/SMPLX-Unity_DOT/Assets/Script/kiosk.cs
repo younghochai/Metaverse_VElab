@@ -57,7 +57,7 @@ public class kiosk : MonoBehaviour
     //Material C3_1, C3_2, C3_3, C3_4, C3_5;
     //Material C4_1, C4_2, C4_3, C4_4, C4_5;
     //Material C5_1, C5_2, C5_3, C5_4, C5_5;
-    //for test.
+    /
 
 
     void step1_2_SELECT_CATEGORY(string direction, Dictionary<int, string> category_OR_menu, int step_num) 
@@ -112,6 +112,14 @@ public class kiosk : MonoBehaviour
             change_counter++;
         }
         
+    }
+    void in_cart()
+    {
+        //카트에 있을 내용 추가
+    }
+    void COMMAND_WITH_ARROWS()
+    {
+        //화살표키로 디렉션 값 주기.
     }
     // Start is called before the first frame update
     void Start()
