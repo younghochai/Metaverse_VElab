@@ -38,17 +38,18 @@ public class kiosk : MonoBehaviour
         {"플레인요거트_스무디", 4500},{"망고_스무디", 4500},{"딸기요거트_스무디", 2800},{"블루베리_스무디",2800},{"바닐라_스무디",2800},
         {"치즈케이크", 4500},{"티라미수", 5000},{"마카롱", 3000},{"쿠키",2500},{"다쿠아즈",3000}
     };
-
+    Dictionary<string, int> cart  = new Dictionary<string, int>();
 
     int MenuIndex = 0;
     int change_counter = 0;
+    int total_sum_price = 0;
 
     public string gesture_direction = "";
     string selected_menu = "";
     string current_menu;
-    bool is_step0, is_step1, is_step2, is_step3, is_step4 = false;
+    bool is_step0, is_step1, is_step2, is_step3, is_step4, is_step5 = false;
     bool is_duplicate = false;
-    bool is_ready;
+    bool is_ready = false;
     Renderer kioskIMG;
     Material start;
     Material C1, C2, C3, C4, C5;
@@ -57,7 +58,7 @@ public class kiosk : MonoBehaviour
     //Material C3_1, C3_2, C3_3, C3_4, C3_5;
     //Material C4_1, C4_2, C4_3, C4_4, C4_5;
     //Material C5_1, C5_2, C5_3, C5_4, C5_5;
-    /
+    
 
 
     void step1_2_SELECT_CATEGORY(string direction, Dictionary<int, string> category_OR_menu, int step_num) 
@@ -72,8 +73,24 @@ public class kiosk : MonoBehaviour
                 change_counter = 0;
                 selected_menu = current_menu;
                 MenuIndex = 0;
+
+
                 if (step_num == 1) { is_step1 = false; is_step2 = true; }
-                if (step_num == 2) { is_step2 = false; is_step3 = true; }
+                //메뉴를 선택하고, 장바구니에 추가한 후 뎁스3으로 넘어갑니다. 
+                if (step_num == 2) 
+                {
+                    //장바구니에 추가
+                    if (cart.ContainsKey(current_menu))
+                    {
+                        cart[current_menu] += 1;
+                    }
+                    else
+                    {
+                        cart.Add(current_menu, 1);
+                    }
+
+                    is_step2 = false; is_step3 = true; 
+                }
 
                 is_duplicate = true;
             }
@@ -115,15 +132,51 @@ public class kiosk : MonoBehaviour
     }
     void in_cart()
     {
-        //카트에 있을 내용 추가
+
+        //1. 현재 장바구니에 있는 메뉴들을 불러줍니다. 
+        //만약 딕셔너리가 비었다면 없다고 출력하고 초기 메뉴로 넘어갑니다.
+        if (cart.Keys.Count == 0)
+        {
+            Debug.Log("현재 장바구니가 비어있습니다. 주문을 위해 초기 메뉴로 이동합니다.");
+            is_step0 = false; is_step2 = false; is_step3 = false; is_step4 = false;
+            is_step1 = true;
+
+            change_counter = 0;
+            MenuIndex = 0;
+        }
+        else 
+        {
+            Debug.Log("현재 장바구니에 있는 메뉴들은 다음과 같습니다.");
+            foreach (var key in cart.Keys) 
+            {
+                Debug.LogFormat("{0} : {1}개",key, cart[key]);
+            }
+            Debug.Log("초기 메뉴로 돌아갑니다.");
+
+        }
+
+        //2. 그 후 그 메뉴와 수량에 대한 총 가격을 출력합니다.
+        if (cart.Keys.Count != 0) 
+        {
+            foreach (var key in cart.Keys) 
+            {
+                total_sum_price += Total_Menu_price[key] * cart[key];
+            }
+            Debug.LogFormat("결제 총 금액: {0}",total_sum_price);
+            total_sum_price = 0;
+
+        }
+
     }
     void COMMAND_WITH_ARROWS()
     {
+        gesture_direction = "Ready";
         //화살표키로 디렉션 값 주기.
-        if (Input.GetKeyDown(KeyCode.UpArrow)) { }
-        if (Input.GetKeyDown(KeyCode.DownArrow)) { }
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) { }
-        if (Input.GetKeyDown(KeyCode.RightArrow)) { }
+        if (Input.GetKeyDown(KeyCode.R)) { is_ready = true; }
+        if (Input.GetKeyDown(KeyCode.UpArrow)) { gesture_direction = "Up";  }
+        if (Input.GetKeyDown(KeyCode.DownArrow)) { gesture_direction = "Down"; }
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) { gesture_direction = "Left";}
+        if (Input.GetKeyDown(KeyCode.RightArrow)) { gesture_direction = "Right";  }
     }
     // Start is called before the first frame update
     void Start()
@@ -144,13 +197,16 @@ public class kiosk : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        COMMAND_WITH_ARROWS();
+
         kioskIMG = GameObject.Find("Screen").GetComponent<MeshRenderer>();
-        gesture_direction = GameObject.Find("Xsens").GetComponent<motion_gesture>().direction;
-        is_ready = GameObject.Find("Xsens").GetComponent<motion_gesture>().is_ready_to_order;
+        //화살표로 컨트롤하는 모드일땐 여기 끄고 하기. 
+        //gesture_direction = GameObject.Find("Xsens").GetComponent<motion_gesture>().direction;
+        //is_ready = GameObject.Find("Xsens").GetComponent<motion_gesture>().is_ready_to_order;
 
         if (is_step0) 
         {
-            //Debug.Log("키오스크의 시작입니다. 어서오세요!. 시작하시려면 좌우로 손을 흔들어주세요.");
+            Debug.Log("키오스크의 시작입니다. 어서오세요!. 시작하시려면 좌우로 손을 흔들어주세요.");
             kioskIMG.material = start;
 
             if (is_ready) 
@@ -158,7 +214,6 @@ public class kiosk : MonoBehaviour
                 is_step0 = false;
                 is_step1 = true;
             }
-
         }
         if (is_step1) 
         {
@@ -210,21 +265,37 @@ public class kiosk : MonoBehaviour
         }
         if (is_step3) 
         {
-            //핫 OR 아이스? 
-            //메뉴를 추가 주문하시겠습니까?(YES: 카테고리로 이동, NO: 결제창으로 이동)
+            //1. 핫 OR 아이스? >> 그런거 선택하지 말자...
 
-            //Debug.LogFormat("선택한 메뉴의 가격은[{}원입니다.]", Total_Menu_price[selected_menu]);
-            //Debug.LogFormat("선택한 메뉴는 [{}]입니다.]", selected_menu);
-            
-            Debug.Log("구현 준비중...");
-            selected_menu = "커피";
+            //2. 몇 잔?
+            //3. 메뉴를 추가 주문하시겠습니까?(YES: 카테고리로 이동, NO: 장바구니로 이동)
 
-            is_step2 = true;
+
+
+            Debug.Log("뜨거운거? 차가운거? 물론 아직 구현 안됐으니 뜨거운 거 드세요.");
+            Debug.Log("추가메뉴를 시키겠습니까? 아니면 장바구니로 가겠습니까? 어차피 구현 안됐으니 장바구니로 갑시다.");
+
+
+            is_step1 = false;
+            is_step2 = false;
             is_step3 = false;
+            is_step4 = true;
         }
         if (is_step4) 
         {
+            //장바구니 뎁스. 여기는 1뎁스든 2뎁스든 맘대로 넘어올 수 있습니다.
+            in_cart();
+            //여기에 결제로 넘어
+            is_step1 = true;
+            is_step2 = false;
+            is_step3 = false;
+            is_step4 = false;
+
+        }
+        if (is_step5) 
+        {
             //결제 수단을 선택해주세요...
+
         }
 
     }
