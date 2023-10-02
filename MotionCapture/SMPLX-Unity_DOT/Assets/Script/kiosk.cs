@@ -57,13 +57,9 @@ public class kiosk : MonoBehaviour
     Renderer kioskIMG;
     Material start;
     Material C1, C2, C3, C4, C5, C6;
-    //Material C1_1, C1_2, C1_3, C1_4, C1_5;
-    //Material C2_1, C2_2, C2_3, C2_4, C2_5;
-    //Material C3_1, C3_2, C3_3, C3_4, C3_5;
-    //Material C4_1, C4_2, C4_3, C4_4, C4_5;
-    //Material C5_1, C5_2, C5_3, C5_4, C5_5;
-    
 
+    float waitingTime;
+    float timer;
 
     void step1_2_SELECT_CATEGORY(string direction, Dictionary<int, string> category_OR_menu, int step_num) 
     {
@@ -75,18 +71,25 @@ public class kiosk : MonoBehaviour
             {
                 Debug.Log("선택. 해당 메뉴로 이동합니다");
                 change_counter = 0;
-                selected_menu = current_menu;
+
                 MenuIndex = 0;
 
-                if (selected_menu == "Cart") 
-                {
+                //if (selected_menu == "Cart") 
+                //{
                     
-                }
+                //}
 
-                if (step_num == 1) { is_step1 = false; is_step2 = true; }
+                if (step_num == 1) //1뎁스에서 2뎁스로 넘어갈 때
+                { 
+                    is_step1 = false; is_step2 = true;
+                    selected_category = current_menu;
+
+                }
                 //메뉴를 선택하고, 장바구니에 추가한 후 뎁스3으로 넘어갑니다. 
                 if (step_num == 2) 
                 {
+                    selected_menu = current_menu;
+
                     //장바구니에 추가
                     if (cart.ContainsKey(current_menu))
                     {
@@ -101,6 +104,7 @@ public class kiosk : MonoBehaviour
                 }
 
                 is_duplicate = true;
+                gesture_direction = "Ready";
             }
             if (direction == "Down")
             {
@@ -110,6 +114,7 @@ public class kiosk : MonoBehaviour
                 if (step_num == 1) { is_step1 = false; is_step0 = true; }
                 if (step_num == 2) { is_step2 = false; is_step1 = true; }
                 is_duplicate = true;
+                gesture_direction = "Ready";
             }
             if (direction == "Left")
             {
@@ -118,6 +123,7 @@ public class kiosk : MonoBehaviour
                 change_counter = 0;
                 if (MenuIndex > 5) MenuIndex = 0;
                 is_duplicate = true;
+                gesture_direction = "Ready";
             }
             if (direction == "Right")
             {
@@ -126,6 +132,7 @@ public class kiosk : MonoBehaviour
                 change_counter = 0;
                 if (MenuIndex < 0) MenuIndex = 5;
                 is_duplicate = true;
+                gesture_direction = "Ready";
             }
         }
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -140,42 +147,9 @@ public class kiosk : MonoBehaviour
     }
     void in_cart()
     {
-        if (is_played) //장바구니 리스트 한번 플레이 되고. 선택지를 넣는 곳.
-        {
-            //Debug.Log("장바구니: 제스처 분기 진입.");
-
-            if (gesture_direction == "Up")
-            {
-                Debug.Log("확인. 결제를 진행합니다.");
-
-                is_played = false; is_step4 = false; is_step5 = true;
-                gesture_direction = "Ready";
-            }
-            if (gesture_direction == "Down")
-            {
-                Debug.Log("아래쪽 디렉션이 입력되었습니다.직전 메뉴로 돌아갑니다.");
-                is_played = false; is_step4 = false;
-                if (prior_depth == 1) is_step1 = true;
-                if (prior_depth == 2) is_step2 = true;
-                if (prior_depth == 3) is_step3 = true;
-                gesture_direction = "Ready";
-            }
-            if (gesture_direction == "Left")//메뉴 수정(수량 증가 or 감소(0이면 삭제))
-            {
-                Debug.Log("왼쪽 디렉션이 입력되었습니다.초기 메뉴로 돌아갑니다.");
-                is_played = false; is_step4 = false; is_step5 = true;
-                gesture_direction = "Ready";
-            }
-            if (gesture_direction == "Right")
-            {
-                Debug.Log("오른쪽 디렉션이 입력되었습니다.초기 메뉴로 돌아갑니다.");
-                is_played = false; is_step4 = false; is_step5 = true;
-                gesture_direction = "Ready";
-            }
-        }
-
         if (!is_played) 
         {
+            Debug.Log("장바구니 분기 진입.");
             //1. 현재 장바구니에 있는 메뉴들을 불러줍니다. 
             //만약 딕셔너리가 비었다면 없다고 출력하고 초기 메뉴로 넘어갑니다.
             if (cart.Keys.Count == 0)
@@ -200,6 +174,7 @@ public class kiosk : MonoBehaviour
             //2. 그 후 그 메뉴와 수량에 대한 총 가격을 출력합니다.
             if (cart.Keys.Count != 0)
             {
+                total_sum_price = 0; // 다른 분기에 들어왔을 때 겹치지 않게 초기화...
                 foreach (var key in cart.Keys)
                 {
                     total_sum_price += Total_Menu_price[key] * cart[key];
@@ -207,66 +182,104 @@ public class kiosk : MonoBehaviour
                 Debug.LogFormat("결제 총 금액: {0}", total_sum_price);
                 Debug.Log("진행을 위해 제스처를 취해주세요. 위: 결제로 진행. 아래: 직전메뉴.");
                 is_played = true;
-
             }
-            
+        }
+        if (is_played) //장바구니 리스트 한번 플레이 되고. 선택지를 넣는 곳.
+        {
+            //Debug.Log("장바구니: 제스처 분기 진입.");
+
+            if (gesture_direction == "Up")
+            {
+                Debug.Log("장바구니_위쪽 \n확인. 결제 단계로 넘어갑니다.");
+
+                is_played = false; is_step4 = false; is_step5 = true;
+                gesture_direction = "Ready";
+            }
+            if (gesture_direction == "Down")
+            {
+                Debug.Log("장바구니_아래쪽 \n.직전 메뉴로 돌아갑니다.");
+                is_played = false; is_step4 = false;
+                if (prior_depth == 1) { is_step1 = true; }
+                if (prior_depth == 2) { is_step2 = true; Debug.LogFormat("이때의 selected_menu: {0}", selected_menu);
+                }
+                if (prior_depth == 3) { is_step2 = true; Debug.LogFormat("이때의 selected_menu: {0}", selected_menu);
+                }
+                gesture_direction = "Ready";
+            }
+            if (gesture_direction == "Left")//메뉴 수정(수량 증가 or 감소(0이면 삭제))
+            {
+                Debug.Log("장바구니_왼쪽.초기 메뉴로 돌아갑니다.");
+                is_played = false; is_step4 = false; is_step5 = true;
+                gesture_direction = "Ready";
+            }
+            if (gesture_direction == "Right")
+            {
+                Debug.Log("장바구니_오른쪽.초기 메뉴로 돌아갑니다.");
+                is_played = false; is_step4 = false; is_step5 = true;
+                gesture_direction = "Ready";
+            }
         }
 
-        
 
     }
 
     void PAYMENT() 
     {
-        //Debug.Log("결제모듈진입.");
+
+        if (!is_played) // 처음만 실행됩니다.
+        {        
+            Debug.Log("결제모듈진입.");
+            
+            current_menu = threeD_pay[0];
+            MenuIndex = 0;
+            Debug.LogFormat("총 결제할 금액은 {0}원입니다.", total_sum_price.ToString());
+            Debug.Log("결제수단을 선택해주세요. 장바구니로 가시려면 뒤로가기를 눌러주세요.");
+
+            //Debug.LogFormat("현재 메뉴는 '{0}' 입니다.", current_menu);
+
+            is_played = true;
+        }
 
         if (is_played) //이후에 대기하면서 돌아가는 스크립트입니다.
         {
             if (gesture_direction == "Up")
             {
-                Debug.Log("위쪽 디렉션이 입력되었습니다.해당 결제 방식으로 결제를 진행해 주세요.");
-
+                Debug.Log("결제_위쪽.해당 결제 방식으로 결제를 진행해 주세요.");
+                cart = new Dictionary<string, int>(); //장바구니 비우기 >> 초기화면으로 가기 위해...
                 is_played = false; is_step5 = false;
-                is_ready = false; is_step1 = true; //초기로 돌아갑니다.
+                is_ready = false; is_step0 = true; //초기로 돌아갑니다.
                 gesture_direction = "Ready";
             }
             if (gesture_direction == "Down")
             {
-                Debug.Log("아래쪽 디렉션이 입력되었습니다.장바구니로 돌아갑니다.");
+                Debug.Log("결제_아래쪽.장바구니로 돌아갑니다.");
                 is_played = false; is_step5 = false; is_step4 = true;
                 gesture_direction = "Ready";
 
             }
             if (gesture_direction == "Left")//메뉴 수정(수량 증가 or 감소(0이면 삭제))
             {
-                Debug.Log("왼쪽.");
+                Debug.Log("결제_왼쪽.");
                 MenuIndex++;
                 if (MenuIndex > 3) MenuIndex = 0;
                 current_menu = threeD_pay[MenuIndex];
+                Debug.LogFormat("선택된 결제수단은 '{0}' 입니다.", current_menu);
                 gesture_direction = "Ready";
             }
             if (gesture_direction == "Right")
             {
-                Debug.Log("오른쪽.");
+                Debug.Log("결제_오른쪽.");
                 MenuIndex--;
-                if (MenuIndex < 0) MenuIndex = 4;
-                is_played = false;
+                if (MenuIndex < 0) MenuIndex = 3;
                 current_menu = threeD_pay[MenuIndex];
+                Debug.LogFormat("선택된 결제수단은 '{0}' 입니다.", current_menu);
+
                 gesture_direction = "Ready";
             }
 
         }
 
-        if (!is_played) // 처음만 실행됩니다.
-        {
-            current_menu = threeD_pay[0];
-            Debug.LogFormat("총 결제할 금액은 {}원입니다.", total_sum_price);
-            Debug.Log("결제수단을 선택해주세요. 장바구니로 가시려면 뒤로가기를 눌러주세요.");
 
-            Debug.LogFormat("현재 메뉴는 '{0}' 입니다.",current_menu);
-
-            is_played = true;
-        }
     }
     void COMMAND_WITH_ARROWS()
     {
@@ -281,7 +294,8 @@ public class kiosk : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        timer = 0.0f;
+        waitingTime = 0.01667f;
         C1 = Resources.Load<Material>("1_Coffee");
         C2 = Resources.Load<Material>("2_Decaf");
         C3 = Resources.Load<Material>("3_Tea");
@@ -297,118 +311,123 @@ public class kiosk : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime;
+
         COMMAND_WITH_ARROWS();
 
         kioskIMG = GameObject.Find("Screen").GetComponent<MeshRenderer>();
         //화살표로 컨트롤하는 모드일땐 여기 끄고 하기. 
         //gesture_direction = GameObject.Find("Xsens").GetComponent<motion_gesture>().direction;
         //is_ready = GameObject.Find("Xsens").GetComponent<motion_gesture>().is_ready_to_order;
-
-        if (is_step0) 
+        if (timer > waitingTime) 
         {
-            prior_depth = 0;
-            Debug.Log("키오스크의 시작입니다. 어서오세요!. 시작하시려면 좌우로 손을 흔들어주세요.");
-            kioskIMG.material = start;
-
-            if (is_ready) 
+            if (is_step0)
             {
-                is_step0 = false;
-                is_step1 = true;
+                prior_depth = 0;
+                MenuIndex = 0;
+                Debug.Log("키오스크의 시작입니다. 어서오세요!. 시작하시려면 좌우로 손을 흔들어주세요.");
+                kioskIMG.material = start;
+
+                if (is_ready)
+                {
+                    is_step0 = false;
+                    is_step1 = true;
+                }
+            }
+            if (is_step1)
+            {
+                prior_depth = 1;
+                C1 = Resources.Load<Material>("Materials/KioskMenuMaterial/1_Category/1_Coffee");
+                C2 = Resources.Load<Material>("Materials/KioskMenuMaterial/1_Category/2_Decaf");
+                C3 = Resources.Load<Material>("Materials/KioskMenuMaterial/1_Category/3_Tea");
+                C4 = Resources.Load<Material>("Materials/KioskMenuMaterial/1_Category/4_Smoothy");
+                C5 = Resources.Load<Material>("Materials/KioskMenuMaterial/1_Category/5_Dessert");
+                step1_2_SELECT_CATEGORY(gesture_direction, oneD_Category, 1);
+            }
+            if (is_step2)
+            {
+                prior_depth = 2;
+
+                if (selected_category == "커피")
+                {
+                    C1 = Resources.Load<Material>("Materials/KioskMenuMaterial/2_Coffee/Coffee_1"); C2 = Resources.Load<Material>("Materials/KioskMenuMaterial/2_Coffee/Coffee_2");
+                    C3 = Resources.Load<Material>("Materials/KioskMenuMaterial/2_Coffee/Coffee_3"); C4 = Resources.Load<Material>("Materials/KioskMenuMaterial/2_Coffee/Coffee_4");
+                    C5 = Resources.Load<Material>("Materials/KioskMenuMaterial/2_Coffee/Coffee_5"); C6 = Resources.Load<Material>("Materials/KioskMenuMaterial/Cart");
+                    step1_2_SELECT_CATEGORY(gesture_direction, twoD_coffee, 2);
+                }
+                if (selected_category == "디카페인")
+                {
+                    C1 = Resources.Load<Material>("Materials/KioskMenuMaterial/3_Decaf/Decaf_1"); C2 = Resources.Load<Material>("Materials/KioskMenuMaterial/3_Decaf/Decaf_2");
+                    C3 = Resources.Load<Material>("Materials/KioskMenuMaterial/3_Decaf/Decaf_3"); C4 = Resources.Load<Material>("Materials/KioskMenuMaterial/3_Decaf/Decaf_4");
+                    C5 = Resources.Load<Material>("Materials/KioskMenuMaterial/3_Decaf/Decaf_5"); C6 = Resources.Load<Material>("Materials/KioskMenuMaterial/Cart");
+                    step1_2_SELECT_CATEGORY(gesture_direction, twoD_decaf, 2);
+                }
+
+                if (selected_category == "차")
+                {
+                    C1 = Resources.Load<Material>("Materials/KioskMenuMaterial/4_Tea/Tea_1"); C2 = Resources.Load<Material>("Materials/KioskMenuMaterial/4_Tea/Tea_2");
+                    C3 = Resources.Load<Material>("Materials/KioskMenuMaterial/4_Tea/Tea_3"); C4 = Resources.Load<Material>("Materials/KioskMenuMaterial/4_Tea/Tea_4");
+                    C5 = Resources.Load<Material>("Materials/KioskMenuMaterial/4_Tea/Tea_5"); C6 = Resources.Load<Material>("Materials/KioskMenuMaterial/Cart");
+                    step1_2_SELECT_CATEGORY(gesture_direction, twoD_tea, 2);
+                }
+                if (selected_category == "스무디")
+                {
+                    C1 = Resources.Load<Material>("Materials/KioskMenuMaterial/5_Smoothy/Smoothy_1"); C2 = Resources.Load<Material>("Materials/KioskMenuMaterial/5_Smoothy/Smoothy_2");
+                    C3 = Resources.Load<Material>("Materials/KioskMenuMaterial/5_Smoothy/Smoothy_3"); C4 = Resources.Load<Material>("Materials/KioskMenuMaterial/5_Smoothy/Smoothy_4");
+                    C5 = Resources.Load<Material>("Materials/KioskMenuMaterial/5_Smoothy/Smoothy_5"); C6 = Resources.Load<Material>("Materials/KioskMenuMaterial/Cart");
+                    step1_2_SELECT_CATEGORY(gesture_direction, twoD_smoothy, 2);
+                }
+                if (selected_menu == "디저트")
+                {
+                    C1 = Resources.Load<Material>("Materials/KioskMenuMaterial/6_Dessert/Dessert_1"); C2 = Resources.Load<Material>("Materials/KioskMenuMaterial/6_Dessert/Dessert_2");
+                    C3 = Resources.Load<Material>("Materials/KioskMenuMaterial/6_Dessert/Dessert_3"); C4 = Resources.Load<Material>("Materials/KioskMenuMaterial/6_Dessert/Dessert_4");
+                    C5 = Resources.Load<Material>("Materials/KioskMenuMaterial/6_Dessert/Dessert_5"); C6 = Resources.Load<Material>("Materials/KioskMenuMaterial/Cart");
+                    step1_2_SELECT_CATEGORY(gesture_direction, twoD_dessert, 2);
+                }
+                if (selected_menu == "장바구니") { is_step2 = false; is_step4 = true; }
+            }
+            if (is_step3)
+            {
+                prior_depth = 3;
+
+                //1. 핫 OR 아이스? >> 그런거 선택하지 말자...
+
+                //2. 몇 잔?
+                //3. 메뉴를 추가 주문하시겠습니까?(YES: 카테고리로 이동, NO: 장바구니로 이동)
+
+
+
+                Debug.Log("뜨거운거? 차가운거? 물론 아직 구현 안됐으니 뜨거운 거 드세요.");
+                Debug.Log("추가메뉴를 시키겠습니까? 아니면 장바구니로 가겠습니까? 어차피 구현 안됐으니 장바구니로 갑시다.");
+
+
+                //is_step1 = false;
+                //is_step2 = false;
+                is_step3 = false;
+                is_step4 = true;
+                //is_played = false;
+            }
+            if (is_step4)
+            {
+                //장바구니 뎁스. 여기는 1뎁스든 2뎁스든 맘대로 넘어올 수 있습니다.
+                //아닌가? 무조건 3뎁스에서 넘어오게 할까요?
+                in_cart();
+                //여기에 결제로 넘어가려면... 위로...어느 뎁스에서 왔는지에 대해 정보값이 있어야하는데 그거에 대해 어떤 식으로 작성을 할지 확인이 필요함
+                // 그러면 글로벌 변수로 직전 뎁스 숫자를 넣어서 입력하기. 그래서 뒤로가기할때 직전 그 뎁스로 들어갈 수 있게...
+                //// 1뎁스는 그대로 들어가게 하고. 2뎁스는 여기에 Selected Menu(카테고리)를 추가 정보값으로 갖고 있으니깐...
+
+
+            }
+            if (is_step5)
+            {
+                //결제 수단을 선택해주세요...
+                PAYMENT();
+
             }
         }
-        if (is_step1) 
-        {
-            prior_depth = 1;
-            C1 = Resources.Load<Material>("Materials/KioskMenuMaterial/1_Category/1_Coffee");
-            C2 = Resources.Load<Material>("Materials/KioskMenuMaterial/1_Category/2_Decaf");
-            C3 = Resources.Load<Material>("Materials/KioskMenuMaterial/1_Category/3_Tea");
-            C4 = Resources.Load<Material>("Materials/KioskMenuMaterial/1_Category/4_Smoothy");
-            C5 = Resources.Load<Material>("Materials/KioskMenuMaterial/1_Category/5_Dessert");
-            step1_2_SELECT_CATEGORY(gesture_direction, oneD_Category, 1);
-        }
-        if (is_step2) 
-        {
-            prior_depth = 2;
-            if (selected_menu == "커피")
-            {
-                C1 = Resources.Load<Material>("Materials/KioskMenuMaterial/2_Coffee/Coffee_1");C2 = Resources.Load<Material>("Materials/KioskMenuMaterial/2_Coffee/Coffee_2");
-                C3 = Resources.Load<Material>("Materials/KioskMenuMaterial/2_Coffee/Coffee_3");C4 = Resources.Load<Material>("Materials/KioskMenuMaterial/2_Coffee/Coffee_4");
-                C5 = Resources.Load<Material>("Materials/KioskMenuMaterial/2_Coffee/Coffee_5");C6 = Resources.Load<Material>("Materials/KioskMenuMaterial/Cart");
-                step1_2_SELECT_CATEGORY(gesture_direction, twoD_coffee, 2);
-            }
-            if (selected_menu == "디카페인")
-            {
-                C1 = Resources.Load<Material>("Materials/KioskMenuMaterial/3_Decaf/Decaf_1"); C2 = Resources.Load<Material>("Materials/KioskMenuMaterial/3_Decaf/Decaf_2");
-                C3 = Resources.Load<Material>("Materials/KioskMenuMaterial/3_Decaf/Decaf_3"); C4 = Resources.Load<Material>("Materials/KioskMenuMaterial/3_Decaf/Decaf_4");
-                C5 = Resources.Load<Material>("Materials/KioskMenuMaterial/3_Decaf/Decaf_5"); C6 = Resources.Load<Material>("Materials/KioskMenuMaterial/Cart");
-                step1_2_SELECT_CATEGORY(gesture_direction, twoD_decaf, 2); 
-            }
 
-            if (selected_menu == "차") 
-            {
-                C1 = Resources.Load<Material>("Materials/KioskMenuMaterial/4_Tea/Tea_1"); C2 = Resources.Load<Material>("Materials/KioskMenuMaterial/4_Tea/Tea_2");
-                C3 = Resources.Load<Material>("Materials/KioskMenuMaterial/4_Tea/Tea_3"); C4 = Resources.Load<Material>("Materials/KioskMenuMaterial/4_Tea/Tea_4");
-                C5 = Resources.Load<Material>("Materials/KioskMenuMaterial/4_Tea/Tea_5"); C6 = Resources.Load<Material>("Materials/KioskMenuMaterial/Cart");
-                step1_2_SELECT_CATEGORY(gesture_direction, twoD_tea, 2); 
-            }
-            if (selected_menu == "스무디") 
-            {
-                C1 = Resources.Load<Material>("Materials/KioskMenuMaterial/5_Smoothy/Smoothy_1"); C2 = Resources.Load<Material>("Materials/KioskMenuMaterial/5_Smoothy/Smoothy_2");
-                C3 = Resources.Load<Material>("Materials/KioskMenuMaterial/5_Smoothy/Smoothy_3"); C4 = Resources.Load<Material>("Materials/KioskMenuMaterial/5_Smoothy/Smoothy_4");
-                C5 = Resources.Load<Material>("Materials/KioskMenuMaterial/5_Smoothy/Smoothy_5"); C6 = Resources.Load<Material>("Materials/KioskMenuMaterial/Cart");
-                step1_2_SELECT_CATEGORY(gesture_direction, twoD_smoothy, 2); 
-            }
-            if (selected_menu == "디저트") 
-            {
-                C1 = Resources.Load<Material>("Materials/KioskMenuMaterial/6_Dessert/Dessert_1"); C2 = Resources.Load<Material>("Materials/KioskMenuMaterial/6_Dessert/Dessert_2");
-                C3 = Resources.Load<Material>("Materials/KioskMenuMaterial/6_Dessert/Dessert_3"); C4 = Resources.Load<Material>("Materials/KioskMenuMaterial/6_Dessert/Dessert_4");
-                C5 = Resources.Load<Material>("Materials/KioskMenuMaterial/6_Dessert/Dessert_5"); C6 = Resources.Load<Material>("Materials/KioskMenuMaterial/Cart");
-                step1_2_SELECT_CATEGORY(gesture_direction, twoD_dessert, 2); 
-            }
-            if (selected_menu == "장바구니") { is_step2 = false; is_step4 = true; }
-        }
-        if (is_step3) 
-        {
-            prior_depth = 3;
-            if (selected_menu == "장바구니") { is_step3 = false; is_step4 = true; }
-
-            //1. 핫 OR 아이스? >> 그런거 선택하지 말자...
-
-            //2. 몇 잔?
-            //3. 메뉴를 추가 주문하시겠습니까?(YES: 카테고리로 이동, NO: 장바구니로 이동)
-
-
-
-            Debug.Log("뜨거운거? 차가운거? 물론 아직 구현 안됐으니 뜨거운 거 드세요.");
-            Debug.Log("추가메뉴를 시키겠습니까? 아니면 장바구니로 가겠습니까? 어차피 구현 안됐으니 장바구니로 갑시다.");
-
-
-            is_step1 = false;
-            is_step2 = false;
-            is_step3 = false;
-            is_step4 = true;
-            is_played = false;
-        }
-        if (is_step4) 
-        {
-            //장바구니 뎁스. 여기는 1뎁스든 2뎁스든 맘대로 넘어올 수 있습니다.
-            //아닌가? 무조건 3뎁스에서 넘어오게 할까요?
-            in_cart();
-            //여기에 결제로 넘어가려면... 위로...어느 뎁스에서 왔는지에 대해 정보값이 있어야하는데 그거에 대해 어떤 식으로 작성을 할지 확인이 필요함
-            // 그러면 글로벌 변수로 직전 뎁스 숫자를 넣어서 입력하기. 그래서 뒤로가기할때 직전 그 뎁스로 들어갈 수 있게...
-            //// 1뎁스는 그대로 들어가게 하고. 2뎁스는 여기에 Selected Menu(카테고리)를 추가 정보값으로 갖고 있으니깐...
-
-
-        }
-        if (is_step5) 
-        {
-            //결제 수단을 선택해주세요...
-            PAYMENT();
-
-        }
+       
 
     }
 }
-//todo: 피피티로 장바구니 마테리얼 만들고, 딕셔너리에 하나씩 추가하기. 
-// 2뎁스에서 장바구니 갈때 어떻게 직전 정보 들고 갈지 체크하기
-// 변수 정리하기 Selected_menu, selected_category 등...
+//todo: ISSUE>> 장바구니에서 2뎁스 메뉴로 갈 시, 선택된 메뉴가 2뎁스 안의 메뉴라서 진입이 안되네. 해결책>> 뎁스별로 Selected Menu를 새로 작성해서 짜야할듯....
