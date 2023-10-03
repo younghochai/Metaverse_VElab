@@ -172,11 +172,33 @@ public class kiosk : MonoBehaviour
             else
             {
                 Debug.Log("현재 장바구니에 있는 메뉴들은 다음과 같습니다.");
+
+                //메뉴의 갯수가 0개인 키가 있으면 그걸 삭제합니다.
+                List<string> remove_keys_list = new List<string>();
                 foreach (var key in cart.Keys)
                 {
-                    Debug.LogFormat("{0} : {1}개", key, cart[key]);
+                    if (cart[key] == 0) remove_keys_list.Add(key);
                 }
+                foreach (var item in remove_keys_list) { cart.Remove(item); }
+                //메뉴의 갯수가 0개인 키가 있으면 그걸 삭제합니다.
 
+
+                if (cart.Keys.Count != 0) //혹시 모든 메뉴가 삭제당하지 않았는지 확인을 합니다. 만약 모든 메뉴가 삭제당했다면 밑에서 초기로 넘어갑니다.
+                {
+                    foreach (var key in cart.Keys)
+                    {
+                        Debug.LogFormat("{0} : {1}개", key, cart[key]);
+                    }
+                }
+            }
+            if (cart.Keys.Count == 0)
+            {
+                Debug.Log("현재 장바구니가 비어있습니다. 주문을 위해 초기 메뉴로 이동합니다.");
+                is_step0 = false; is_step2 = false; is_step3 = false; is_step4 = false;
+                is_step1 = true;
+
+                change_counter = 0;
+                MenuIndex = 0;
             }
 
             //2. 그 후 그 메뉴와 수량에 대한 총 가격을 출력합니다.
@@ -238,7 +260,7 @@ public class kiosk : MonoBehaviour
     {
         if (!is_played)// 한번 실행되었을 때
         {
-            cart_modify = new Dictionary<int, string>();
+            cart_modify = new Dictionary<int, string>(); //들어올 때마다 카트 수정값 초기화 합니다. 안그러면 중복 오류 뜸
             MenuIndex = 0;
             int i = 1;
             cart_modify.Add( 0, "선택메뉴");
@@ -259,19 +281,42 @@ public class kiosk : MonoBehaviour
         {
             if (gesture_direction == "Up") //수량 업
             {
-                Debug.Log("장바구니 수정_위쪽.수정끝났습니다.");
-                if (MenuIndex == 0) 
+                if (MenuIndex == 0)
                 {
-                    
+                    Debug.Log("장바구니 수정_위쪽.수정끝났습니다.");
+                    is_cart_modify = false;
+                    is_played = false;
+
                 }
-                is_cart_modify = false;
+                else 
+                {
+                    Debug.LogFormat("{0}의 메뉴 수량을 늘립니다.", cart_modify[MenuIndex]);
+
+                    cart[cart_modify[MenuIndex]] += 1;
+                    Debug.LogFormat("{0}의 수량: {1}", cart_modify[MenuIndex], cart[cart_modify[MenuIndex]]);
+
+                }
                 gesture_direction = "Ready";
 
             }
             if (gesture_direction == "Down") //수량 다운
             {
-                Debug.Log("장바구니 수정_아래쪽.수정끝났습니다.");
-                is_cart_modify = false;
+                if (MenuIndex == 0)
+                {
+                    Debug.Log("장바구니 수정_아래쪽.수정끝났습니다.");
+                    is_cart_modify = false;
+                    is_played = false;
+                }
+                else 
+                {
+                    Debug.LogFormat("{0}의 메뉴 수량을 줄입니다.", cart_modify[MenuIndex]);
+
+                    cart[cart_modify[MenuIndex]] -= 1;
+                    if (cart[cart_modify[MenuIndex]] < 0) cart[cart_modify[MenuIndex]] = 0;
+                    Debug.LogFormat("{0}의 수량: {1}", cart_modify[MenuIndex], cart[cart_modify[MenuIndex]]);
+                }
+
+
                 gesture_direction = "Ready";
 
             }
