@@ -54,7 +54,8 @@ public class kiosk : MonoBehaviour
     string current_menu;
 
     bool is_step0, is_step1, is_step2, is_step3, is_step4, is_step5, is_cart_modify = false;
-    bool is_duplicate = false;
+    public bool is_duplicate = false;
+    public bool is_loop_once_finished = false;
     bool is_ready = false;
     bool is_played = false;
 
@@ -65,96 +66,96 @@ public class kiosk : MonoBehaviour
 
     float waitingTime;
     float timer;
+    float delaytimer; 
+    //void step1_2_SELECT_CATEGORY(string direction, Dictionary<int, string> category_OR_menu, int step_num) 
+    //{
+    //    Material[] MenuMaterial = new Material[] { C1, C2, C3, C4, C5, C6 };
+    //    kioskIMG.material = MenuMaterial[MenuIndex];
+    //    if (!is_duplicate) 
+    //    {
+    //        if (direction == "Up")
+    //        {
+    //            change_counter = 0;
+    //            MenuIndex = 0;
+    //            Debug.Log("선택. 해당 메뉴로 이동합니다");
+    //            Debug.LogFormat("이때의 선택된 메뉴는?: {0}", current_menu);
 
-    void step1_2_SELECT_CATEGORY(string direction, Dictionary<int, string> category_OR_menu, int step_num) 
-    {
-        Material[] MenuMaterial = new Material[] { C1, C2, C3, C4, C5, C6 };
-        kioskIMG.material = MenuMaterial[MenuIndex];
-        if (!is_duplicate) 
-        {
-            if (direction == "Up")
-            {
-                change_counter = 0;
-                MenuIndex = 0;
-                Debug.Log("선택. 해당 메뉴로 이동합니다");
-                Debug.LogFormat("이때의 선택된 메뉴는?: {0}", current_menu);
 
+    //            //current_menu가  cart인 상태로 up이 눌렸을 경우
+    //            if (current_menu == "장바구니")//1뎁스나 2뎁스에서 장바구니로 바로 갑니다. 만약에 돌아 올 때는 prior 변수로 다시 돌아옵니다.
+    //            {
+    //                Debug.Log("카트 분기 진입 체크용.");
 
-                //current_menu가  cart인 상태로 up이 눌렸을 경우
-                if (current_menu == "장바구니")//1뎁스나 2뎁스에서 장바구니로 바로 갑니다. 만약에 돌아 올 때는 prior 변수로 다시 돌아옵니다.
-                {
-                    Debug.Log("카트 분기 진입 체크용.");
+    //                is_step1 = false; is_step2 = false;
+    //                is_step4 = true;
+    //            }
 
-                    is_step1 = false; is_step2 = false;
-                    is_step4 = true;
-                }
+    //            if (step_num == 1 && current_menu != "장바구니") //1뎁스에서 2뎁스로 넘어갈 때
+    //            { 
+    //                is_step1 = false; is_step2 = true;
+    //                selected_category = current_menu;
 
-                if (step_num == 1 && current_menu != "장바구니") //1뎁스에서 2뎁스로 넘어갈 때
-                { 
-                    is_step1 = false; is_step2 = true;
-                    selected_category = current_menu;
+    //            }
+    //            //메뉴를 선택하고, 장바구니에 추가한 후 뎁스3으로 넘어갑니다. 
+    //            if (step_num == 2 && current_menu != "장바구니") 
+    //            {
+    //                selected_menu = current_menu;
 
-                }
-                //메뉴를 선택하고, 장바구니에 추가한 후 뎁스3으로 넘어갑니다. 
-                if (step_num == 2 && current_menu != "장바구니") 
-                {
-                    selected_menu = current_menu;
+    //                //장바구니에 추가
+    //                if (cart.ContainsKey(current_menu))
+    //                {
+    //                    cart[current_menu] += 1;
+    //                }
+    //                else
+    //                {
+    //                    cart.Add(current_menu, 1);
+    //                }
 
-                    //장바구니에 추가
-                    if (cart.ContainsKey(current_menu))
-                    {
-                        cart[current_menu] += 1;
-                    }
-                    else
-                    {
-                        cart.Add(current_menu, 1);
-                    }
+    //                is_step2 = false; is_step3 = true; 
+    //            }
 
-                    is_step2 = false; is_step3 = true; 
-                }
-
-                is_duplicate = true;
-                direction_from_motion_gesture = "Defualt";
-            }
-            if (direction == "Down")
-            {
-                Debug.Log("취소. 이전 메뉴로 이동합니다.");
-                change_counter = 0;
-                MenuIndex = 0;
-                if (step_num == 1) { is_step1 = false; is_step0 = true; }
-                if (step_num == 2) { is_step2 = false; is_step1 = true; }
-                is_duplicate = true;
-                direction_from_motion_gesture = "Defualt";
-            }
-            if (direction == "Left")
-            {
-                Debug.Log("다음메뉴");
-                MenuIndex++;
-                change_counter = 0;
-                if (MenuIndex > 5) MenuIndex = 0;
-                is_duplicate = true;
-                direction_from_motion_gesture = "Defualt";
-            }
-            if (direction == "Right")
-            {
-                Debug.Log("이전메뉴");
-                MenuIndex--;
-                change_counter = 0;
-                if (MenuIndex < 0) MenuIndex = 5;
-                is_duplicate = true;
-                direction_from_motion_gesture = "Defualt";
-            }
-        }
-        //////////////////////////////////////////////////////////////////////////////////////////
-        if (direction == "Defualt") is_duplicate = false;
-        if (change_counter == 0 && direction != "Down" && direction != "Up")
-        {
-            current_menu = category_OR_menu[MenuIndex];
-            Debug.LogFormat("현재 선택된 메뉴는 [{0}]입니다.", current_menu);
-            change_counter++;
-        }
+    //            is_duplicate = true;
+    //            direction_from_motion_gesture = "Defualt";
+    //        }
+    //        if (direction == "Down")
+    //        {
+    //            Debug.Log("취소. 이전 메뉴로 이동합니다.");
+    //            change_counter = 0;
+    //            MenuIndex = 0;
+    //            if (step_num == 1) { is_step1 = false; is_step0 = true; }
+    //            if (step_num == 2) { is_step2 = false; is_step1 = true; }
+    //            is_duplicate = true;
+    //            direction_from_motion_gesture = "Defualt";
+    //        }
+    //        if (direction == "Left")
+    //        {
+    //            Debug.Log("다음메뉴");
+    //            MenuIndex++;
+    //            change_counter = 0;
+    //            if (MenuIndex > 5) MenuIndex = 0;
+    //            is_duplicate = true;
+    //            direction_from_motion_gesture = "Defualt";
+    //        }
+    //        if (direction == "Right")
+    //        {
+    //            Debug.Log("이전메뉴");
+    //            MenuIndex--;
+    //            change_counter = 0;
+    //            if (MenuIndex < 0) MenuIndex = 5;
+    //            is_duplicate = true;
+    //            direction_from_motion_gesture = "Defualt";
+    //        }
+    //    }
+    //    //////////////////////////////////////////////////////////////////////////////////////////
+    //    if (direction == "Defualt") is_duplicate = false;
+    //    if (change_counter == 0 && direction != "Down" && direction != "Up")
+    //    {
+    //        current_menu = category_OR_menu[MenuIndex];
+    //        Debug.LogFormat("현재 선택된 메뉴는 [{0}]입니다.", current_menu);
+    //        change_counter++;
+    //    }
         
-    }
+    //}
     void step1_2_SELECT_CATEGORY1(string direction, Dictionary<int, string> category_OR_menu, int step_num)
     {
         Material[] MenuMaterial = new Material[] { C1, C2, C3, C4, C5, C6 };
@@ -204,6 +205,7 @@ public class kiosk : MonoBehaviour
                     }
                     is_step2 = false; is_step3 = true;
                 }
+                is_duplicate = true;
                 direction_from_motion_gesture = "Defualt";
                 is_played = false;
             }
@@ -213,9 +215,10 @@ public class kiosk : MonoBehaviour
                 MenuIndex = 0;
                 if (step_num == 1) { is_step1 = false; is_step0 = true; }
                 if (step_num == 2) { is_step2 = false; is_step1 = true; }
-                is_duplicate = true;
                 direction_from_motion_gesture = "Defualt";
                 is_played = false;
+                is_duplicate = true;
+
             }
             if (direction == "Left")
             {
@@ -224,6 +227,8 @@ public class kiosk : MonoBehaviour
                 if (MenuIndex > 5) MenuIndex = 0;
                 direction_from_motion_gesture = "Defualt";
                 is_played = false;
+                is_duplicate = true;
+
             }
             if (direction == "Right")
             {
@@ -232,6 +237,8 @@ public class kiosk : MonoBehaviour
                 if (MenuIndex < 0) MenuIndex = 5;
                 direction_from_motion_gesture = "Defualt";
                 is_played = false;
+                is_duplicate = true;
+
             }
         }
     }
@@ -308,6 +315,8 @@ public class kiosk : MonoBehaviour
 
                 is_played = false; is_step4 = false; is_step5 = true;
                 direction_from_motion_gesture = "Defualt";
+                is_duplicate = true;
+
             }
             if (direction_from_motion_gesture == "Down")
             {
@@ -319,6 +328,8 @@ public class kiosk : MonoBehaviour
                 if (prior_depth == 3) { is_step2 = true; Debug.LogFormat("이때의 selected_menu: {0}", selected_menu);
                 }
                 direction_from_motion_gesture = "Defualt";
+                is_duplicate = true;
+
             }
             if (direction_from_motion_gesture == "Left")//메뉴 수정(수량 증가 or 감소(0이면 삭제))
             {
@@ -326,6 +337,7 @@ public class kiosk : MonoBehaviour
                 is_played = false; //is_step4 = false; is_step5 = true;
                 is_cart_modify = true;
                 direction_from_motion_gesture = "Defualt";
+                is_duplicate = true;
 
             }
             if (direction_from_motion_gesture == "Right")
@@ -333,6 +345,7 @@ public class kiosk : MonoBehaviour
                 Debug.Log("장바구니_오른쪽.초기 메뉴로 돌아갑니다.");
                 is_played = false; is_step4 = false; is_step5 = true;
                 direction_from_motion_gesture = "Defualt";
+                is_duplicate = true;
 
             }
         }
@@ -383,6 +396,7 @@ public class kiosk : MonoBehaviour
 
                 }
                 direction_from_motion_gesture = "Defualt";
+                is_duplicate = true;
 
             }
             if (direction_from_motion_gesture == "Down") //수량 다운
@@ -404,6 +418,7 @@ public class kiosk : MonoBehaviour
 
 
                 direction_from_motion_gesture = "Defualt";
+                is_duplicate = true;
 
             }
             if (direction_from_motion_gesture == "Left") //메뉴 이동-좌
@@ -419,6 +434,7 @@ public class kiosk : MonoBehaviour
                 }
 
                 direction_from_motion_gesture = "Defualt";
+                is_duplicate = true;
 
             }
             if (direction_from_motion_gesture == "Right") //메뉴 이동-우
@@ -434,6 +450,7 @@ public class kiosk : MonoBehaviour
                 }
 
                 direction_from_motion_gesture = "Defualt";
+                is_duplicate = true;
 
             }
 
@@ -471,12 +488,15 @@ public class kiosk : MonoBehaviour
                 is_played = false; is_step5 = false;
                 is_ready = false; is_step0 = true; //초기로 돌아갑니다.
                 direction_from_motion_gesture = "Defualt";
+                is_duplicate = true;
+
             }
             if (direction_from_motion_gesture == "Down")
             {
                 Debug.Log("결제_아래쪽.장바구니로 돌아갑니다.");
                 is_played = false; is_step5 = false; is_step4 = true;
                 direction_from_motion_gesture = "Defualt";
+                is_duplicate = true;
 
             }
             if (direction_from_motion_gesture == "Left")//메뉴 수정(수량 증가 or 감소(0이면 삭제))
@@ -487,6 +507,8 @@ public class kiosk : MonoBehaviour
                 current_menu = threeD_pay[MenuIndex];
                 Debug.LogFormat("선택된 결제수단은 '{0}' 입니다.", current_menu);
                 direction_from_motion_gesture = "Defualt";
+                is_duplicate = true;
+
             }
             if (direction_from_motion_gesture == "Right")
             {
@@ -497,6 +519,8 @@ public class kiosk : MonoBehaviour
                 Debug.LogFormat("선택된 결제수단은 '{0}' 입니다.", current_menu);
 
                 direction_from_motion_gesture = "Defualt";
+                is_duplicate = true;
+
             }
 
         }
@@ -536,7 +560,6 @@ public class kiosk : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-
         //COMMAND_WITH_ARROWS(); //키보드 입력 모드
         printMessage_2.text = "현재 direction 입력값:" + direction_from_motion_gesture;
 
@@ -546,13 +569,7 @@ public class kiosk : MonoBehaviour
         direction_from_motion_gesture = GameObject.Find("Xsens").GetComponent<motion_gesture>().direction;
         is_ready = GameObject.Find("Xsens").GetComponent<motion_gesture>().is_ready_to_order;
 
-        // 1초의 입력 딜레이 텀을 준다. 한번 동작이 입력되면, 1초 후 다음 동작이 입력될 때까지 입력 비활성화
-        if (direction_from_motion_gesture == "Up" || direction_from_motion_gesture == "Down" || direction_from_motion_gesture == "Left" || direction_from_motion_gesture == "Right")
-        {
-            if(timer >1.0)
-            kiosk_direction = direction_from_motion_gesture;
 
-        }
         if (is_step0)
         {
             if (!is_played) // 처음만 실행됩니다.
@@ -682,8 +699,21 @@ public class kiosk : MonoBehaviour
             PAYMENT();
 
         }
+        // 1초의 입력 딜레이 텀을 준다. 한번 동작이 입력되면, 1초 후 다음 동작이 입력될 때까지 입력 비활성화
+        //if (direction_from_motion_gesture == "Up" || direction_from_motion_gesture == "Down" || direction_from_motion_gesture == "Left" || direction_from_motion_gesture == "Right")
+        //{
+        //    delaytimer += Time.deltaTime;
+        //    if (is_duplicate)
+        //    {                
+        //        kiosk_direction = direction_from_motion_gesture;// 1. 아무튼 제스처 취하면 is_duplicate 트루로 감. 그러면 
+        //    }
+        //    if (delaytimer > 0.5)
+        //    {
+        //        is_duplicate = false;
+        //    }
 
-       
+        //}
+        if (is_duplicate) { is_loop_once_finished = true; }
 
     }
 }

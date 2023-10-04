@@ -50,7 +50,7 @@ public class motion_gesture : MonoBehaviour
     bool is_playing_avatar;
     bool is_ready_to_start;
     bool x_in_boundary, y_in_boundary, z_in_boundary;
-
+    bool is_input_delay;
 
     void COMMAND_WITH_ARROWS()
     {
@@ -76,7 +76,6 @@ public class motion_gesture : MonoBehaviour
 
         printMessage_1 = GameObject.Find("print_msg_1").GetComponent<Text>();
         printMessage_2 = GameObject.Find("print_msg_2").GetComponent<Text>();
-        //is_playing_avatar = GameObject.Find("pr");
 
         joint_R_elbow = smpldata.GetComponent<SMPLX>()._transformFromName["right_elbow"];
         joint_R_shoulder = smpldata.GetComponent<SMPLX>()._transformFromName["right_shoulder"];
@@ -301,9 +300,15 @@ public class motion_gesture : MonoBehaviour
 
         if (is_playing_avatar)
         {
-            if (timer > waitingTime)
-       
+            is_input_delay = GameObject.Find("Screen").GetComponent<kiosk>().is_loop_once_finished;
+            if (is_input_delay)
             {
+                direction = "Defualt";
+                is_input_delay = false;
+            }
+            if (timer > waitingTime)
+            {
+
                 if (!is_ready_to_order) 
                 {
                     StartKioskMotion();
@@ -312,22 +317,11 @@ public class motion_gesture : MonoBehaviour
                 {
                     Standby();
                     Gesture_recognization();
-                    
                 }
 
-                if (direction == "Up" || direction == "Down" || direction == "Left" || direction == "Right")
-                {
-                    delay_counter++;
-                    
-                }
-                
                 timer = 0;
             }
-            if (delay_counter > 30)
-            {
-                delay_counter =0;
-                direction = "Default";
-            }
+
         }
     }
 }
