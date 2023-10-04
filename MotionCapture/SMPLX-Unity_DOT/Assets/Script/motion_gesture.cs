@@ -29,7 +29,7 @@ public class motion_gesture : MonoBehaviour
     int other_pose_counter = 0;
     int start_counter = 0;
     int time_limit = 0;
-    int edge_counter, middle_counter, wave_counter = 0;
+    int edge_counter, middle_counter, wave_counter, delay_counter = 0;
 
     float dot, angle;
     float timer;
@@ -52,7 +52,16 @@ public class motion_gesture : MonoBehaviour
     bool x_in_boundary, y_in_boundary, z_in_boundary;
 
 
-
+    void COMMAND_WITH_ARROWS()
+    {
+        //direction_from_motion_gesture = "Defualt"; //자켓으로 컨트롤할때는여기 비활성화 시켜야함
+        //화살표키로 디렉션 값 주기.
+        if (Input.GetKeyDown(KeyCode.R)){is_ready_to_order = true; }
+        if (Input.GetKeyDown(KeyCode.UpArrow)) { direction = "Up"; }
+        if (Input.GetKeyDown(KeyCode.DownArrow)) { direction = "Down"; }
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) { direction = "Left"; }
+        if (Input.GetKeyDown(KeyCode.RightArrow)) { direction = "Right"; }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -250,7 +259,7 @@ public class motion_gesture : MonoBehaviour
                 wave_counter++;
             }
 
-            if (wave_counter > 5) 
+            if (wave_counter > 3) 
             {
                 Debug.Log("졸라흔들기 성공. 시작합니다.");
                 printMessage_1.text = "손 열심히 흔들었구나... 이제 메뉴 받아줄게";
@@ -286,6 +295,7 @@ public class motion_gesture : MonoBehaviour
     }
     void Update()
     {
+        //COMMAND_WITH_ARROWS();
         is_playing_avatar = from_play_script.GetComponent<playscript>().is_play_avatar;
         timer += Time.deltaTime;
 
@@ -302,12 +312,22 @@ public class motion_gesture : MonoBehaviour
                 {
                     Standby();
                     Gesture_recognization();
+                    
                 }
 
-
+                if (direction == "Up" || direction == "Down" || direction == "Left" || direction == "Right")
+                {
+                    delay_counter++;
+                    
+                }
+                
                 timer = 0;
             }
-
+            if (delay_counter > 30)
+            {
+                delay_counter =0;
+                direction = "Default";
+            }
         }
     }
 }
