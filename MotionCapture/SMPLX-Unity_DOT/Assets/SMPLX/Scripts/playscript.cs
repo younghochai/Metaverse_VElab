@@ -285,7 +285,7 @@ public class playscript : MonoBehaviour
 
             Debug.Log("포즈를 취해주십시오...");
             //GET_CALIB_POSE();
-
+            //comment
 
             for (int i = 0; i < number_of_IMU; i++)
             {
