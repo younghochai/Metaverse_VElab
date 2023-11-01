@@ -48,7 +48,7 @@ using MovellaDotPcSdk;
 using Xsens;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
-
+//comment 
 public class XsensDot : MonoBehaviour
 {
     public class CallbackHandler : XsDotCallback
