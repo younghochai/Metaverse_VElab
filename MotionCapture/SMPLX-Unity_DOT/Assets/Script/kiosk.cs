@@ -248,7 +248,7 @@ public class kiosk : MonoBehaviour
         {
             Debug.Log("장바구니 분기 진입.");
             printMessage_1.text = "현재 단계는 '장바구니 단계'입니다.";
-            //printMessage_2.text = "위: 결제수단으로 넘어가기\n아래: 이전 메뉴로 돌아가기\n왼쪽: 장바구니 수정.";
+            printMessage_2.text = "위: 결제수단으로 넘어가기\n아래: 이전 메뉴로 돌아가기\n왼쪽: 장바구니 수정.";
             //1. 현재 장바구니에 있는 메뉴들을 불러줍니다. 
             //만약 딕셔너리가 비었다면 없다고 출력하고 초기 메뉴로 넘어갑니다.
             if (cart.Keys.Count == 0)
@@ -358,7 +358,7 @@ public class kiosk : MonoBehaviour
         if (!is_played)// 한번 실행되었을 때
         {
             printMessage_1.text = "현재 단계는 '장바구니 수정 단계'입니다. 이전 메뉴로 돌아가려면 메뉴선택 항목에서 위 아래를 입력해주세요.";
-            //printMessage_2.text = "위: 수량 증가/돌아가기\n아래: 수량감소/돌아가기\n왼쪽,오른쪽: 메뉴이동";
+            printMessage_2.text = "위: 수량 증가/돌아가기\n아래: 수량감소/돌아가기\n왼쪽,오른쪽: 메뉴이동";
             cart_modify = new Dictionary<int, string>(); //들어올 때마다 카트 수정값 초기화 합니다. 안그러면 중복 오류 뜸
             MenuIndex = 0;
             int i = 1;
@@ -469,7 +469,7 @@ public class kiosk : MonoBehaviour
             current_menu = threeD_pay[0];
             MenuIndex = 0;
             printMessage_1.text = "총 결제할 금액은 " + total_sum_price.ToString() + "원입니다.";
-            //printMessage_2.text = "위: 선택한 결제수단으로 결제\n아래:장바구니로 돌아가기\n왼쪽,오른쪽:결제 수단 변경";
+            printMessage_2.text = "위: 선택한 결제수단으로 결제\n아래:장바구니로 돌아가기\n왼쪽,오른쪽:결제 수단 변경";
             Debug.LogFormat("총 결제할 금액은 {0}원입니다.", total_sum_price.ToString());
             Debug.Log("결제수단을 선택해주세요. 장바구니로 가시려면 뒤로가기를 눌러주세요.");
             Debug.LogFormat("선택된 결제수단은 '{0}' 입니다.", current_menu);
@@ -561,7 +561,7 @@ public class kiosk : MonoBehaviour
     {
         timer += Time.deltaTime;
         //COMMAND_WITH_ARROWS(); //키보드 입력 모드
-        printMessage_2.text = "현재 direction 입력값:" + direction_from_motion_gesture;
+        //printMessage_2.text = "현재 direction 입력값:" + direction_from_motion_gesture;
 
 
         kioskIMG = GameObject.Find("Screen").GetComponent<MeshRenderer>();
@@ -600,8 +600,8 @@ public class kiosk : MonoBehaviour
         }
         if (is_step1)
         {
-            //printMessage_1.text = "주문하실 메뉴의 카테고리를 골라주세요! 다음 카테고리는 []입니다.";
-            //printMessage_2.text = "위: 카테고리 선택, 아래:이전 메뉴\n왼쪽, 오른쪽: 메뉴 이동";
+            printMessage_1.text = "주문하실 메뉴의 카테고리를 골라주세요! 다음 카테고리는 []입니다.";
+            printMessage_2.text = "위: 카테고리 선택, 아래:이전 메뉴\n왼쪽, 오른쪽: 메뉴 이동";
             prior_depth = 1;
             C1 = Resources.Load<Material>("Materials/KioskMenuMaterial/1_Category/1_Coffee");
             C2 = Resources.Load<Material>("Materials/KioskMenuMaterial/1_Category/2_Decaf");
@@ -613,8 +613,8 @@ public class kiosk : MonoBehaviour
         if (is_step2)
         {
             prior_depth = 2;
-            //printMessage_1.text = "주문하실 메뉴를 골라주세요!";
-            //printMessage_2.text = "위: 카테고리 선택, 아래:이전 메뉴\n왼쪽, 오른쪽: 메뉴 이동";
+            printMessage_1.text = "주문하실 메뉴를 골라주세요!";
+            printMessage_2.text = "위: 카테고리 선택, 아래:이전 메뉴\n왼쪽, 오른쪽: 메뉴 이동";
 
             if (selected_category == "커피")
             {

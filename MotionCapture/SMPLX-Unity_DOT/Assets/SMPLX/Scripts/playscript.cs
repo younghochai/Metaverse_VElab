@@ -38,6 +38,10 @@ public class playscript : MonoBehaviour
     int number_of_IMU = 10;
     public bool is_play_avatar = false;
     bool is_printPoint = false;
+
+    bool is_wait_calibration = false;
+    int cali_waiting_counter = 0;
+
     double QW1, QX1, QY1, QZ1;
 
     List<float> coordinate_X = new List<float>{0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
@@ -78,7 +82,7 @@ public class playscript : MonoBehaviour
         new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
         new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
     };
-    List<Quaternion> final_Input_List = new List<Quaternion>
+    public List<Quaternion> final_Input_List = new List<Quaternion>
     {
         new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
         new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
@@ -148,52 +152,6 @@ public class playscript : MonoBehaviour
                 smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser10JointNames[i],
                     heading_reset * coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I * heading_reset_I);
 
-
-
-                /////////////////////////////////////////////////////////////////////////////////////////////쿼터니언 회전 확인용 스크립트. 필요할때 쓰세요////////////////////////////////////////////////////////////////
-                //Quaternion coord = Quaternion.Euler(-90.0f, 180.0f, 0.0f);//ORIGINAL
-                //Quaternion coord_I = Quaternion.Inverse(coord);
-
-                //Quaternion heading_reset = Quaternion.Euler(-coordinate_X[0], -coordinate_Z[0], -coordinate_Y[0]);
-                //Quaternion heading_reset_I = Quaternion.Inverse(heading_reset);
-
-                //Quaternion testQ1 = sensorQuatList[0] * sensorQuatCaliList[0];
-                //Quaternion testQ2 = heading_reset * coord * sensorQuatList[0] * sensorQuatCaliList[0] * coord_I * heading_reset_I;
-                //Quaternion testQ3 = smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation1(_Senser8JointNames_UP_RIGHT_PART[0], testQ2);
-
-                //Vector3 testV1 = Quaternion.ToEulerAngles(testQ1);
-                //Vector3 testV2 = Quaternion.ToEulerAngles(testQ2);
-                //Vector3 testV3 = Quaternion.ToEulerAngles(testQ3);
-                ////Q * Q-1
-                //testV1.x = (float)ConvertRadiansToDegrees(testV1.x);
-                //testV1.y = (float)ConvertRadiansToDegrees(testV1.y);
-                //testV1.z = (float)ConvertRadiansToDegrees(testV1.z);
-                ////Q * Q-1, Coordinate & heading reset 적용
-                //testV2.x = (float)ConvertRadiansToDegrees(testV2.x);
-                //testV2.y = (float)ConvertRadiansToDegrees(testV2.y);
-                //testV2.z = (float)ConvertRadiansToDegrees(testV2.z);
-                ////Q * Q-1, Coordinate & heading reset 적용, 좌표계 회전 적용
-                //testV3.x = (float)ConvertRadiansToDegrees(testV3.x);
-                //testV3.y = (float)ConvertRadiansToDegrees(testV3.y);
-                //testV3.z = (float)ConvertRadiansToDegrees(testV3.z);
-
-                //if (is_printPoint)
-                //{
-                //    Debug.LogFormat("q*q-1 : \nX: {0}, Y: {1}, Z: {2}", testV1.x.ToString("F3"), testV1.y.ToString("F3"), testV1.z.ToString("F3"));
-                //    Debug.LogFormat("Heading 보정 값 : \nX: {0}, Y: {1}, Z: {2}", coordinate_X[0].ToString("F3"), coordinate_Y[0].ToString("F3"), coordinate_Z[0].ToString("F3"));
-
-                //    Debug.LogFormat("전체  : \nX: {0}, Y: {1}, Z: {2}", testV2.x.ToString("F3"), testV2.y.ToString("F3"), testV2.z.ToString("F3"));
-                //    Debug.LogFormat("진짜  : \nX: {0}, Y: {1}, Z: {2}", testV3.x.ToString("F3"), testV3.y.ToString("F3"), testV3.z.ToString("F3"));
-
-                //    is_printPoint = false;
-                //}
-
-                ////smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser8JointNames_UP_RIGHT_PART[0], coord * sensorQuatList[0] * sensorQuatCaliList[0] * coord_I);
-                //smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser8JointNames_UP_RIGHT_PART[0],  heading_reset * coord * sensorQuatList[0] * sensorQuatCaliList[0]  * coord_I * heading_reset_I);
-
-
-                //smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser8JointNames_UP_RIGHT_PART[0], coord * Quaternion.Euler(0.0f, 90.0f, 0.0f) * coord_I);
-                /////////////////////////////////////////////////////////////////////////////////////////////쿼터니언 회전 확인용 스크립트. 필요할때 쓰세요////////////////////////////////////////////////////////////////
             }
             //###########################################################################
             //1. 오리지널 raw 데이터 로그 찍고 1,2프레임에 캘리, 헤딩 정보 값을 넣기
@@ -205,26 +163,26 @@ public class playscript : MonoBehaviour
             {
                 if (i == 0)
                 {
-                    tempQuat = new string[18];
+                    tempQuat = new string[24];
                 }
 
                 //tempQuat[4 * i + 0] = q0.w.ToString(); 
                 //tempQuat[4 * i + 1] = q0.x.ToString(); 
                 //tempQuat[4 * i + 2] = q0.y.ToString(); 
                 //tempQuat[4 * i + 3] = q0.z.ToString();
-
-                //tempQuat[4 * i + 0] = final_Input_List[i].w.ToString();
-                //tempQuat[4 * i + 1] = final_Input_List[i].x.ToString();
-                //tempQuat[4 * i + 2] = final_Input_List[i].y.ToString();
-                //tempQuat[4 * i + 3] = final_Input_List[i].z.ToString();
                 ///////////////////////////////////////////////////////////////////////////////
-                Transform joint = smpldata.GetComponent<SMPLX>()._transformFromName[_Senser10JointNames[i]];
-                QuatToEuler.x = joint.localEulerAngles.x;
-                QuatToEuler.y = joint.localEulerAngles.y;
-                QuatToEuler.z = joint.localEulerAngles.z;
-                tempQuat[3 * i + 0] = QuatToEuler.x.ToString();
-                tempQuat[3 * i + 1] = QuatToEuler.y.ToString();
-                tempQuat[3 * i + 2] = QuatToEuler.z.ToString();
+                tempQuat[4 * i + 0] = final_Input_List[i].w.ToString();
+                tempQuat[4 * i + 1] = final_Input_List[i].x.ToString();
+                tempQuat[4 * i + 2] = final_Input_List[i].y.ToString();
+                tempQuat[4 * i + 3] = final_Input_List[i].z.ToString();
+                ///////////////////////////////////////////////////////////////////////////////
+                //Transform joint = smpldata.GetComponent<SMPLX>()._transformFromName[_Senser10JointNames[i]];
+                //QuatToEuler.x = joint.localEulerAngles.x;
+                //QuatToEuler.y = joint.localEulerAngles.y;
+                //QuatToEuler.z = joint.localEulerAngles.z;
+                //tempQuat[3 * i + 0] = QuatToEuler.x.ToString();
+                //tempQuat[3 * i + 1] = QuatToEuler.y.ToString();
+                //tempQuat[3 * i + 2] = QuatToEuler.z.ToString();
                 if (i == number_of_IMU - 1)
                 {
                     csvSaveData.Add(tempQuat);
@@ -255,10 +213,13 @@ public class playscript : MonoBehaviour
 
     public void GET_CALIB_POSE()
     {
+
         for (int i = 0; i < number_of_IMU; i++)
         {
             sensorQuatCaliList[i] = Quaternion.Inverse(sensorQuatList[i]);
         }
+        
+
     }
     public void ALIGN_COORDINATE() //IMU Heading reset.
     {
@@ -319,10 +280,11 @@ public class playscript : MonoBehaviour
         {
             Debug.Log("Keyboard: C is pressed.\n T-Pose 상태의 센서 정보를 저장하였습니다.");
             printMessage.text = "Keyboard: C is pressed.\n T-Pose 상태의 센서 정보를 저장하였습니다.";
+            is_wait_calibration = true;
             //혼자서 T포즈를 위해 지연시간 추가.
 
             Debug.Log("포즈를 취해주십시오...");
-            GET_CALIB_POSE();
+            //GET_CALIB_POSE();
 
 
             for (int i = 0; i < number_of_IMU; i++)
@@ -397,6 +359,20 @@ public class playscript : MonoBehaviour
         if (timer > waitingTime)
         {
             GET_SENSOR_QDATA();
+
+            if (is_wait_calibration) 
+            {
+                cali_waiting_counter++;
+                Debug.Log("자세를 취해주세요.");
+            }
+            if (cali_waiting_counter > 300) 
+            {
+                GET_CALIB_POSE();
+                Debug.Log("캘리브레이션 완료!");
+
+                cali_waiting_counter = 0;
+                is_wait_calibration = false;
+            }
 
             timer = 0;
 

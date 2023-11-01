@@ -50,7 +50,7 @@ public class CSVPlayer : MonoBehaviour
             //string prefix = "D:/Unity/SMPLX-Unity_DOT/";   //root file path  
             string prefix = "D:/Velab_github/Metaverse_VElab/MotionCapture/SMPLX-Unity_DOT/";   //root file path  
 
-            TXTReader(prefix + "0912bothhand.csv");
+            TXTReader(prefix + "1016test.csv");
 
             //Debug.Log("TXT file load done");
             Debug.Log("CSV file load done");

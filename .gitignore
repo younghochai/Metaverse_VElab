@@ -46,6 +46,8 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
+*.png
+*.mat
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -71,6 +73,9 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 #JINWOO'S REPO
+*.mp3
+*.wav
+*.ttf
 *.meta
 *.md
 *.csv

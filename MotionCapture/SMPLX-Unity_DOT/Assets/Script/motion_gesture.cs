@@ -43,7 +43,7 @@ public class motion_gesture : MonoBehaviour
                                                     "left_shoulder", "left_elbow",
                                                     "right_hip", "right_knee",
                                                     "left_hip", "left_knee" };
-    public Text printMessage_1;
+    //public Text printMessage_1;
     public Text printMessage_2;
     bool is_standby = false;
     public bool is_ready_to_order = false;
@@ -69,33 +69,33 @@ public class motion_gesture : MonoBehaviour
         waitingTime = 0.01667f;
         timer = 0.0f;
 
-        from_play_script = GameObject.Find("Xsens");
-        smpldata = GameObject.Find("smplx-neutral-se");
-        gesture_feedback = GameObject.Find("border_gesture");
+        from_play_script = GameObject.Find("Xsens"); // 정제된 쿼터니언 들고 오기 위해서....
+        smpldata = GameObject.Find("smplx-neutral-se"); // 팔목이나 어깨, 팔뚝의 위치, 각도를 갖고오기 위해 smpl에서 참조
+        gesture_feedback = GameObject.Find("border_gesture"); // 오디오 피드백을 주려고 했...던것.
 
-
-        printMessage_1 = GameObject.Find("print_msg_1").GetComponent<Text>();
+        is_ready_to_order = true;
+        //printMessage_1 = GameObject.Find("print_msg_1").GetComponent<Text>();
         printMessage_2 = GameObject.Find("print_msg_2").GetComponent<Text>();
 
         joint_R_elbow = smpldata.GetComponent<SMPLX>()._transformFromName["right_elbow"];
         joint_R_shoulder = smpldata.GetComponent<SMPLX>()._transformFromName["right_shoulder"];
         joint_R_wirst = smpldata.GetComponent<SMPLX>()._transformFromName["right_wrist"];
 
-        SoundEffect = gesture_feedback.GetComponent<AudioSource>();
-        SoundEffect.mute = false;
-        SoundEffect.loop = false;
-        SoundEffect.Play();
+        //SoundEffect = gesture_feedback.GetComponent<AudioSource>();
+        //SoundEffect.mute = false;
+        //SoundEffect.loop = false;
+        //SoundEffect.Play();
         //play script에 있는 플레잉 변수 들고 와서 아바타 플레이시 동시에 구문진행되게 함
-        printMessage_1.text =
+        //printMessage_1.text =
 
 
-            "HELLO UNITY!\n" +
-            "THIS IS THREE LINE TEXT!\n" +
-            "THIS LINE WILL SHOW YOU THAT SENSOR ROTATION VALUE!";
-        printMessage_2.text =
-            "HELLO UNITY!\n" +
-            "THIS IS THREE LINE TEXT!\n" +
-            "THIS LINE WILL SHOW YOU THAT SENSOR ROTATION VALUE!";
+        //    "HELLO UNITY!\n" +
+        //    "THIS IS THREE LINE TEXT!\n" +
+        //    "THIS LINE WILL SHOW YOU THAT SENSOR ROTATION VALUE!";
+        //printMessage_2.text =
+        //    "HELLO UNITY!\n" +
+        //    "THIS IS THREE LINE TEXT!\n" +
+        //    "THIS LINE WILL SHOW YOU THAT SENSOR ROTATION VALUE!";
 
     }
 
@@ -111,7 +111,7 @@ public class motion_gesture : MonoBehaviour
                                 current_wrist_position.y.ToString("F3") + "( 2.0 ~  2.4)\n" +
                                 current_wrist_position.z.ToString("F3") + "(-0.6 ~ 0.0)";
 
-        printMessage_1.text = print_message;
+        //printMessage_1.text = print_message;
         /////////////////함수화 고려부분///////////////////////////
         if (current_wrist_position.x > -0.75 && current_wrist_position.x < -0.25) x_in_boundary = true; else x_in_boundary = false;
         if (current_wrist_position.y > 2.0 && current_wrist_position.y < 2.4) y_in_boundary = true; else y_in_boundary = false;
@@ -132,8 +132,8 @@ public class motion_gesture : MonoBehaviour
 
         if (standby_counter >= 45)
         {
-            //printMessage_2.text = "제스쳐 스탠바이 모드로 진입합니다.";
-            //Debug.Log("제스쳐 스탠바이 모드로 진입합니다.");
+            printMessage_2.text = "제스쳐 스탠바이 모드로 진입합니다.";
+            Debug.Log("제스쳐 스탠바이 모드로 진입합니다.");
             is_standby = true;
             standby_counter = 0;
             other_pose_counter = 0;
@@ -145,8 +145,8 @@ public class motion_gesture : MonoBehaviour
         }
         if (other_pose_counter >= 120)
         {
-            //printMessage_2.text = "제스처 스탠바이모드가 아닙니다.";
-            //Debug.Log("제스처 스탠바이모드가 아닙니다.");
+            printMessage_2.text = "제스처 스탠바이모드가 아닙니다.";
+            Debug.Log("제스처 스탠바이모드가 아닙니다.");
             is_standby = false;
             standby_counter = 0;
             other_pose_counter = 0;
@@ -170,11 +170,11 @@ public class motion_gesture : MonoBehaviour
             //string print_message = "Diif_X:" + rotation_difference.x.ToString("F3") + "\n" +
             //                       "Diif_Y:" + rotation_difference.y.ToString("F3") + "\n" +
             //                       "Diif_Z:" + rotation_difference.z.ToString("F3");
-            printMessage_1.text = print_message;
+            //printMessage_1.text = print_message;
 
             if (current_wrist_position.y > 2.8 && angle > 50) 
             {
-                //Debug.Log("위쪽 제스쳐입니다.");
+                Debug.Log("위쪽 제스쳐입니다.");
                 printMessage_2.text = "위쪽 제스쳐입니다.";
                 direction = "Up";
 
@@ -184,7 +184,7 @@ public class motion_gesture : MonoBehaviour
             }
             if (current_wrist_position.y < 1.85 && angle > 50)
             {
-                //Debug.Log("아래쪽 제스쳐입니다.");
+                Debug.Log("아래쪽 제스쳐입니다.");
                 printMessage_2.text = "아래쪽 제스쳐입니다.";
                 direction = "Down";
 
@@ -195,7 +195,7 @@ public class motion_gesture : MonoBehaviour
             }
             if (current_wrist_position.x > -0.1 && angle > 50)
             {
-                //Debug.Log("왼쪽 제스쳐입니다.");
+                Debug.Log("왼쪽 제스쳐입니다.");
                 printMessage_2.text = "왼쪽 제스쳐입니다.";
                 direction = "Left";
 
@@ -206,7 +206,7 @@ public class motion_gesture : MonoBehaviour
             }
             if (current_wrist_position.x < -0.85 && angle > 50)
             {
-                //Debug.Log("오른쪽 제스쳐입니다.");
+                Debug.Log("오른쪽 제스쳐입니다.");
                 printMessage_2.text = "오른쪽 제스쳐입니다.";
                 direction = "Right";
 
@@ -230,7 +230,7 @@ public class motion_gesture : MonoBehaviour
             string testmsg = "X : " + temp_for_check.x.ToString("F3") + "\n" +
                              "Y : " + temp_for_check.y.ToString("F3") + "\n" +
                              "Z : " + temp_for_check.z.ToString("F3");
-            printMessage_2.text = testmsg;
+            //printMessage_2.text = testmsg;
 
 
             if (temp_for_check.y > 0.38) { start_counter++; }
@@ -246,7 +246,7 @@ public class motion_gesture : MonoBehaviour
         {
             moving_vector = joint_R_wirst.position - joint_R_elbow.position;
             angle = Vector3.Angle(stop_vector, moving_vector);
-            printMessage_2.text = "벡터 내적의 차이:" + angle.ToString("F3") + "\nWave_count:" + wave_counter.ToString();
+            //printMessage_2.text = "벡터 내적의 차이:" + angle.ToString("F3") + "\nWave_count:" + wave_counter.ToString();
             //////
             if (angle > 40 && edge_counter == middle_counter) 
             {
@@ -256,12 +256,14 @@ public class motion_gesture : MonoBehaviour
             {
                 middle_counter++;
                 wave_counter++;
+                Debug.Log("더흔드세요.");
+
             }
 
             if (wave_counter > 3) 
             {
                 Debug.Log("졸라흔들기 성공. 시작합니다.");
-                printMessage_1.text = "손 열심히 흔들었구나... 이제 메뉴 받아줄게";
+                //printMessage_1.text = "손 열심히 흔들었구나... 이제 메뉴 받아줄게";
                 edge_counter = 0;
                 middle_counter = 0;
                 wave_counter = 0;
@@ -300,24 +302,26 @@ public class motion_gesture : MonoBehaviour
 
         if (is_playing_avatar)
         {
-            is_input_delay = GameObject.Find("Screen").GetComponent<kiosk>().is_loop_once_finished;
-            if (is_input_delay)
-            {
-                direction = "Defualt";
-                is_input_delay = false;
-            }
+            //is_input_delay = GameObject.Find("Screen").GetComponent<kiosk>().is_loop_once_finished;
+            //if (is_input_delay)
+            //{
+            //    direction = "Defualt";
+            //    is_input_delay = false;
+            //}
             if (timer > waitingTime)
             {
 
-                if (!is_ready_to_order) 
-                {
-                    StartKioskMotion();
-                }
+                //if (!is_ready_to_order) 
+                //{
+                //    StartKioskMotion();
+                //}
                 if (is_ready_to_order) 
                 {
                     Standby();
                     Gesture_recognization();
                 }
+
+
 
                 timer = 0;
             }
