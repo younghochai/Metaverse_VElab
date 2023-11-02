@@ -30,6 +30,14 @@ public class GenDataLoad : MonoBehaviour
     int frm_strat = 0;
     int frame_cnt = 0;
 
+    int draw_joint = 21;
+
+    int switch_label;
+
+    public Python_net connect;
+    public GameObject PythonConnection;
+    public Material gen;
+
     [Header("Key pose")]
     ///public TextMeshProUGUI[] Chat_Text;
     public TMP_InputField file_num;
