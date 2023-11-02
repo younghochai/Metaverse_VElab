@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GenDataLoad : MonoBehaviour
 {
@@ -21,6 +23,13 @@ public class GenDataLoad : MonoBehaviour
     int cur_act_frm;
     int frm_strat = 0;
     int frame_cnt = 0;
+
+    [Header("Key pose")]
+    ///public TextMeshProUGUI[] Chat_Text;
+    public TMP_InputField file_num;
+    public TMP_InputField frame_num;
+    public Button play_pose;
+
 
     // Start is called before the first frame update
     void Start()
