@@ -58,9 +58,7 @@ public class motion_gesture_angle : MonoBehaviour
 
     public string direction = "Default"; // Kiosk Trigger
 
-    /// <summary>
-    /// ///////////////////////////////////////////////////////////////////////////////////////////
-    /// </summary>
+
     //제스처 준비자세를 체크하기 위한 함수
     void Standby() 
     {
@@ -117,9 +115,6 @@ public class motion_gesture_angle : MonoBehaviour
                 direction = "Default";
             }
         }
-
-
-
 
     }
 
