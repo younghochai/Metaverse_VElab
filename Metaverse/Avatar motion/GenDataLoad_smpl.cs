@@ -11,6 +11,12 @@ public class GenDataLoad : MonoBehaviour
     public List<List<List<Quaternion>>> load_quat_list = new List<List<List<Quaternion>>>();
     public List<List<List<Vector3>>> load_axis_list = new List<List<List<Vector3>>>();
 
+
+    public List<List<Quaternion>> gen_quat_list = new List<List<Quaternion>>();
+
+
+    public List<Vector3> elbow_position = new List<Vector3>();
+
     string[] _bodyJointNames = new string[] {"pelvis", "left_hip", "right_hip", "spine1", "left_knee", "right_knee", "spine2", "left_ankle", "right_ankle", "spine3", "left_foot", "right_foot", "neck", "left_collar", "right_collar", "head", "left_shoulder", "right_shoulder", "left_elbow", "right_elbow", "left_wrist", "right_wrist", "left_hand", "right_hand", "transl" };
     public SMPLX smpl_manager;
 
