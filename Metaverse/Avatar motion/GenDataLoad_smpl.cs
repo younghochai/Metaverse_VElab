@@ -62,7 +62,10 @@ public class GenDataLoad : MonoBehaviour
 
 
 
-            string prefix = "QuaternionDB/gendata/fighting/";
+            //string prefix = "QuaternionDB/gendata/fighting/";
+
+            // case 2 
+            string prefix = "QuaternionDB/gendata/case1Fix/case2/";
 
             ReadAxis(prefix + "1_load.csv");
 
