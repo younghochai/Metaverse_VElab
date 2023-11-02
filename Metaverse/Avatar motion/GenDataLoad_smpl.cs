@@ -1,13 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GenDataLoad : MonoBehaviour
 {
     List<string> lst_DBpath = new List<string>();
     public List<List<List<Quaternion>>> load_quat_list = new List<List<List<Quaternion>>>();
     public List<List<List<Vector3>>> load_axis_list = new List<List<List<Vector3>>>();
+
+
+    public List<List<Quaternion>> gen_quat_list = new List<List<Quaternion>>();
+
+
+    public List<Vector3> elbow_position = new List<Vector3>();
 
     string[] _bodyJointNames = new string[] {"pelvis", "left_hip", "right_hip", "spine1", "left_knee", "right_knee", "spine2", "left_ankle", "right_ankle", "spine3", "left_foot", "right_foot", "neck", "left_collar", "right_collar", "head", "left_shoulder", "right_shoulder", "left_elbow", "right_elbow", "left_wrist", "right_wrist", "left_hand", "right_hand", "transl" };
     public SMPLX smpl_manager;
@@ -21,6 +29,21 @@ public class GenDataLoad : MonoBehaviour
     int cur_act_frm;
     int frm_strat = 0;
     int frame_cnt = 0;
+
+    int draw_joint = 21;
+
+    int switch_label;
+
+    public Python_net connect;
+    public GameObject PythonConnection;
+    public Material gen;
+
+    [Header("Key pose")]
+    ///public TextMeshProUGUI[] Chat_Text;
+    public TMP_InputField file_num;
+    public TMP_InputField frame_num;
+    public Button play_pose;
+
 
     // Start is called before the first frame update
     void Start()
