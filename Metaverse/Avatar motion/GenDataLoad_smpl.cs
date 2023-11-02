@@ -350,7 +350,7 @@ public class GenDataLoad : MonoBehaviour
 
         }
 
-        yield return StartCoroutine(avatar_play_sel(post_action_num, frame_stnum));
+        yield return StartCoroutine(avatar_play_sel(post_action_num, frame_stnum)); // start coroutine
 
 
 
