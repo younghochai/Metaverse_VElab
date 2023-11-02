@@ -62,17 +62,21 @@ public class GenDataLoad : MonoBehaviour
 
 
 
-            //string prefix = "QuaternionDB/gendata/fighting/";
 
-            // case 2 
+
+            // ISMAR Exper. case 2 
             string prefix = "QuaternionDB/gendata/case1Fix/case2/";
 
-            //ReadAxis(prefix + "1_load.csv");
+            
             ReadAxis(prefix + "gen_rot_try1_000467.csv");
             ReadAxis(prefix + "gen_rot_try1_004841.csv");
             ReadAxis(prefix + "poses_data.csv");
             ReadAxis(prefix + "000467_rotation.csv");
             ReadAxis(prefix + "004841_rotation.csv");
+
+            // case 2 
+            //string prefix = "QuaternionDB/gendata/fighting/";
+            //ReadAxis(prefix + "1_load.csv");
             //ReadAxis(prefix + "2_load.csv");
             //ReadAxis(prefix + "3_load_fix.csv");
             //ReadAxis(prefix + "4_load_fix.csv");
