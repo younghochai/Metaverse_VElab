@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CSVPlayer : MonoBehaviour
 {
+    // read button changed.
     bool zDown;
     bool bDown;
 
