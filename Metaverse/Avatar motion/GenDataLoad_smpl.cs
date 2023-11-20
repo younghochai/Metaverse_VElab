@@ -1100,6 +1100,10 @@ public class GenDataLoad : MonoBehaviour
          q3 = Mathf.Sin(angleY / 2.0f) * Mathf.Cos(angleX / 2.0f) * Mathf.Cos(angleZ / 2.0f) - Mathf.Sin(angleX / 2.0f) * Mathf.Sin(angleZ / 2.0f) * Mathf.Cos(angleY / 2.0f);
          q4 = -Mathf.Sin(angleX / 2.0f) * Mathf.Sin(angleY / 2.0f) * Mathf.Cos(angleZ / 2.0f) + Mathf.Sin(angleZ / 2.0f) * Mathf.Cos(angleY / 2.0f) * Mathf.Cos(angleX / 2.0f);*/
 
+        /*q1 = Mathf.Sin(angleX / 2.0f) * Mathf.Sin(angleY / 2.0f) * Mathf.Sin(angleZ / 2.0f) + Mathf.Cos(angleX / 2.0f) * Mathf.Cos(angleY / 2.0f) * Mathf.Cos(angleZ / 2.0f);
+       q2 = Mathf.Sin(angleX / 2.0f) * Mathf.Cos(angleY / 2.0f) * Mathf.Cos(angleZ / 2.0f) + Mathf.Sin(angleY / 2.0f) * Mathf.Sin(angleZ / 2.0f) * Mathf.Cos(angleX / 2.0f);
+       q3 = -Mathf.Sin(angleX / 2.0f) * Mathf.Sin(angleZ / 2.0f) * Mathf.Cos(angleY / 2.0f) + Mathf.Sin(angleY / 2.0f) * Mathf.Cos(angleX / 2.0f) * Mathf.Cos(angleZ / 2.0f);
+       q4 = -Mathf.Sin(angleX / 2.0f) * Mathf.Sin(angleY / 2.0f) * Mathf.Cos(angleZ / 2.0f) + Mathf.Sin(angleZ / 2.0f) * Mathf.Cos(angleX / 2.0f) * Mathf.Cos(angleY / 2.0f);*/
 
         return q;
     }
