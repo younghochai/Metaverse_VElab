@@ -102,6 +102,14 @@ public class GenDataLoad : MonoBehaviour
         //line_gen.startColor = Color.yellow;
         //line_gen.endColor= Color.yellow;
 
+        //LineRenderer line_origin = new GameObject().AddComponent<LineRenderer>();
+
+        //line_origin.gameObject.transform.SetParent(GameObject.Find("right_wrist").transform);
+        //line_origin.gameObject.transform.localPosition = Vector3.zero;
+        //line_origin.material = origin;
+        //line_origin.startWidth = 0.1f;
+        //line_origin.endWidth = 0.1f;
+        //line_renderer.Add(line_origin);
 
 
     }    // Update is called once per frame
