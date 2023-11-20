@@ -174,33 +174,7 @@ public class Python_net : MonoBehaviour
             buf.Add(Vector3.Angle(coordY, LLA) * Mathf.Deg2Rad);
             buf.Add(Vector3.Angle(coordZ, LLA) * Mathf.Deg2Rad);
 
-            //buf.Add(coordX.x);
-            //buf.Add(coordX.y);
-            //buf.Add(coordX.z);
 
-            //buf.Add(coordY.x);
-            //buf.Add(coordY.y);
-            //buf.Add(coordY.z);
-
-            //buf.Add(coordZ.x);
-            //buf.Add(coordZ.y);
-            //buf.Add(coordZ.z);
-
-            //buf.Add(RUA.x);
-            //buf.Add(RUA.y);
-            //buf.Add(RUA.z);
-
-            //buf.Add(RLA.x);
-            //buf.Add(RLA.y);
-            //buf.Add(RLA.z);
-
-            //buf.Add(LUA.x);
-            //buf.Add(LUA.y);
-            //buf.Add(LUA.z);
-
-            //buf.Add(LLA.x);
-            //buf.Add(LLA.y);
-            //buf.Add(LLA.z);
 
             cur_plpose_vec.RemoveRange(0, 6);
         }
