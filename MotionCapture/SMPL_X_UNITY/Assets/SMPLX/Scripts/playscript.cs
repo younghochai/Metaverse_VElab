@@ -38,6 +38,9 @@ public class playscript : MonoBehaviour
     bool is_printPoint = false;
     double QW1, QX1, QY1, QZ1;
 
+    bool is_wait_calibration = false;
+    int cali_waiting_counter = 0;
+
     List<float> coordinate_X = new List<float>{0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
     List<float> coordinate_Y= new List<float> { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
     List<float> coordinate_Z = new List<float> { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
@@ -154,22 +157,7 @@ public class playscript : MonoBehaviour
                 tempQuat[4 * i + 2] = final_Input_List[i].y.ToString();
                 tempQuat[4 * i + 3] = final_Input_List[i].z.ToString();
 
-                //////////////////////////////csv 각도만 쓰는거임///////////////////////////
-                //Vector3 csv_Q_to_E = Quaternion.ToEulerAngles(final_Input_List[i]);
-                //QuatToEuler.x = (float)ConvertRadiansToDegrees(csv_Q_to_E.x);
-                //QuatToEuler.y = (float)ConvertRadiansToDegrees(csv_Q_to_E.y);
-                //QuatToEuler.z = (float)ConvertRadiansToDegrees(csv_Q_to_E.z);
-                //tempQuat[3 * i + 0] = QuatToEuler.x.ToString();
-                //tempQuat[3 * i + 1] = QuatToEuler.y.ToString();
-                //tempQuat[3 * i + 2] = QuatToEuler.z.ToString();
-                ///////////////////////////////////////////////////////////////////////////////
-                //Transform joint = smpldata.GetComponent<SMPLX>()._transformFromName[_Senser10JointNames[i]];
-                //QuatToEuler.x = joint.localEulerAngles.x;
-                //QuatToEuler.y = joint.localEulerAngles.y;
-                //QuatToEuler.z = joint.localEulerAngles.z;
-                //tempQuat[3 * i + 0] = QuatToEuler.x.ToString();
-                //tempQuat[3 * i + 1] = QuatToEuler.y.ToString();
-                //tempQuat[3 * i + 2] = QuatToEuler.z.ToString();
+
                 if (i == number_of_IMU-1)
                 {
                     csvSaveData.Add(tempQuat);
@@ -265,7 +253,7 @@ public class playscript : MonoBehaviour
             //혼자서 T포즈를 위해 지연시간 추가.
           
             Debug.Log("포즈를 취해주십시오...");
-            GET_CALIB_POSE();
+            //GET_CALIB_POSE();
 
 
             for (int i = 0; i < number_of_IMU; i++)
@@ -334,6 +322,22 @@ public class playscript : MonoBehaviour
         if (timer > waitingTime)
         {
             GET_SENSOR_QDATA();
+
+            //여기에서 tpsoe 지연시간 추가
+            if (is_wait_calibration)
+            {
+                cali_waiting_counter++;
+                Debug.Log("자세를 취해주세요.");
+            }
+            if (cali_waiting_counter > 300)
+            {
+                GET_CALIB_POSE();
+                Debug.Log("캘리브레이션 완료!");
+
+                cali_waiting_counter = 0;
+                is_wait_calibration = false;
+            }
+
             timer = 0;
         }
 
