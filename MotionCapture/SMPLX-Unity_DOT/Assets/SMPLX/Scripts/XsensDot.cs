@@ -252,7 +252,6 @@ public class XsensDot : MonoBehaviour
       //{ 3, "D4:22:CD:00:37:E9" },
       //{ 4, "D4:22:CD:00:38:00" },
       //{ 5, "D4:22:CD:00:42:3B" }
-      //dot address changed.
 
       { 0, "D4:22:CD:00:38:F3" }, //0, "D4:22:CD:00:38:F1" 
       { 1, "D4:22:CD:00:38:F1" },
