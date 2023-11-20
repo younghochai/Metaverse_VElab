@@ -89,7 +89,12 @@ public class GenDataLoad : MonoBehaviour
             Arm_position.Add(load_axis_buf);
         }
 
-        // Update is called once per frame
+
+
+
+
+
+    }    // Update is called once per frame
         void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
