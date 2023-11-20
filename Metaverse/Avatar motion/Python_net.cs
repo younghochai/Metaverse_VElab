@@ -34,6 +34,9 @@ public class Python_net : MonoBehaviour
     public List<float> sendDataQuaternion = new List<float>();
     public bool data_load_Available = false;
 
+    public int predict_label = -1;
+
+    public bool newrecongition = false;
     // Start is called before the first frame update
     void Start()
     {
