@@ -55,7 +55,7 @@ public class GenDataLoad : MonoBehaviour
 
     public GameObject beads;
 
-
+    string prefix_global = "QuaternionDB/gendata/case1Fix/motiongpt/M007399/";
     private Dictionary<int, Color> color_Dict;
 
     float Radian2Degree = 180 / Mathf.PI;
