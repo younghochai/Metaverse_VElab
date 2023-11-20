@@ -142,14 +142,6 @@ public class ConductingHand : MonoBehaviour
                 //Transform l_joints = _transformFromName[LeftHandJointNames[j]];
 
 
-                //for (int f = 0; f < l_frame_num; f++)
-                //{
-                //    Quaternion old_rot = l_joints.localRotation;
-
-                //    l_joints.localRotation = Quaternion.Slerp(old_rot, L_pose_data[p][j][l_frame_num - 1], 0.5f);
-                //}
-
-
                 // Right
                 Transform joints = _transformFromName[RightHandJointNames[j]];
                 Quaternion old_rot = joints.localRotation;
