@@ -1093,7 +1093,11 @@ public class GenDataLoad : MonoBehaviour
         float angle_deg = 90;
         Quaternion quat = Quaternion.AngleAxis(angle_deg, axis);
 
+        data = Quaternion.Inverse(quat) * smpl_quat * quat;
 
+        frontValue = EulerToQuat(new Vector3(0, 0, 90));
+
+        data = Quaternion.Inverse(frontValue) * data * frontValue;
 
         return data;
     }
