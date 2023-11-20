@@ -772,7 +772,20 @@ public class GenDataLoad : MonoBehaviour
         yield break;
     }
 
+    public void One_pose_play()
+    {
+        string file_num_str = file_num.text;
+        string frame_num_str = frame_num.text;
 
+        int file = int.Parse(file_num_str);
+        int pose = int.Parse(frame_num_str);
+
+
+    
+
+
+
+    }
     IEnumerator avatar_play()
     {
         //Color c = renderer.material.color;
