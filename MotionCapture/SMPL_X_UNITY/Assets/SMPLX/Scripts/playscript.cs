@@ -38,6 +38,9 @@ public class playscript : MonoBehaviour
     bool is_printPoint = false;
     double QW1, QX1, QY1, QZ1;
 
+    bool is_wait_calibration = false;
+    int cali_waiting_counter = 0;
+
     List<float> coordinate_X = new List<float>{0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
     List<float> coordinate_Y= new List<float> { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
     List<float> coordinate_Z = new List<float> { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
@@ -265,7 +268,7 @@ public class playscript : MonoBehaviour
             //혼자서 T포즈를 위해 지연시간 추가.
           
             Debug.Log("포즈를 취해주십시오...");
-            GET_CALIB_POSE();
+            //GET_CALIB_POSE();
 
 
             for (int i = 0; i < number_of_IMU; i++)
@@ -334,6 +337,22 @@ public class playscript : MonoBehaviour
         if (timer > waitingTime)
         {
             GET_SENSOR_QDATA();
+
+            //여기에서 tpsoe 지연시간 추가
+            if (is_wait_calibration)
+            {
+                cali_waiting_counter++;
+                Debug.Log("자세를 취해주세요.");
+            }
+            if (cali_waiting_counter > 300)
+            {
+                GET_CALIB_POSE();
+                Debug.Log("캘리브레이션 완료!");
+
+                cali_waiting_counter = 0;
+                is_wait_calibration = false;
+            }
+
             timer = 0;
         }
 
