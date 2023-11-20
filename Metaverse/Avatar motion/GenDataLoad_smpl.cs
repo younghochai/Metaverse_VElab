@@ -538,6 +538,14 @@ public class GenDataLoad : MonoBehaviour
 
         }
 
+        int last_quat_idx = frame_num.Length - 1;
+        for (int i = 1; i < _bodyJointNames.Length - 3; i++)
+        {
+            load_quat_buf[i].Add(QuatFromRodrigues(load_axis_list[action_label][i][last_quat_idx].x, load_axis_list[action_label][i][last_quat_idx].y, load_axis_list[action_label][i][last_quat_idx].z));
+        }
+
+
+
     }
 
 
