@@ -647,6 +647,22 @@ public class GenDataLoad : MonoBehaviour
     }
 
 
+    IEnumerator avatar_play_slerp(int action_num, int frame_stnum = 0)
+    {
+        //LineRenderer temp;
+        Debug.Log("test gen data");
+        Debug.Log(gen_quat_list[3].Count);
+        // line_slerp.positionCount = gen_quat_list[3].Count;
+        line_renderer[action_num].positionCount = gen_quat_list[3].Count;
+
+        cur_act_idx = action_num;
+
+
+
+    }
+
+
+
     IEnumerator avatar_play()
     {
         //Color c = renderer.material.color;
