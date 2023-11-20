@@ -214,7 +214,10 @@ public class GenDataLoad : MonoBehaviour
             // ISMAR Exper. case 2 
             string prefix = "QuaternionDB/gendata/case1Fix/case2/";
 
-            
+            // motion gpt test
+            string prefix2 = "QuaternionDB/gendata/case1Fix/motiongpt/M007399/";
+            //ReadAxis(prefix + "gen_rot_try1_000467.csv");
+
             ReadAxis(prefix + "gen_rot_try1_000467.csv");
             ReadAxis(prefix + "gen_rot_try1_004841.csv");
             ReadAxis(prefix + "poses_data.csv");
