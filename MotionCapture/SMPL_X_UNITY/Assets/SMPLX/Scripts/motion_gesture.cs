@@ -82,7 +82,6 @@ public class motion_gesture : MonoBehaviour
         //                        current_position.z.ToString("F3") + "(-0.3 ~ 0.3)";
 
         //printMessage_1.text = print_message;
-        /////////////////함수화 고려부분///////////////////////////
         if (current_position.x > -0.75 && current_position.x < -0.25) x_in_boundary = true; else x_in_boundary = false;
         if (current_position.y > 2.0 && current_position.y < 2.4) y_in_boundary = true; else y_in_boundary = false;
         if (current_position.z > -0.6 && current_position.z < 0.0) z_in_boundary = true; else z_in_boundary = false;
@@ -148,9 +147,7 @@ public class motion_gesture : MonoBehaviour
                                    "Diif_Z:" + rotation_difference.z.ToString("F3");
             printMessage_1.text = print_message;
 
-            //if(rotation_difference의 xyz중 하나(혹은 두개)가 주어진 각도를 넘어섰을 때)
-            //  이것은 손을 흔드는 제스처다
-            //  제스처에 따른 키오스크 액션 시작
+
             
             // 제스처 수만큼 반복... 
         }
