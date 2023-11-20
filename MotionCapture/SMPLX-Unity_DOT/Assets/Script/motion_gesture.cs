@@ -80,10 +80,7 @@ public class motion_gesture : MonoBehaviour
         joint_R_shoulder = smpldata.GetComponent<SMPLX>()._transformFromName["right_shoulder"];
         joint_R_wirst = smpldata.GetComponent<SMPLX>()._transformFromName["right_wrist"];
 
-        //SoundEffect = gesture_feedback.GetComponent<AudioSource>();
-        //SoundEffect.mute = false;
-        //SoundEffect.loop = false;
-        //SoundEffect.Play();
+
         //play script에 있는 플레잉 변수 들고 와서 아바타 플레이시 동시에 구문진행되게 함
         //printMessage_1.text =
 
