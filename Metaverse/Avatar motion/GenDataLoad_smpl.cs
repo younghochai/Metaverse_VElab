@@ -112,6 +112,17 @@ public class GenDataLoad : MonoBehaviour
         //line_renderer.Add(line_origin);
 
 
+        //LineRenderer line_slerp = new GameObject().AddComponent<LineRenderer>();
+
+        //line_slerp.gameObject.transform.SetParent(GameObject.Find("right_wrist").transform);
+        //line_slerp.material = slerp;
+        //line_slerp.gameObject.transform.localPosition = Vector3.zero;
+        //line_slerp.startWidth = 0.1f;
+        //line_slerp.endWidth = 0.1f;
+
+        //line_renderer.Add(line_slerp);
+
+
     }    // Update is called once per frame
     void Update()
     {
