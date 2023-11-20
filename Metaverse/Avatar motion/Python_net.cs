@@ -81,7 +81,13 @@ public class Python_net : MonoBehaviour
 
                 client.Close();
                 CloseSocket();
-            }
+
+                is_connect_close = false;
+                socketReady = false;
+            }                
+            
+            is_connect_close = false;
+                socketReady = false;
 
             if (Input.GetKeyDown(KeyCode.Q))
             {
