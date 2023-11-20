@@ -70,6 +70,10 @@ public class GenDataLoad : MonoBehaviour
 
         color_Dict = new Dictionary<int, Color>();
 
+
+        color_Dict.Add(0, Color.red); // Vivid Raspberry
+
+
     }
 
     // Update is called once per frame
