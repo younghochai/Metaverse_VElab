@@ -16,7 +16,6 @@ using System.IO;
 public class playscript : MonoBehaviour
 {
     float timer;
-    float csv_timer;
     float waitingTime;
 
     public GameObject sensordata;
@@ -44,12 +43,9 @@ public class playscript : MonoBehaviour
     List<float> coordinate_Z = new List<float> { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
     Vector3 CoordinateRotate = new Vector3(0.0f,0.0f,0.0f);
-    Vector3 testvec1 = new Vector3(0.0f, 0.0f, 0.0f);
-    Vector3 testvec2 = new Vector3(0.0f, 0.0f, 0.0f);
+
 
     Quaternion q0;
-    Quaternion input_sensor_csv_data;
-    Vector3 QuatToEuler = new Vector3(0.0f, 0.0f, 0.0f);
 
     List< Quaternion> sensorQuatList = new List<Quaternion>
     {
