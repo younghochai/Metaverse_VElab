@@ -658,7 +658,8 @@ public class GenDataLoad : MonoBehaviour
         cur_act_idx = action_num;
 
 
-
+        anim_playing = false;
+        yield break;
     }
 
 
