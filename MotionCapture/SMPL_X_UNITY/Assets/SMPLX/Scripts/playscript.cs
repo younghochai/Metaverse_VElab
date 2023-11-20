@@ -103,7 +103,7 @@ public class playscript : MonoBehaviour
 
 
         sensordata = GameObject.Find("Xsens");
-        smpldata = GameObject.Find("smplx-neutral-se");
+        smpldata = GameObject.Find("smplx-neutral-se"); //다른 모델을 불러오기도 가능하게 함
 
         //number_of_IMU = sensordata.GetComponent<XsensManage>().sensors.Count;
         number_of_IMU = 6;
