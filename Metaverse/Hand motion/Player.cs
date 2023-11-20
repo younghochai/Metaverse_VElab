@@ -2,20 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using TMPro;
 using UnityEditor.PackageManager.UI;
 using UnityEngine;
+using static Player;
 
 public class Player : MonoBehaviour
 {
     //========================= Added by js =============================//
     public string timeSignature;       // Time Signature
-    public int bpm;                    // BPM
-    public Subject subject_name;
+    public int manualBpm;                    // BPM
     public List<List<Quaternion>> load_init_quat = new List<List<Quaternion>>();   // Calibration quaternion data
 
+    public Subject subject;
+    public Bpm bpm;
     public enum Subject {
         JS, HB
-    };  // Name of subjects
+    }  // Name of subjects
+    public enum Bpm { 
+        느리게, 빠르게
+    };
 
     public Vector3 elbowGap_rot, wristGap_pos;
 
@@ -26,7 +32,7 @@ public class Player : MonoBehaviour
 
     Dictionary<string, Transform> _transformFromName;
 
-    QuatForSMPLX quat4smplX = new QuatForSMPLX();
+    public QuatForSMPLX quat4smplX;
     //=================================================================//
 
     float speed = 0.5f;
@@ -58,7 +64,9 @@ public class Player : MonoBehaviour
     void Start()
     {
         _transformFromName = smpl_module._transformFromName;
+
         quat4smplX = GetComponent<QuatForSMPLX>();
+
     }
 
     // Update is called once per frame
@@ -163,15 +171,20 @@ public class Player : MonoBehaviour
             //TXTReader(prefix + "alignpos.txt");
             //TXTReader(prefix + "walking1_stageii_concat_root_body_pose.txt");
 
-            if (subject_name == Subject.JS)
+            if (subject == Subject.JS && bpm == Bpm.느리게)
             {
-                TXTReader(prefix + subject_name + "/" + timeSignature + "_100_once.txt");
-                CalibTXTReader(prefix + subject_name + "/CalibIMUData-000-171419.txt");
+                TXTReader(prefix + subject + "/" + timeSignature + "_60_repeat.txt");
+                CalibTXTReader(prefix + subject + "/CalibIMUData-000-171419.txt");
             }
-            if (subject_name == Subject.HB)
+            if (subject == Subject.JS && bpm == Bpm.빠르게)
             {
-                TXTReader(prefix + subject_name + "/" + timeSignature + "_100_repeat.txt");
-                CalibTXTReader(prefix + subject_name + "/CalibIMUData-000-163118.txt");
+                TXTReader(prefix + subject + "/" + timeSignature + "_100_repeat.txt");
+                CalibTXTReader(prefix + subject + "/CalibIMUData-000-171419.txt");
+            }
+            if (subject == Subject.HB)
+            {
+                TXTReader(prefix + subject + "/" + timeSignature + "_" + bpm.ToString() + "_repeat.txt");
+                CalibTXTReader(prefix + subject + "/CalibIMUData-000-163118.txt");
             }
 
 
@@ -187,7 +200,9 @@ public class Player : MonoBehaviour
         {
             //StartCoroutine(avatar_play());
             StartCoroutine(avator_play_custom());
+            StopCoroutine(avator_play_custom());
         }
+
 
         //------------------------ Added by js --------------------------------
         //newPos_wrist = _transformFromName["right_wrist"].transform.position;
@@ -232,7 +247,7 @@ public class Player : MonoBehaviour
 
     IEnumerator avator_play_custom()
     {
-        float delay_time = 0.025f + (1 - bpm / 100) * 0.025f;  // correspond to BPM (js)
+        float delay_time = 0.025f + (1 - manualBpm / 100) * 0.025f;  // correspond to BPM (js)
 
         for (int frame_cnt = 0; frame_cnt < load_quat_list[0][0].Count; frame_cnt++)
         {
@@ -249,8 +264,8 @@ public class Player : MonoBehaviour
                 Quaternion init_quat = Quaternion.Inverse(load_init_quat[0][i]);
                 smpl_module.SetWorld2LocalJointRotation(_bodyCustomJointNames[i], motion_quat * init_quat);
 
-                //------------------------ Added by js --------------------------------
-                StartCoroutine(quat4smplX.calcGapValue());                
+            //------------------------ Added by js --------------------------------
+                //StartCoroutine(quat4smplX.calcGapValue());                
                 
                 //oldPos_wrist = _transformFromName["right_wrist"].transform.position;
                 //oldRot_elbow = _transformFromName["right_elbow"].transform.eulerAngles;
@@ -266,9 +281,17 @@ public class Player : MonoBehaviour
                 //Debug.Log("new: " + newPos_wrist + ", " + newRot_elbow);
                 //Debug.Log("old_elbow: " + oldQuat_elbow);
                 //Debug.Log("new_elbow: " + newQuat_elbow);
-                //---------------------------------------------------------------------
 
             }
+
+            //Debug.Log("elbow.transform.localEulerAngle = (" + _transformFromName["right_elbow"].transform.localEulerAngles + ")\n" 
+            //    + "elobw.transform.position = (" + _transformFromName["right_elbow"].transform.position + ")\n"
+            //    + "wrist.transform.position = (" + _transformFromName["right_wrist"].transform.position + ")");
+
+            Debug.Log("elobw.transform.position = (" + _transformFromName["right_elbow"].transform.position + ")\n"
+                + "wrist.transform.position = (" + _transformFromName["right_wrist"].transform.position + ")");
+            //---------------------------------------------------------------------
+
             smpl_module.UpdateJointPositions(false);
             yield return new WaitForSeconds(delay_time);
 
@@ -277,7 +300,9 @@ public class Player : MonoBehaviour
         //------------------------ Added by js --------------------------------
         elbowGap_rot = new Vector3(0.0f, 0.0f, 0.0f);   // Clear the rotation gap between old and new value
         wristGap_pos = new Vector3(0.0f, 0.0f, 0.0f);   // Clear the position gap between old and new value
-        //---------------------------------------------------------------------
+                                                        //---------------------------------------------------------------------
+        //quat4smplX.isDrew = false;
+        //Debug.Log(quat4smplX.isDrew);
 
         yield break;
 
