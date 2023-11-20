@@ -893,6 +893,7 @@ public class GenDataLoad : MonoBehaviour
     }
 
 
+
     IEnumerator avatar_play()
     {
         //Color c = renderer.material.color;
@@ -972,7 +973,14 @@ public class GenDataLoad : MonoBehaviour
 
         return;
     }
+    void write_csv_file()
+    {
+    
 
+
+
+
+    }
 
     void ReadQuaternion(string file_path)
     {
