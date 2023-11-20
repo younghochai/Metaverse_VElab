@@ -175,8 +175,21 @@ public class GenDataLoad : MonoBehaviour
                 }
 
             }
+            else
+            {
+                anim_playing = true;
 
-            if (Input.GetKeyDown(KeyCode.X))
+                StartCoroutine(avatar_play_sel(act_label));
+            }
+
+
+            connect.newrecongition = false;
+
+
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
         {
             // data_read_csv();
             // data_read_csv_meta75(new string[] { "0", "1", "2", "3", "4", "5" }); // "0", "1", "2", "3",//"4", "5", "6", "7", "8", "9", "10", "11", "12","13", "18","19", "20","21", "22","23", "24","25", "26","27"
