@@ -218,11 +218,18 @@ public class GenDataLoad : MonoBehaviour
             string prefix2 = "QuaternionDB/gendata/case1Fix/motiongpt/M007399/";
             //ReadAxis(prefix + "gen_rot_try1_000467.csv");
 
-            ReadAxis(prefix + "gen_rot_try1_000467.csv");
-            ReadAxis(prefix + "gen_rot_try1_004841.csv");
+            ReadAxis(prefix2 + "M007399_0_0_seg_gen_smpl.csv");
+            ReadAxis(prefix2 + "M007399_0_1_seg_gen_smpl.csv");
             ReadAxis(prefix + "poses_data.csv");
-            ReadAxis(prefix + "000467_rotation.csv");
-            ReadAxis(prefix + "004841_rotation.csv");
+            ReadAxis(prefix2 + "M007399_0_2_seg_gen_smpl.csv");
+            ReadAxis(prefix2 + "M007399_gt_smpl.csv");
+
+            // ISMAR
+            //ReadAxis(prefix + "gen_rot_try1_000467.csv");
+            //ReadAxis(prefix + "gen_rot_try1_004841.csv");
+            //ReadAxis(prefix + "poses_data.csv");
+            //ReadAxis(prefix + "000467_rotation.csv");
+            //ReadAxis(prefix + "004841_rotation.csv");
 
             // case 2 
             //string prefix = "QuaternionDB/gendata/fighting/";
