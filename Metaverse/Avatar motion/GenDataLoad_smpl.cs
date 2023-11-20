@@ -1085,6 +1085,20 @@ public class GenDataLoad : MonoBehaviour
     }
 
 
+    Quaternion EulerToQuat(Vector3 Angle)
+    {
+        float angleX, angleY, angleZ;
+        Quaternion q;
+        float q1, q2, q3, q4, scale;
+
+      
+        
+
+        return q;
+    }
+
+
+
     Quaternion RotPelvis(Quaternion smpl_quat)
     {
         Quaternion data;
