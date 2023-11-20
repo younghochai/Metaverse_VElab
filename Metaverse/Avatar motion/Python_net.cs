@@ -133,17 +133,10 @@ public class Python_net : MonoBehaviour
 
 
 
-
-
-
-
-
-
-
         }
 
 
-        caldata_write_frm();
+       // caldata_write_frm();
 
 
     }
