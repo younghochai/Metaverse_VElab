@@ -125,31 +125,30 @@ public class ConductingHand : MonoBehaviour
 
     public IEnumerator PlayMotion(int p)
     {
-
         Debug.Log("Motion Start");
-
 
         float slerp_time = 60.0f;
 
         for (float t = 0; t <= slerp_time; t++)
         {
-            float sec = t / slerp_time;
 
             for (int j = 1; j < HandJointIdx.Length; j++)
             {
-                //// Left
-                //int l_frame_num = L_pose_data[p][j].Count;
-                //Transform l_joints = _transformFromName[LeftHandJointNames[j]];
+                // Left
+                Transform L_joints = _transformFromName[LeftHandJointNames[j]];
+                Quaternion L_old_rot = L_joints.localRotation;
+
+                L_joints.localRotation = Quaternion.Slerp(L_old_rot, L_pose_data[p][j][1] * Quaternion.Euler(0.0f, 0.0f, 90.0f), 1.0f);
 
 
                 // Right
-                Transform joints = _transformFromName[RightHandJointNames[j]];
-                Quaternion old_rot = joints.localRotation;
+                Transform R_joints = _transformFromName[RightHandJointNames[j]];
+                Quaternion R_old_rot = R_joints.localRotation;
                 
-                joints.localRotation = Quaternion.Slerp(old_rot, L_pose_data[p][j][1]*Quaternion.Euler(0.0f, 0.0f, 90.0f), 1.0f);
+                R_joints.localRotation = Quaternion.Slerp(R_old_rot, L_pose_data[p][j][1] * Quaternion.Euler(0.0f, 0.0f, 90.0f), 1.0f);
                 
-                Debug.Log("eulerAngle[" + j + "] = " + joints.localEulerAngles);
             }
+
             yield return new WaitForSeconds(0.0075f);
         }
     }
