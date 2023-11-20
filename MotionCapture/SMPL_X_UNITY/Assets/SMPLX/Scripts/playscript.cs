@@ -168,7 +168,7 @@ public class playscript : MonoBehaviour
         DateTime now = DateTime.Now; // 현재 날짜와 시간 가져오기
         string dateTimeString = now.ToString("MM_dd_HH_mm_ss");
         Debug.Log(dateTimeString);
-        string file_Name = dateTimeString + "_OUTPUT.csv";
+        string file_Name = dateTimeString + "_OUTPUT.csv";// 경로 폴더 변경하기.
         string filePath = file_Name; // 저장할 파일 경로 및 이름
         StreamWriter sw = new StreamWriter(filePath, true); // true: 기존 파일에 이어 쓰기
         foreach (string[] row in csvSaveData)
