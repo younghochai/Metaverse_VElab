@@ -90,12 +90,22 @@ public class GenDataLoad : MonoBehaviour
         }
 
 
+        //LineRenderer line_gen = new GameObject().AddComponent<LineRenderer>();
 
+        //line_renderer.Add(line_gen);
+
+        //line_gen.gameObject.transform.SetParent(GameObject.Find("right_wrist").transform);
+        // line_gen.gameObject.transform.localPosition = Vector3.zero;
+        //line_gen.material = gen;
+        //line_gen.startWidth=0.1f;
+        //line_gen.endWidth = 0.1f;
+        //line_gen.startColor = Color.yellow;
+        //line_gen.endColor= Color.yellow;
 
 
 
     }    // Update is called once per frame
-        void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
