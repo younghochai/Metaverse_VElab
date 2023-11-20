@@ -347,9 +347,6 @@ public class SMPLX : MonoBehaviour
         //joint.localRotation = Quaternion.Inverse(jointParent.rotation) * quatWorld * Quaternion.Euler(0.0f, 180.0f, 0.0f);
         
         //joint.localRotation = Quaternion.Inverse(jointParent.rotation) * quatWorld;// * new Quaternion(0.0f, 0.0f, 1.0f, 0.0f) * new Quaternion(1.0f, 0.0f, 0.0f, 0.0f);
-
-
-
     }
 
     public Vector3 PrintLocalRotation(string name)
