@@ -502,6 +502,24 @@ public class GenDataLoad : MonoBehaviour
         }
 
 
+        for (int frame_idx = 0; frame_idx < frame_num.Length - 1; frame_idx++)
+        {
+            int start_quat_idx = frame_num[frame_idx];
+            int end_quat_idx = frame_num[frame_idx + 1];
+
+            int maxframe = end_quat_idx - start_quat_idx - 1;
+            //Debug.Log(frame_idx);
+            for (int i = 1; i < _bodyJointNames.Length - 3; i++)
+            {
+                load_quat_buf[i].Add(QuatFromRodrigues(load_axis_list[action_label][i][frame_idx].x, load_axis_list[action_label][i][frame_idx].y, load_axis_list[action_label][i][frame_idx].z));
+            }
+
+
+
+            // Debug.Log(frame_idx);
+
+        }
+
     }
 
 
