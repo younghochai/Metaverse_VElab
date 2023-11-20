@@ -4,7 +4,8 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Text;
+using System.Linq;
 public class GenDataLoad : MonoBehaviour
 {
     List<string> lst_DBpath = new List<string>();
