@@ -50,7 +50,7 @@ public class playscript : MonoBehaviour
 
 
 
-    Quaternion q0;
+    Quaternion temp_quaternion;
     List<Quaternion> sensorQuatList = new List<Quaternion>
     {
         new Quaternion(0.0f, 0.0f, 0.0f, 1.0f),
@@ -116,12 +116,12 @@ public class playscript : MonoBehaviour
             QY1 = sensordata.GetComponent<XsensManage>().sensors[i].QuatY;
             QZ1 = sensordata.GetComponent<XsensManage>().sensors[i].QuatZ;
 
-            q0.w = (float)QW1; 
-            q0.x = (float)QX1; 
-            q0.y = (float)QY1; 
-            q0.z = (float)QZ1;
+            temp_quaternion.w = (float)QW1; 
+            temp_quaternion.x = (float)QX1; 
+            temp_quaternion.y = (float)QY1; 
+            temp_quaternion.z = (float)QZ1;
             
-            sensorQuatList[i] = q0;
+            sensorQuatList[i] = temp_quaternion;
 
 
             if (is_play_avatar)
