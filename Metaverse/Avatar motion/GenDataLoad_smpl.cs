@@ -63,7 +63,13 @@ public class GenDataLoad : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
+        PythonConnection = GameObject.Find("PythonConnection");
+
+
+
+
+
     }
 
     // Update is called once per frame
