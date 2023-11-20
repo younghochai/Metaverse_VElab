@@ -49,6 +49,8 @@ public class GenDataLoad : MonoBehaviour
 
     //public Material gen;
     public Material origin;
+    public Material slerp;
+
 
     // Start is called before the first frame update
     void Start()
