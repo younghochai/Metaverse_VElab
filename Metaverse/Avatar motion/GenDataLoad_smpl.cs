@@ -975,8 +975,12 @@ public class GenDataLoad : MonoBehaviour
     }
     void write_csv_file()
     {
-    
 
+
+        var builder = new StringBuilder();
+
+
+        //file.WriteLine(address_joint_idx[0] + ", x, y, z," + address_joint_idx[1] + ", x, y, z," + address_joint_idx[2] + ", x, y, z," + address_joint_idx[3] + ", x, y, z," + address_joint_idx[4] + ", x, y, z," + address_joint_idx[5] + ", x, y, z");
 
 
 
