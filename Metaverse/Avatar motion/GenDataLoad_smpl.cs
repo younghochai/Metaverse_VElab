@@ -975,14 +975,18 @@ public class GenDataLoad : MonoBehaviour
     }
     void write_csv_file()
     {
+        for (int repeat = 0; repeat < Arm_position.Count(); repeat++)
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(prefix_global + repeat.ToString() + "_test1.csv"))
+
+            {
 
 
-        var builder = new StringBuilder();
+                var builder = new StringBuilder();
 
 
-        //file.WriteLine(address_joint_idx[0] + ", x, y, z," + address_joint_idx[1] + ", x, y, z," + address_joint_idx[2] + ", x, y, z," + address_joint_idx[3] + ", x, y, z," + address_joint_idx[4] + ", x, y, z," + address_joint_idx[5] + ", x, y, z");
+                //file.WriteLine(address_joint_idx[0] + ", x, y, z," + address_joint_idx[1] + ", x, y, z," + address_joint_idx[2] + ", x, y, z," + address_joint_idx[3] + ", x, y, z," + address_joint_idx[4] + ", x, y, z," + address_joint_idx[5] + ", x, y, z");
 
-
+            }
 
     }
 
