@@ -74,9 +74,13 @@ public class Python_net : MonoBehaviour
                 predict_label = int.Parse(msg);
                 newrecongition = true;
             }
-        
 
 
+            if (is_connect_close)
+            {
+           
+
+            }
 
             if (Input.GetKeyDown(KeyCode.Q))
             {
