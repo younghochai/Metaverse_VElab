@@ -43,7 +43,6 @@ public class motion_gesture : MonoBehaviour
                                                     "left_shoulder", "left_elbow",
                                                     "right_hip", "right_knee",
                                                     "left_hip", "left_knee" };
-    //public Text printMessage_1;
     public Text printMessage_2;
     bool is_standby = false;
     public bool is_ready_to_order = false;
@@ -88,14 +87,6 @@ public class motion_gesture : MonoBehaviour
         //play script에 있는 플레잉 변수 들고 와서 아바타 플레이시 동시에 구문진행되게 함
         //printMessage_1.text =
 
-
-        //    "HELLO UNITY!\n" +
-        //    "THIS IS THREE LINE TEXT!\n" +
-        //    "THIS LINE WILL SHOW YOU THAT SENSOR ROTATION VALUE!";
-        //printMessage_2.text =
-        //    "HELLO UNITY!\n" +
-        //    "THIS IS THREE LINE TEXT!\n" +
-        //    "THIS LINE WILL SHOW YOU THAT SENSOR ROTATION VALUE!";
 
     }
 
