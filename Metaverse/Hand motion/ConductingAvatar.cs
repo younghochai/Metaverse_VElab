@@ -14,11 +14,10 @@ public class ConductingAvatar : MonoBehaviour
     QuatForSMPLX quat4smplx;
 
     TrailRenderer[] trailRenderer = new TrailRenderer[2];
+
     List<Vector3> originDir = new List<Vector3>();
     List<float> originAngle = new List<float>();
-    List<float> originDirX = new List<float>();
-    List<float> originDirY = new List<float>();
-    List<float> originDirZ = new List<float>();
+
     List<Dictionary<int, float>> record1 = new List<Dictionary<int, float>>();
     List<Dictionary<int, float>> record2 = new List<Dictionary<int, float>>();
 
@@ -35,8 +34,7 @@ public class ConductingAvatar : MonoBehaviour
     public int dirFilterSize = 3;
     float angleX = 0.0f;
     float angleY = 0.0f;
-    Vector3 initPos;
-    Quaternion initRot;
+
     Vector3 rot = new Vector3(0.0f, 0.0f, 0.0f);
 
     void Start()
@@ -63,12 +61,6 @@ public class ConductingAvatar : MonoBehaviour
             //Debug.Log("L wrist pos:" + trailRenderer[0].GetPosition(count_L - 1)
             //+ "\n\t    R wrist pos:" + trailRenderer[1].GetPosition(count_R - 1));
         }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            initPos = wrist[1].position;
-            initRot = wrist[1].localRotation;
-            Debug.Log("Press 'P' button\ninitPos = " + initPos);
-        }
 
         if (count_R > 2)
         {
@@ -93,9 +85,6 @@ public class ConductingAvatar : MonoBehaviour
 
             angleX += gapX;
             angleY += gapY;
-
-            //rot += dir * -50.0f;
-
 
             //wrist[1].localRotation = rot;
             //Debug.Log("wrist[1].localEulerAngles = " + wrist[1].localEulerAngles);
@@ -127,8 +116,8 @@ public class ConductingAvatar : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Comma))
         {
             //*** When recording... ***
-            quat4smplx.SaveDic2Csv("C:/Users/pssil/OneDrive/πŸ≈¡ »≠∏È/velab/2023.07-08/SMPLX-Unity/Assets/records/angle(1)_4.csv", record1);
-            quat4smplx.SaveDic2Csv("C:/Users/pssil/OneDrive/πŸ≈¡ »≠∏È/velab/2023.07-08/SMPLX-Unity/Assets/records/avg_angle(50,1)_4.csv", record2);
+            quat4smplx.SaveDic2Csv("C:/Users/pssil/OneDrive/πŸ≈¡ »≠∏È/velab/2023.07-10/SMPLX-Unity/Assets/records/angle(1)_4.csv", record1);
+            quat4smplx.SaveDic2Csv("C:/Users/pssil/OneDrive/πŸ≈¡ »≠∏È/velab/2023.07-10/SMPLX-Unity/Assets/records/avg_angle(50,1)_4.csv", record2);
             //**************************
         }
     }
@@ -144,12 +133,10 @@ public class ConductingAvatar : MonoBehaviour
         dir = (currentPos - beforePos).normalized;
 
         originDir.Add(dir);
-        //originDirX.Add(dir.x);
-        //originDirY.Add(dir.y);
-        //originDirZ.Add(dir.z);
 
         finalDir = NormalizeVector(originDir, dirFilterSize);
         //Debug.Log("dir = (" + dir.x +", " + dir.y + ", " + dir.z + ")\n\tfinalDir = (" + finalDir.x + ", " + finalDir.y + ", " + finalDir.z +")");
+        
         //finalDir.x = MovingAverageFilter(originDirX, dirFilterSize);
         //finalDir.y = MovingAverageFilter(originDirY, dirFilterSize);
         //finalDir.z = MovingAverageFilter(originDirZ, dirFilterSize);
