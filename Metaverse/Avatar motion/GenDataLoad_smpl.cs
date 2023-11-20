@@ -725,7 +725,36 @@ public class GenDataLoad : MonoBehaviour
         for (int frame_cnt = frame_stnum; frame_cnt < load_axis_list[action_num][0].Count; frame_cnt++)
         {
 
-          
+            for (int i = 1; i < _bodyJointNames.Length - 3; i++)
+            {
+                if (i == 5)
+                    continue;
+                else if (i == 4)
+                    continue;
+                else if (i == 7)
+                    continue;
+
+                else if (i == 8)
+                    continue;
+                else if (i == 1)
+                    continue;
+                else if (i == 2)
+                    continue;
+                else if (i == 12)
+                    continue;
+                else if (i == 15)
+                    continue;
+
+                else if (i == 10)
+                    continue;
+
+                else if (i == 11)
+                    continue;
+
+
+                smpl_manager.SetLocalJointRotation(_bodyJointNames[i], QuatFromRodrigues(load_axis_list[action_num][i][frame_cnt].x, load_axis_list[action_num][i][frame_cnt].y, load_axis_list[action_num][i][frame_cnt].z));
+
+            }
             smpl_manager.UpdateJointPositions(false);
 
 
