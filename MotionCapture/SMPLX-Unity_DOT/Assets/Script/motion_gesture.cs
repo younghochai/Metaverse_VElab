@@ -207,75 +207,75 @@ public class motion_gesture : MonoBehaviour
         }
     }
 
-    void StartKioskMotion() 
-    {
-        if (!is_ready_to_start) 
-        {
-            current_elbow_position = joint_R_elbow.position;
-            current_wrist_position = joint_R_wirst.position;
+    //void StartKioskMotion() 
+    //{
+    //    if (!is_ready_to_start) 
+    //    {
+    //        current_elbow_position = joint_R_elbow.position;
+    //        current_wrist_position = joint_R_wirst.position;
 
-            Vector3 temp_for_check = current_wrist_position - current_elbow_position;
-            string testmsg = "X : " + temp_for_check.x.ToString("F3") + "\n" +
-                             "Y : " + temp_for_check.y.ToString("F3") + "\n" +
-                             "Z : " + temp_for_check.z.ToString("F3");
-            //printMessage_2.text = testmsg;
+    //        Vector3 temp_for_check = current_wrist_position - current_elbow_position;
+    //        string testmsg = "X : " + temp_for_check.x.ToString("F3") + "\n" +
+    //                         "Y : " + temp_for_check.y.ToString("F3") + "\n" +
+    //                         "Z : " + temp_for_check.z.ToString("F3");
+    //        //printMessage_2.text = testmsg;
 
 
-            if (temp_for_check.y > 0.38) { start_counter++; }
-            else { start_counter = 0; }
+    //        if (temp_for_check.y > 0.38) { start_counter++; }
+    //        else { start_counter = 0; }
 
-            if (start_counter > 30) // 30프레임동안 손 위로 들고 있으면 흔들기 준비자세(짧다!)
-            {
-                stop_vector = joint_R_wirst.position - joint_R_elbow.position;
-                is_ready_to_start = true;
-            }
-        }
-        if (is_ready_to_start) 
-        {
-            moving_vector = joint_R_wirst.position - joint_R_elbow.position;
-            angle = Vector3.Angle(stop_vector, moving_vector);
-            //printMessage_2.text = "벡터 내적의 차이:" + angle.ToString("F3") + "\nWave_count:" + wave_counter.ToString();
-            //////
-            if (angle > 40 && edge_counter == middle_counter) 
-            {
-                edge_counter++;
-            }
-            if (angle < 15 && edge_counter > middle_counter) 
-            {
-                middle_counter++;
-                wave_counter++;
-                Debug.Log("더흔드세요.");
+    //        if (start_counter > 30) // 30프레임동안 손 위로 들고 있으면 흔들기 준비자세(짧다!)
+    //        {
+    //            stop_vector = joint_R_wirst.position - joint_R_elbow.position;
+    //            is_ready_to_start = true;
+    //        }
+    //    }
+    //    if (is_ready_to_start) 
+    //    {
+    //        moving_vector = joint_R_wirst.position - joint_R_elbow.position;
+    //        angle = Vector3.Angle(stop_vector, moving_vector);
+    //        //printMessage_2.text = "벡터 내적의 차이:" + angle.ToString("F3") + "\nWave_count:" + wave_counter.ToString();
+    //        //////
+    //        if (angle > 40 && edge_counter == middle_counter) 
+    //        {
+    //            edge_counter++;
+    //        }
+    //        if (angle < 15 && edge_counter > middle_counter) 
+    //        {
+    //            middle_counter++;
+    //            wave_counter++;
+    //            Debug.Log("더흔드세요.");
 
-            }
+    //        }
 
-            if (wave_counter > 3) 
-            {
-                Debug.Log("졸라흔들기 성공. 시작합니다.");
-                //printMessage_1.text = "손 열심히 흔들었구나... 이제 메뉴 받아줄게";
-                edge_counter = 0;
-                middle_counter = 0;
-                wave_counter = 0;
-                start_counter = 0;
-                is_ready_to_order = true;
-                is_ready_to_start = false;
+    //        if (wave_counter > 3) 
+    //        {
+    //            Debug.Log("졸라흔들기 성공. 시작합니다.");
+    //            //printMessage_1.text = "손 열심히 흔들었구나... 이제 메뉴 받아줄게";
+    //            edge_counter = 0;
+    //            middle_counter = 0;
+    //            wave_counter = 0;
+    //            start_counter = 0;
+    //            is_ready_to_order = true;
+    //            is_ready_to_start = false;
 
-            }
+    //        }
 
-            /////////////////////////////////////////대기시간 초기화/////////////////////////////////////////////////
-            time_limit++;
-            if (time_limit > 300) 
-            {
-                Debug.Log("흔들기 실패. 다시 시작하세요.");
+    //        /////////////////////////////////////////대기시간 초기화/////////////////////////////////////////////////
+    //        time_limit++;
+    //        if (time_limit > 300) 
+    //        {
+    //            Debug.Log("흔들기 실패. 다시 시작하세요.");
 
-                edge_counter = 0;
-                middle_counter = 0;
-                start_counter = 0;
-                wave_counter = 0;
-                time_limit = 0;
-                is_ready_to_start = false;
-            }
-             // 5초동안 안흔들면 초기값으로 처음으로 돌아가라
-        }
+    //            edge_counter = 0;
+    //            middle_counter = 0;
+    //            start_counter = 0;
+    //            wave_counter = 0;
+    //            time_limit = 0;
+    //            is_ready_to_start = false;
+    //        }
+    //         // 5초동안 안흔들면 초기값으로 처음으로 돌아가라
+    //    }
 
     }
     void Update()
