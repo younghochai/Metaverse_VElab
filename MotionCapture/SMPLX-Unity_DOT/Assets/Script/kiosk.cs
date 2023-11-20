@@ -67,95 +67,7 @@ public class kiosk : MonoBehaviour
     float waitingTime;
     float timer;
     float delaytimer; 
-    //void step1_2_SELECT_CATEGORY(string direction, Dictionary<int, string> category_OR_menu, int step_num) 
-    //{
-    //    Material[] MenuMaterial = new Material[] { C1, C2, C3, C4, C5, C6 };
-    //    kioskIMG.material = MenuMaterial[MenuIndex];
-    //    if (!is_duplicate) 
-    //    {
-    //        if (direction == "Up")
-    //        {
-    //            change_counter = 0;
-    //            MenuIndex = 0;
-    //            Debug.Log("선택. 해당 메뉴로 이동합니다");
-    //            Debug.LogFormat("이때의 선택된 메뉴는?: {0}", current_menu);
 
-
-    //            //current_menu가  cart인 상태로 up이 눌렸을 경우
-    //            if (current_menu == "장바구니")//1뎁스나 2뎁스에서 장바구니로 바로 갑니다. 만약에 돌아 올 때는 prior 변수로 다시 돌아옵니다.
-    //            {
-    //                Debug.Log("카트 분기 진입 체크용.");
-
-    //                is_step1 = false; is_step2 = false;
-    //                is_step4 = true;
-    //            }
-
-    //            if (step_num == 1 && current_menu != "장바구니") //1뎁스에서 2뎁스로 넘어갈 때
-    //            { 
-    //                is_step1 = false; is_step2 = true;
-    //                selected_category = current_menu;
-
-    //            }
-    //            //메뉴를 선택하고, 장바구니에 추가한 후 뎁스3으로 넘어갑니다. 
-    //            if (step_num == 2 && current_menu != "장바구니") 
-    //            {
-    //                selected_menu = current_menu;
-
-    //                //장바구니에 추가
-    //                if (cart.ContainsKey(current_menu))
-    //                {
-    //                    cart[current_menu] += 1;
-    //                }
-    //                else
-    //                {
-    //                    cart.Add(current_menu, 1);
-    //                }
-
-    //                is_step2 = false; is_step3 = true; 
-    //            }
-
-    //            is_duplicate = true;
-    //            direction_from_motion_gesture = "Defualt";
-    //        }
-    //        if (direction == "Down")
-    //        {
-    //            Debug.Log("취소. 이전 메뉴로 이동합니다.");
-    //            change_counter = 0;
-    //            MenuIndex = 0;
-    //            if (step_num == 1) { is_step1 = false; is_step0 = true; }
-    //            if (step_num == 2) { is_step2 = false; is_step1 = true; }
-    //            is_duplicate = true;
-    //            direction_from_motion_gesture = "Defualt";
-    //        }
-    //        if (direction == "Left")
-    //        {
-    //            Debug.Log("다음메뉴");
-    //            MenuIndex++;
-    //            change_counter = 0;
-    //            if (MenuIndex > 5) MenuIndex = 0;
-    //            is_duplicate = true;
-    //            direction_from_motion_gesture = "Defualt";
-    //        }
-    //        if (direction == "Right")
-    //        {
-    //            Debug.Log("이전메뉴");
-    //            MenuIndex--;
-    //            change_counter = 0;
-    //            if (MenuIndex < 0) MenuIndex = 5;
-    //            is_duplicate = true;
-    //            direction_from_motion_gesture = "Defualt";
-    //        }
-    //    }
-    //    //////////////////////////////////////////////////////////////////////////////////////////
-    //    if (direction == "Defualt") is_duplicate = false;
-    //    if (change_counter == 0 && direction != "Down" && direction != "Up")
-    //    {
-    //        current_menu = category_OR_menu[MenuIndex];
-    //        Debug.LogFormat("현재 선택된 메뉴는 [{0}]입니다.", current_menu);
-    //        change_counter++;
-    //    }
-        
-    //}
     void step1_2_SELECT_CATEGORY1(string direction, Dictionary<int, string> category_OR_menu, int step_num)
     {
         Material[] MenuMaterial = new Material[] { C1, C2, C3, C4, C5, C6 };
@@ -351,8 +263,7 @@ public class kiosk : MonoBehaviour
         }
     }
     void cart_menu_modifier()
-    // 0번 메뉴를 따로 추가하자. 0번에서 뒤로가기, 앞으로 가기 할 경우, 다시 장바구니 뎁스로.
-    // 실제 메뉴에서는 그 메뉴에서 좌 우에 따라 수량을 수정하게 함.
+
 
     {
         if (!is_played)// 한번 실행되었을 때
@@ -453,8 +364,6 @@ public class kiosk : MonoBehaviour
                 is_duplicate = true;
 
             }
-
-            //좌우
         }// is played 초기화 한번 시켜야함
     }
 
