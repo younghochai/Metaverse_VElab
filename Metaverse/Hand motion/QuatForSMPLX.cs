@@ -5,24 +5,27 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UIElements;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
+using UnityEngine.UI;
 
 public class QuatForSMPLX : MonoBehaviour
 {
 //--------------- From SMPLX script -----------------
     SMPLX smplX;
     Dictionary<string, Transform> _transformFromName;
-    bool is_Coroutine;
+    bool isCoroutine;
 //---------------------------------------------------
 
 
     Vector3 oldPos_wrist, newPos_wrist, oldRot_elbow, newRot_elbow;
     Vector3 elbowGap_rot, wristGap_pos;
-    Quaternion oldQuat_elbow, newQuat_elbow, oldQuat_wrist;
+    Quaternion oldQuat_elbow, newQuat_elbow, oldQuat_wrist, oldRot;
+    public float angle;
 
-    public float magnify = 4.0f;
+    public float scalingValue = 4.0f;
     public float clamp = 0.5f;
 
-    List<List<float>> records = new List<List<float>>();
+    public List<List<float>> record1 = new List<List<float>>();
+    public List<List<float>> record2 = new List<List<float>>();
     List<float> motion_num = new List<float>();
 
 
@@ -30,17 +33,18 @@ public class QuatForSMPLX : MonoBehaviour
     public List<List<List<Quaternion>>> R_pose_data = new List<List<List<Quaternion>>>();
     public List<Vector3> pos_list = new List<Vector3>();
 
-    public bool is_mirrored = true;
+    public bool isMirrored = false;
 
     public GameObject linePref;
     [HideInInspector]
-    public LineRenderer lineRenderer;
+    public LineRenderer lineRenderer1, lineRenderer2;
 
-    public bool isDrew = false;
+    bool isDrew = false;
 
     ConductingHand handScript;
+    CSVPlayer readCSVscript;
 
-    private string file_path = "C:/Users/pssil/OneDrive/πŸ≈¡ »≠∏È/velab/2023.07-08/SMPLX-Unity/Assets/";
+    private string file_path = "C:/Users/pssil/OneDrive/πŸ≈¡ »≠∏È/velab/2023.07-10/SMPLX-Unity/Assets/";
 
 
     string[] _manualLeftJointNames = new string[] {
@@ -66,10 +70,10 @@ public class QuatForSMPLX : MonoBehaviour
     private void Start()
     {
         smplX = GetComponent<SMPLX>();
+        readCSVscript = GameObject.Find("Play Controller").GetComponent<CSVPlayer>();
         _transformFromName = smplX._transformFromName;
-        is_Coroutine = smplX.is_Coroutine;
-
-        handScript = GameObject.Find("SteamVR_female_hand_right 1").GetComponent<ConductingHand>();
+        isCoroutine = smplX.is_Coroutine;
+        
     }
 
 
@@ -80,9 +84,9 @@ public class QuatForSMPLX : MonoBehaviour
         newRot_elbow = _transformFromName["right_elbow"].transform.eulerAngles;
 
 
+        // Read the file and Save quaternion data
         if (Input.GetKeyDown(KeyCode.Slash))
         {
-            // Read the file and Save quaternion data
             for (int i = 0; i < 8; i++)
                 ReadQuaternion(file_path + "basis_pose_" + i.ToString() + ".csv", i);
 
@@ -100,7 +104,7 @@ public class QuatForSMPLX : MonoBehaviour
 
         else if (Input.GetKeyDown(KeyCode.Keypad0))     // Flat
         {
-            is_Coroutine = true;
+            isCoroutine = true;
             StartCoroutine(RotationDelay(0));
             //StartCoroutine(handScript.PlayMotion(0));
 
@@ -108,7 +112,7 @@ public class QuatForSMPLX : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Keypad1))     // Bent
         {
-            is_Coroutine = true;
+            isCoroutine = true;
             StartCoroutine(RotationDelay(1));
             //StartCoroutine(handScript.PlayMotion(1));
 
@@ -116,25 +120,25 @@ public class QuatForSMPLX : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Keypad2))     // Pursed
         {
-            is_Coroutine = true;
+            isCoroutine = true;
             StartCoroutine(RotationDelay(2));
             //StartCoroutine(handScript.PlayMotion(2));
         }
         else if (Input.GetKeyDown(KeyCode.Keypad3))     // O sign
         {
-            is_Coroutine = true;
+            isCoroutine = true;
             StartCoroutine(RotationDelay(3));
             //StartCoroutine(handScript.PlayMotion(3));
         }
         else if (Input.GetKeyDown(KeyCode.Keypad4))     // Fist
         {
-            is_Coroutine = true;
+            isCoroutine = true;
             StartCoroutine(RotationDelay(4));
             //StopCoroutine(handScript.PlayMotion(4));
         }
         else if (Input.GetKeyDown(KeyCode.Keypad5))     // Feeling 1 (Pinky up)
         {
-            is_Coroutine = true;
+            isCoroutine = true;
             StartCoroutine(RotationDelay(5));
             //StopCoroutine(handScript.PlayMotion(5));
 
@@ -142,35 +146,69 @@ public class QuatForSMPLX : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Keypad6))     // Pointing
         {
-            is_Coroutine = true;
+            isCoroutine = true;
             StartCoroutine(RotationDelay(6));
             //StopCoroutine(handScript.PlayMotion(6));
         }
         else if (Input.GetKeyDown(KeyCode.Keypad7))     // Feeling 2 (Holding out)
         {
-            is_Coroutine = true;
-            StartCoroutine(RotationDelay(7));
+            isCoroutine = true;
+            StartCoroutine(RotationDelay2(7, 150, 1));
             //StopCoroutine(handScript.PlayMotion(7));
         }
 
-        //rotateWrist();
+        //RotateWrist();
 
+        //if (Input.GetKeyDown(KeyCode.Comma))
+        //{
+        //    //GameObject R_path = Instantiate(linePref, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+        //    //R_path.tag = "Line";
+        //    //lineRenderer2 = R_path.GetComponent<LineRenderer>();
+            
+        //    GameObject L_path = Instantiate(linePref, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+        //    L_path.tag = "Line";
+        //    lineRenderer1 = L_path.GetComponent<LineRenderer>();
 
-        // Activate a function 'avator_play_custom' from 'Player.cs' and Instantiate line prefab
-        if (Input.GetKeyDown(KeyCode.N))
+        //    //isDrew = true;
+
+        //SaveDic2Csv(file_path + "/records/L wrist position_04.csv", record1);
+        //    SaveList2Csv(file_path + "/records/R wrist position_04.csv", record2);
+        //}
+
+        if (Input.GetKeyDown(KeyCode.Period))
         {
-            GameObject currentLine = Instantiate(linePref, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
-            lineRenderer = currentLine.GetComponent<LineRenderer>();
+            isDrew = false;
         }
-        
-        DrawPath(true);
+
+        DrawPath(isDrew);
 
         smplX.UpdatePoseCorrectives();
         smplX.UpdateJointPositions(false);
 
     }
 
-    public IEnumerator calcGapValue()
+    void CalcVector(Vector3 current, Vector3 past, Vector3 old)
+    {
+        Vector3 vec1 = current - past;
+        Vector3 vec2 = current - old;
+
+        angle = Mathf.Acos(Vector3.Dot(vec1, vec2) / (Vector3.Magnitude(vec1) * Vector3.Magnitude(vec2))) * (float)(180.0 / Mathf.PI);
+
+        Debug.Log("vec1: " + vec1 + ",  vec2: " + vec2 + "\nangle = " + angle);
+
+
+        //if (angle != float.NaN && angle <= 100.0f)
+        //{
+        //    StartCoroutine(RotationDelay2(3, angle));
+        //}
+        //if (angle != float.NaN && angle > 100.0f)
+        //{
+        //    StartCoroutine(RotationDelay2(0, angle));
+        //}
+    }
+
+
+    public IEnumerator CalcGapValue()
     {
         oldPos_wrist = _transformFromName["right_wrist"].transform.position;
         oldRot_elbow = _transformFromName["right_elbow"].transform.eulerAngles;
@@ -186,10 +224,9 @@ public class QuatForSMPLX : MonoBehaviour
         //List<float> old_elbow_list = new List<float> { oldRot_elbow.x, oldRot_elbow .y, oldRot_elbow.z};
         //List<float> elbow_gap_list = new List<float> { elbowGap_rot.x, elbowGap_rot.y, elbowGap_rot.z};
         //List<float> wrist_rot_list = new List<float> { _transformFromName["right_wrist"].transform.localEulerAngles.x, _transformFromName["right_wrist"].transform.localEulerAngles.y, _transformFromName["right_wrist"].transform.localEulerAngles.z };
-        //List<float> wrist_gap_list = new List<float> { wristGap_pos.x, wristGap_pos.y, wristGap_pos.z };
-        //records.Add(wrist_gap_list);
 
-        
+
+
         yield return new WaitForSeconds(1.0f);
 
         //if (Input.GetKeyDown(KeyCode.X))
@@ -201,16 +238,20 @@ public class QuatForSMPLX : MonoBehaviour
         //}
     }
 
+
     void DrawPath(bool isDrew)
     {
         if (isDrew == true)
         {
-            Vector3 current_pos = _transformFromName["right_wrist"].transform.position;
+            Vector3 current_pos = _transformFromName["left_wrist"].transform.position;
             pos_list.Add(current_pos);
 
-            lineRenderer.positionCount = pos_list.Count;
-            lineRenderer.SetPositions(pos_list.ToArray());
+            lineRenderer1.positionCount = pos_list.Count;
+            lineRenderer1.SetPositions(pos_list.ToArray());
         }
+
+        else
+            pos_list.Clear();
     }
 
 
@@ -246,7 +287,7 @@ public class QuatForSMPLX : MonoBehaviour
                 }
             }
 
-            if (!is_mirrored)
+            if (!isMirrored)
             {
                 // [j]: joint index
                 for (int j = 0; j < joint_num * 2; j++)
@@ -308,6 +349,115 @@ public class QuatForSMPLX : MonoBehaviour
     }
 
 
+    /* [p]: pose index    [j]: joint index      [f]: frame index */
+    public void PlayHandMotion(int p, float angle, int hand)
+    {
+
+        if (angle < -100.0f || angle > 100.0f)   angle = 100.0f;
+
+        angle *= 10.0f;
+        float ratio = angle *Time.deltaTime;
+        //Debug.Log("ratio = " + ratio);
+
+
+        if (hand == 0)
+        {
+            //int frame_num = L_pose_data[p][3].Count;
+
+            for (int f = 1; f < L_pose_data[p][3].Count; f++)
+            {
+
+                for (int j = 3; j < _manualLeftJointNames.Length; j++)
+                {
+                    Transform l_joints = _transformFromName[_manualLeftJointNames[j]];
+
+                    Quaternion oldRot = l_joints.localRotation;
+
+                    //Quaternion nowRot = Quaternion.Slerp(L_pose_data[p][j][0], L_pose_data[p][j][1], ratio);
+                    Quaternion nowRot = Quaternion.Slerp(L_pose_data[p][j][0], L_pose_data[p][j][1], ratio);
+
+                    Quaternion.Slerp(oldRot, nowRot, 1.0f);
+                    //l_joints.localRotation = Quaternion.Slerp(L_pose_data[p][j][f], L_pose_data[p][j][f + 1], sec);
+
+                    //Debug.Log("start: L_pose_data[" + p + "][" + j + "][" + f + "]" + ", end: L_pose_data[" + p + "][" + j + "][" + (f + 1) + "]");
+
+                }
+            }
+        }
+
+        if (hand == 1)
+        {
+            int frame_num = R_pose_data[p][3].Count;
+
+            for (int f = 0; f < frame_num; f++)
+            {
+
+                for (int j = 3; j < _manualRightJointNames.Length; j++)
+                {
+                    Transform r_joints = _transformFromName[_manualRightJointNames[j]];
+                    Quaternion old_rot = r_joints.localRotation;
+
+                    r_joints.localRotation = Quaternion.Slerp(old_rot, R_pose_data[p][j][f], ratio);
+
+                }
+            }
+        }
+
+    }
+
+
+    /* [p]: pose index    [j]: joint index      [f]: frame index */
+    public IEnumerator RotationDelay2(int p, float angle, int hand)
+    {
+
+        float ratio = angle*2 / 100.0f;
+        
+        if (hand == 0)
+        {
+            for (float t = 0; t <= angle; t++)
+            {
+                //for (int f = 0; f < L_pose_data[p][3].Count; f++)
+                //{
+                    for (int j = 3; j < _manualLeftJointNames.Length; j++)
+                    {
+                        Transform l_joints = _transformFromName[_manualLeftJointNames[j]];
+
+                        Quaternion oldRot = l_joints.localRotation;
+
+                        //l_joints.localRotation = Quaternion.Slerp(old_rot, L_pose_data[p][j][f], ratio);
+                        Quaternion nowRot = Quaternion.Slerp(L_pose_data[p][j][0], L_pose_data[p][j][1], ratio);
+
+                        l_joints.localRotation = Quaternion.Slerp(oldRot, nowRot, t/angle);
+                    }
+                    yield return new WaitForSeconds(0.0025f);
+                //}
+
+                //Debug.Log("ratio: " + ratio);
+            }
+        }
+
+
+        if (hand == 1)
+        {
+            for (float t = 0; t <= angle; t++)
+            {
+                for (int j = 3; j < _manualRightJointNames.Length; j++)
+                {
+                    Transform r_joints = _transformFromName[_manualRightJointNames[j]];
+
+                    Quaternion nowRot = Quaternion.Slerp(R_pose_data[p][j][0], R_pose_data[p][j][1], ratio);
+                    r_joints.localRotation = nowRot;
+                }
+
+                yield return new WaitForSeconds(0.0025f);
+            }
+        }
+
+        yield break;
+    }
+
+
+
     // Rotate hand joints(finger joints) by data of hand motion lists
     /* [p]: pose index    [j]: joint index      [f]: frame index */
     public IEnumerator RotationDelay(int p)
@@ -319,7 +469,7 @@ public class QuatForSMPLX : MonoBehaviour
         int joint_num = _manualLeftJointNames.Count();
 
 
-        if (is_Coroutine)
+        if (isCoroutine)
         {
             //ResetBodyPose();
 
@@ -373,16 +523,16 @@ public class QuatForSMPLX : MonoBehaviour
             yield break;
         }
 
-        is_Coroutine = false;
+        isCoroutine = false;
     }
 
     // Apply to rotate the wrist and map hand motions (considering to elbow rot gap)
-    void rotateWrist()
+    void RotateWrist()
     {
-        //_transformFromName["right_wrist"].transform.localRotation = Quaternion.Euler(elbowGap_rot * magnify);
-        //_transformFromName["right_wrist"].transform.localEulerAngles = elbowGap_rot * magnify;
+        //_transformFromName["right_wrist"].transform.localRotation = Quaternion.Euler(elbowGap_rot * scalingValue);
+        //_transformFromName["right_wrist"].transform.localEulerAngles = elbowGap_rot * scalingValue;
 
-        //Vector3 wrist_angle = _transformFromName["right_wrist"].transform.localEulerAngles = elbowGap_rot * magnify;
+        //Vector3 wrist_angle = _transformFromName["right_wrist"].transform.localEulerAngles = elbowGap_rot * scalingValue;
 
         //if (wrist_angle.x > 180) {
         //    wrist_angle.x -= 360.0f;
@@ -398,7 +548,7 @@ public class QuatForSMPLX : MonoBehaviour
         //}
 
 
-        _transformFromName["right_wrist"].transform.localRotation = Quaternion.Slerp(oldQuat_wrist, Quaternion.Euler(elbowGap_rot * magnify), clamp);
+        _transformFromName["right_wrist"].transform.localRotation = Quaternion.Slerp(oldQuat_wrist, Quaternion.Euler(elbowGap_rot * scalingValue), clamp);
 
 
         if (wristGap_pos.x != 0 || wristGap_pos.y != 0 || wristGap_pos.z != 0)
@@ -445,15 +595,16 @@ public class QuatForSMPLX : MonoBehaviour
         }
     }
 
-    void saveCSVfile(string file_path)
+    void SaveList2Csv(string file_path, List<List<float>> record)
     {
-        FileStream fs = new FileStream(file_path + "/records/wrist pos_4.4_100.csv", FileMode.Create);
+        FileStream fs = new FileStream(file_path, FileMode.Create);
         StreamWriter sw = new StreamWriter(fs);
 
-        for (int i = 0; i < records.Count; i++)
-            sw.WriteLine("{0}, {1}, {2}", records[i][0], records[i][1], records[i][2]);
 
-        Debug.Log("records.Count: " + records.Count);
+        for (int i = 0; i < record.Count; i++)
+            sw.WriteLine("{0}, {1}, {2}", record[i][0], record[i][1], record[i][2]);
+
+        Debug.Log("record.Count: " + record.Count);
 
         //for (int i = 0; i < motion_num.Count; i++)
         //    sw.WriteLine("{0}", motion_num[i]);
@@ -462,7 +613,35 @@ public class QuatForSMPLX : MonoBehaviour
         fs.Close();
 
 
-        records.Clear();
+        record.Clear();
+
+        return;
+    }
+
+    public void SaveDic2Csv(string file_path, List<Dictionary<int, float>> record)
+    {
+        FileStream fs = new FileStream(file_path, FileMode.Create);
+        StreamWriter sw = new StreamWriter(fs);
+
+
+        for (int i = 0; i < record.Count; i++)
+        {
+            foreach (KeyValuePair<int, float> pairs in record[i])
+            {
+                sw.WriteLine("{0}, {1}", pairs.Key, pairs.Value);
+            }
+        }
+
+        Debug.Log("record.Count: " + record.Count);
+
+        //for (int i = 0; i < motion_num.Count; i++)
+        //    sw.WriteLine("{0}", motion_num[i]);
+
+        sw.Close();
+        fs.Close();
+
+
+        record.Clear();
 
         return;
     }
