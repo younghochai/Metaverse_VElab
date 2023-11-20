@@ -261,7 +261,7 @@ public class XsensDot : MonoBehaviour
       { 5, "D4:22:CD:00:37:E8" }
 
     };
-    public Text printMessage;
+    public Text printMessage;//dummy log
 
     void Start()
     {
