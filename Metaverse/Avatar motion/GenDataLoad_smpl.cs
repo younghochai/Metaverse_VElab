@@ -66,9 +66,9 @@ public class GenDataLoad : MonoBehaviour
 
         PythonConnection = GameObject.Find("PythonConnection");
 
-
-
         connect = PythonConnection.GetComponent<Python_net>();
+
+        color_Dict = new Dictionary<int, Color>();
 
     }
 
