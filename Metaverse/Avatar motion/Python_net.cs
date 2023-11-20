@@ -55,7 +55,9 @@ public class Python_net : MonoBehaviour
         {
             if (!socketReady)
             {
-
+                Debug.Log("CheckReceive :" + is_connect_open);
+                CheckReceive();
+                is_connect_open = false;
             }
 
         }
