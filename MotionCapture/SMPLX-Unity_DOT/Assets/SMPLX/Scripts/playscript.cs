@@ -154,9 +154,7 @@ public class playscript : MonoBehaviour
 
             }
             //###########################################################################
-            //1. 오리지널 raw 데이터 로그 찍고 1,2프레임에 캘리, 헤딩 정보 값을 넣기
             //2. 이미 캘리브레이션, 헤딩 정보를 다 계산한 값을 로그로 찍기
-            // 선택 필요.
             //###########################################################################
 
             if (is_recording)
@@ -283,7 +281,7 @@ public class playscript : MonoBehaviour
             is_wait_calibration = true;
             //혼자서 T포즈를 위해 지연시간 추가.
 
-            Debug.Log("포즈를 취해주십시오...");
+            Debug.Log("포즈를 취해주십시오...");//측정을 위해 밑에 업데이트에서 실행하게 바꾸었음.
             //GET_CALIB_POSE();
 
             for (int i = 0; i < number_of_IMU; i++)
@@ -318,13 +316,6 @@ public class playscript : MonoBehaviour
                                                                            CoordinateRotate.x,
                                                                             CoordinateRotate.y,
                                                                             CoordinateRotate.z);
-
-                //Vector3 xyzprint =  smpldata.GetComponent<SMPLX>().PrintLocalRotation(_Senser8JointNames_UP_RIGHT_PART[i]);
-                //Debug.LogFormat("{0}부분 회전 값: X: {1}, Y: {2}, Z: {3}", _Senser8JointNames_UP_RIGHT_PART[i],
-
-                //                                                           xyzprint.x,
-                //                                                            xyzprint.y,
-                //                                                            xyzprint.z);
             }
 
         }
@@ -350,7 +341,6 @@ public class playscript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //printMessage.text = "hello this is initial message.";
 
         KEYBOARD_INPUT_CASE();
         timer += Time.deltaTime;
