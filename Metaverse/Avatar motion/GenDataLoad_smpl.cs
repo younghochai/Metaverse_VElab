@@ -722,7 +722,22 @@ public class GenDataLoad : MonoBehaviour
 
         cur_act_idx = action_num;
 
+        for (int frame_cnt = frame_stnum; frame_cnt < load_axis_list[action_num][0].Count; frame_cnt++)
+        {
 
+          
+            smpl_manager.UpdateJointPositions(false);
+
+
+            elbow_position.Add(smpl_manager.GetJointPositions()[draw_joint]);
+
+            Instantiate(beads, smpl_manager.GetJointPositions()[draw_joint], Quaternion.identity);
+            cur_act_frm = frame_cnt;
+
+            yield return new WaitForSeconds(.025f);
+
+
+        }
 
         anim_playing = false;
         yield break;
