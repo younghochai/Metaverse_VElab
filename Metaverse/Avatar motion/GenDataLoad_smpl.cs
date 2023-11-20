@@ -159,7 +159,22 @@ public class GenDataLoad : MonoBehaviour
 
             }
 
+            int act_label = switch_label;
+            if (anim_playing)
+            {
 
+                StopAllCoroutines();
+                if (toggle_interpol)
+                {
+                    StartCoroutine(avatar_bet_play(cur_act_idx, cur_act_frm, act_label, frm_strat));
+                }
+                else
+                {
+                    StartCoroutine(avatar_play_sel(act_label));
+
+                }
+
+            }
 
             if (Input.GetKeyDown(KeyCode.X))
         {
