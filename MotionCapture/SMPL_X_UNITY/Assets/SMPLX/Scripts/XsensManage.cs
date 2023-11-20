@@ -84,12 +84,6 @@ public class XsensManage : MonoBehaviour
         sensors.Add(new XsensDevice("00B438C7")); // 8,
         sensors.Add(new XsensDevice("00B4391F")); // 9,
         sensors.Add(new XsensDevice("00B43926")); // 0,   
-           
-
-          
-          
-          
-    
 
         Debug.Log("Void Start part done!");
         //TestFuncion();
@@ -474,19 +468,19 @@ public class XsensManage : MonoBehaviour
 
 
         }
-        if (e.Packet.containsFreeAcceleration()) 
-        {
-            //Debug.Log("가속도 데이터 존재.");
-            XsVector free_acc = e.Packet.freeAcceleration();
-            //XsVector free_acc = e.Packet.calibratedAcceleration();
+        //if (e.Packet.containsFreeAcceleration()) 
+        //{
+        //    //Debug.Log("가속도 데이터 존재.");
+        //    XsVector free_acc = e.Packet.freeAcceleration();
+        //    //XsVector free_acc = e.Packet.calibratedAcceleration();
 
-            _connectedMtwData[e.Device.deviceId().toInt()]._acceleration = free_acc;
-            uint vecLength = free_acc.size();
+        //    _connectedMtwData[e.Device.deviceId().toInt()]._acceleration = free_acc;
+        //    uint vecLength = free_acc.size();
 
-            // Debug.LogFormat("value12: {0}", _connectedMtwData[e.Device.deviceId().toInt()]._acceleration);
-            //Debug.LogFormat("벡터의 사이즈: {0}", vecLength);
+        //    // Debug.LogFormat("value12: {0}", _connectedMtwData[e.Device.deviceId().toInt()]._acceleration);
+        //    //Debug.LogFormat("벡터의 사이즈: {0}", vecLength);
 
-        }
+        //}
 
 
         // -- Determine effective update rate percentage --
