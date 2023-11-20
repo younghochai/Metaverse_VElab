@@ -51,7 +51,11 @@ public class Python_net : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (is_connect_open)
+        {
 
+
+        }
         if (socketReady)
         {
 
