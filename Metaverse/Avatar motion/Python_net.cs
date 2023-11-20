@@ -72,6 +72,7 @@ public class Python_net : MonoBehaviour
                 string msg = Encoding.UTF8.GetString(receivedBuffer, 0, receivedBuffer.Length); // byte[] to string
                 Debug.Log("recognition Result :" + int.Parse(msg));
                 predict_label = int.Parse(msg);
+                newrecongition = true;
             }
         
 
