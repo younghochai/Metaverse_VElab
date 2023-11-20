@@ -125,7 +125,7 @@ public class Python_net : MonoBehaviour
                 //Buffer.BlockCopy(byteArray, 0, floatArray2, 0, byteArray.Length);
                 //Debug.Log(floatArray2[0]);
 
-                //var data = Encoding.UTF8.GetBytes("close");
+            
                 stream.Write(byteArray, 0, 24 * 4);
 
 
@@ -136,7 +136,6 @@ public class Python_net : MonoBehaviour
         }
 
 
-       // caldata_write_frm();
 
 
     }
