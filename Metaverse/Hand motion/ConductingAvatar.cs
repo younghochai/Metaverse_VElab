@@ -56,20 +56,10 @@ public class ConductingAvatar : MonoBehaviour
         int count_L = trailRenderer[0].positionCount;
         int count_R = trailRenderer[1].positionCount;
 
-        if (count_L > 0)
-        {
-            //Debug.Log("L wrist pos:" + trailRenderer[0].GetPosition(count_L - 1)
-            //+ "\n\t    R wrist pos:" + trailRenderer[1].GetPosition(count_R - 1));
-        }
 
         if (count_R > 2)
         {
             CalcAngularVelocity(count_R - 1, 1);
-
-            //Debug.Log("wristR rot: " + wrist[1].localEulerAngles);
-            //wrist[1].localRotation = Quaternion.AngleAxis(finalAngle * scalingValue, Vector3.forward);
-            //wrist[1].localRotation = Quaternion.AngleAxis(finalAngle * scalingValue, dir);
-
 
             Vector3[] pos = new Vector3[2];
 
@@ -86,12 +76,11 @@ public class ConductingAvatar : MonoBehaviour
             angleX += gapX;
             angleY += gapY;
 
+
             //wrist[1].localRotation = rot;
             //Debug.Log("wrist[1].localEulerAngles = " + wrist[1].localEulerAngles);
 
-
             StartCoroutine(quat4smplx.RotationDelay2(3, finalAngle * scalingValue, 1));
-            //quat4smplx.PlayHandMotion(2, finalAngle * scalingValue, 1);
 
             //Debug.Log("Angle: " + finalAngle * scalingValue);
     }
@@ -101,25 +90,16 @@ public class ConductingAvatar : MonoBehaviour
         {
             CalcAngularVelocity(count_L - 1, 0);
 
-            //quat4smplx.PlayHandMotion(2, finalAngle * scalingValue, 0);
-
-            //if (wrist[0].position.y > shldr[0].position.y)
-            //{
-            //    StartCoroutine(quat4smplx.RotationDelay2(1, finalAngle * scalingValue, 0));
-            //}
-            //else
-            //{
-                StartCoroutine(quat4smplx.RotationDelay2(3, finalAngle * scalingValue, 0));
-            //}
+            StartCoroutine(quat4smplx.RotationDelay2(3, finalAngle * scalingValue, 0));
         }
 
-        if (Input.GetKeyDown(KeyCode.Comma))
-        {
-            //*** When recording... ***
-            quat4smplx.SaveDic2Csv("C:/Users/pssil/OneDrive/πŸ≈¡ »≠∏È/velab/2023.07-10/SMPLX-Unity/Assets/records/angle(1)_4.csv", record1);
-            quat4smplx.SaveDic2Csv("C:/Users/pssil/OneDrive/πŸ≈¡ »≠∏È/velab/2023.07-10/SMPLX-Unity/Assets/records/avg_angle(50,1)_4.csv", record2);
-            //**************************
-        }
+        //if (Input.GetKeyDown(KeyCode.Comma))
+        //{
+        //    //*** When recording... ***
+        //    quat4smplx.SaveDic2Csv("C:/Users/pssil/OneDrive/πŸ≈¡ »≠∏È/velab/2023.07-10/SMPLX-Unity/Assets/records/angle(1)_4.csv", record1);
+        //    quat4smplx.SaveDic2Csv("C:/Users/pssil/OneDrive/πŸ≈¡ »≠∏È/velab/2023.07-10/SMPLX-Unity/Assets/records/avg_angle(50,1)_4.csv", record2);
+        //    //**************************
+        //}
     }
 
 
@@ -135,11 +115,7 @@ public class ConductingAvatar : MonoBehaviour
         originDir.Add(dir);
 
         finalDir = NormalizeVector(originDir, dirFilterSize);
-        //Debug.Log("dir = (" + dir.x +", " + dir.y + ", " + dir.z + ")\n\tfinalDir = (" + finalDir.x + ", " + finalDir.y + ", " + finalDir.z +")");
         
-        //finalDir.x = MovingAverageFilter(originDirX, dirFilterSize);
-        //finalDir.y = MovingAverageFilter(originDirY, dirFilterSize);
-        //finalDir.z = MovingAverageFilter(originDirZ, dirFilterSize);
 
         Vector3 v1 = beforePos - pivot[hand].position;
         Vector3 v2 = currentPos - pivot[hand].position;
@@ -164,8 +140,7 @@ public class ConductingAvatar : MonoBehaviour
             angle = 100.0f;
         }
 
-        //Debug.Log("Frame no." + n + ",      angle = " + angle * scalingValue);
-
+        
         //*** When recording... ***
         Dictionary<int, float> dic1 = new Dictionary<int, float>();
         dic1.Add(n, angle);
