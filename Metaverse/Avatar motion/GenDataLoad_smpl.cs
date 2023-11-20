@@ -57,6 +57,9 @@ public class GenDataLoad : MonoBehaviour
 
 
     private Dictionary<int, Color> color_Dict;
+
+    float Radian2Degree = 180 / Mathf.PI;
+    float Degree2Radian = Mathf.PI / 180;
     // Start is called before the first frame update
     void Start()
     {
