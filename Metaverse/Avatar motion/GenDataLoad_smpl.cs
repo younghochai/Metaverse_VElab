@@ -55,6 +55,8 @@ public class GenDataLoad : MonoBehaviour
 
     public GameObject beads;
 
+
+    private Dictionary<int, Color> color_Dict;
     // Start is called before the first frame update
     void Start()
     {
