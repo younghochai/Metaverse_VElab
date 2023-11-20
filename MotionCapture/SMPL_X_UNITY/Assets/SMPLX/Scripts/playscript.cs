@@ -309,8 +309,6 @@ public class playscript : MonoBehaviour
         Debug.Log("Playerscript 실행 되었습니다.");
         timer = 0.0f;
         waitingTime = 0.01667f;
-        //waitingTime = 2.0f;
-
     }
 
     // Update is called once per frame

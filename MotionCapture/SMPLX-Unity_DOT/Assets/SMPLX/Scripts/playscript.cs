@@ -207,8 +207,6 @@ public class playscript : MonoBehaviour
         {
             sensorQuatCaliList[i] = Quaternion.Inverse(sensorQuatList[i]);
         }
-        
-
     }
     public void ALIGN_COORDINATE() //IMU Heading reset.
     {
@@ -243,7 +241,6 @@ public class playscript : MonoBehaviour
         // C: T포즈 취한후 눌러서 Calibrate
         // P : 현재 전체 센서 데이터 출력(1회)
         // S : 아바타 움직이는 거 시작.
-
 
         if (Input.GetKeyDown(KeyCode.O)) 
         {
