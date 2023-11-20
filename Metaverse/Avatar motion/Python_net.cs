@@ -113,7 +113,13 @@ public class Python_net : MonoBehaviour
             {
                 ld_bcadata = sendDataQuaternion.ToArray();
                 data_Frm = ld_bcadata.Length / 24;
-               
+                //Debug.Log("Read Current Data : " + data_Frm);
+
+                sendDataQuaternion.Clear();
+
+                //Debug.Log("cur frm send : ");
+                var byteArray = new byte[24 * 4];
+                Buffer.BlockCopy(ld_bcadata, 0, byteArray, 0, byteArray.Length);
             }
 
 
