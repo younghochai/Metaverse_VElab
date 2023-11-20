@@ -1111,7 +1111,12 @@ public class GenDataLoad : MonoBehaviour
         q2 = -Mathf.Sin(angleY / 2.0f) * Mathf.Sin(angleZ / 2.0f) * Mathf.Cos(angleX / 2.0f) + Mathf.Sin(angleX / 2.0f) * Mathf.Cos(angleZ / 2.0f) * Mathf.Cos(angleY / 2.0f);
         q3 = Mathf.Sin(angleY / 2.0f) * Mathf.Cos(angleZ / 2.0f) * Mathf.Cos(angleX / 2.0f) + Mathf.Sin(angleZ / 2.0f) * Mathf.Sin(angleX / 2.0f) * Mathf.Cos(angleY / 2.0f);
         q4 = -Mathf.Sin(angleY / 2.0f) * Mathf.Sin(angleX / 2.0f) * Mathf.Cos(angleZ / 2.0f) + Mathf.Sin(angleZ / 2.0f) * Mathf.Cos(angleY / 2.0f) * Mathf.Cos(angleX / 2.0f);
+        scale = Mathf.Sqrt(q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4);
 
+        q.w = q1 / scale;
+        q.x = q2 / scale;
+        q.y = q3 / scale;
+        q.z = q4 / scale;
 
         return q;
     }
