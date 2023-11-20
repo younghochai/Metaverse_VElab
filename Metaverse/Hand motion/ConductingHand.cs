@@ -44,8 +44,6 @@ public class ConductingHand : MonoBehaviour
     public List<List<List<Quaternion>>> L_pose_data = new List<List<List<Quaternion>>>();
     public List<List<List<Quaternion>>> R_pose_data = new List<List<List<Quaternion>>>();
 
-    List<Vector3> m_CutOff = new List<Vector3>();
-
 
     void Start()
     {
@@ -57,14 +55,11 @@ public class ConductingHand : MonoBehaviour
             for (int i = 0; i < HandJointIdx.Length; i++)
             {
                 _transformFromName.Add(RightHandJointNames[i], transforms[HandJointIdx[i]]);
-                //_transformFromName.Add(RightHandJointNames[i], transforms[i]);
 
                 Debug.Log("_transformFromName = (" + RightHandJointNames[i] + ", " + _transformFromName[RightHandJointNames[i]] + ")");
             }
         }
 
-
-        //center = GameObject.Find("center").transform;
 
         quat4smplX = smplxModel.GetComponent<QuatForSMPLX>();
         L_pose_data = quat4smplX.L_pose_data;
@@ -98,9 +93,6 @@ public class ConductingHand : MonoBehaviour
         {
             path[i] = lineRenderer.GetPosition(i);
         }
-
-        m_CutOff = path.ToList();
-
 
         Vector3 vec;
         int index = 0;
@@ -160,15 +152,10 @@ public class ConductingHand : MonoBehaviour
 
                 // Right
                 Transform joints = _transformFromName[RightHandJointNames[j]];
-
-
                 Quaternion old_rot = joints.localRotation;
-
-                //joints.localRotation = Quaternion.Slerp(old_rot, L_pose_data[p][j][1], 1.0f);
+                
                 joints.localRotation = Quaternion.Slerp(old_rot, L_pose_data[p][j][1]*Quaternion.Euler(0.0f, 0.0f, 90.0f), 1.0f);
-                //joints.localRotation *= Quaternion.Euler(0.0f, -90.0f, 90.0f);
-                //r_joints.localRotation = Quaternion.Slerp(R_pose_data[p][j + 2][f], R_pose_data[p][j + 2][f + 1], 1.0f);
-
+                
                 Debug.Log("eulerAngle[" + j + "] = " + joints.localEulerAngles);
             }
             yield return new WaitForSeconds(0.0075f);
