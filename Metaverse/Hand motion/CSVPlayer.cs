@@ -54,10 +54,9 @@ public class CSVPlayer : MonoBehaviour
 
     void Start()
     {
+
         quat4smplX = smplX[1].gameObject.GetComponent<QuatForSMPLX>();
         videoPlayer = GameObject.Find("Video").GetComponent<VideoPlayer>();
-
-
     }
 
     // Update is called once per frame
@@ -110,17 +109,12 @@ public class CSVPlayer : MonoBehaviour
 
             StartCoroutine(avatar_play_custom(value));
             isPlaying = false;
-
-
         }
 
         if (Input.GetKeyDown(KeyCode.Comma))
         {
             Debug.Log("Current Motion Frame: " + currentFrame);
         }
-
-        //if (pastPos == null)  pastPos = new Vector3(0, 0, 0);
-        //if (oldPos == null)     oldPos = new Vector3(0, 0, 0);
 
         currentPos = wristL.position;
         
