@@ -869,7 +869,16 @@ public class GenDataLoad : MonoBehaviour
             //smpl_manager.Setglobalposition(_bodyJointNames[0], load_axis_list[action_num][0][frame_cnt]);
 
 
-            
+            for (int i = 0; i < _bodyJointNames.Length - 3; i++)
+            {
+
+
+                smpl_manager.SetLocalJointRotation(_bodyJointNames[i], QuatFromRodrigues(load_axis_list[action_num][i][frame_cnt].x, load_axis_list[action_num][i][frame_cnt].y, load_axis_list[action_num][i][frame_cnt].z));
+                // smpl_manager.SetLocalJointRotation(_bodyJointNames[i], QuatFromRodrigues(load_axis_list[action_num][i][frame_cnt].x, load_axis_list[action_num][i][frame_cnt].y, load_axis_list[action_num][i][frame_cnt].z));
+                //smpl_manager.Setlocalposition(_bodyJointNames[i], load_axis_list[action_num][i][frame_cnt]);
+                //Debug.Log("play this");
+            }
+            smpl_manager.UpdateJointPositions(false);
 
         }
         anim_playing = false;
