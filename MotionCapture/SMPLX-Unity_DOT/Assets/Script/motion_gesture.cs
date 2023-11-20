@@ -280,7 +280,7 @@ public class motion_gesture : MonoBehaviour
     //}
     void Update()
     {
-        //COMMAND_WITH_ARROWS();
+        ////COMMAND_WITH_ARROWS();
         is_playing_avatar = from_play_script.GetComponent<playscript>().is_play_avatar;
         timer += Time.deltaTime;
 
