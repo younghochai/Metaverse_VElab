@@ -73,6 +73,11 @@ public class GenDataLoad : MonoBehaviour
 
         color_Dict.Add(0, Color.red); // Vivid Raspberry
         color_Dict.Add(1, Color.green); // : Medium Spring Green
+        color_Dict.Add(2, Color.yellow); // Cadmium Yellow
+
+
+
+
 
     }
 
