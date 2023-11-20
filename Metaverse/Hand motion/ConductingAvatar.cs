@@ -126,10 +126,10 @@ public class ConductingAvatar : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Comma))
         {
-            /*** When recording... ***
+            //*** When recording... ***
             quat4smplx.SaveDic2Csv("C:/Users/pssil/OneDrive/πŸ≈¡ »≠∏È/velab/2023.07-08/SMPLX-Unity/Assets/records/angle(1)_4.csv", record1);
             quat4smplx.SaveDic2Csv("C:/Users/pssil/OneDrive/πŸ≈¡ »≠∏È/velab/2023.07-08/SMPLX-Unity/Assets/records/avg_angle(50,1)_4.csv", record2);
-            **************************/
+            //**************************
         }
     }
 
@@ -160,11 +160,11 @@ public class ConductingAvatar : MonoBehaviour
         angle = Mathf.Acos(Vector3.Dot(v1, v2) / (Vector3.Magnitude(v1) * Vector3.Magnitude(v2))) * (float)(180.0 / Mathf.PI);
 
 
-        /*** When recording... ***
+        //*** When recording... ***
         Dictionary<int, float> dic = new Dictionary<int, float>();
         dic.Add(n, angle * scalingValue);
         record.Add(dic);
-        **************************/
+        //**************************
 
         if (float.IsNaN(angle))
         {
@@ -179,11 +179,11 @@ public class ConductingAvatar : MonoBehaviour
 
         //Debug.Log("Frame no." + n + ",      angle = " + angle * scalingValue);
 
-        /*** When recording... ***
+        //*** When recording... ***
         Dictionary<int, float> dic1 = new Dictionary<int, float>();
         dic1.Add(n, angle);
         record1.Add(dic1);
-        **************************/
+        //**************************
 
         //finalAngle = angle;
         originAngle.Add(angle);
@@ -195,11 +195,11 @@ public class ConductingAvatar : MonoBehaviour
         //wrist[hand].localRotation = Quaternion.AngleAxis(finalAngle * scalingValue, finalDir);
 
 
-        /*** When recording... ***
+        //*** When recording... ***
         Dictionary<int, float> dic2 = new Dictionary<int, float>();
         dic2.Add(n, finalAngle * scalingValue);
         record2.Add(dic2);
-        **************************/
+        //**************************
     }
 
 
