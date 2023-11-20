@@ -351,19 +351,7 @@ public class SMPLX : MonoBehaviour
 
 
     }
-    public Quaternion SetWorld2LocalJointRotation1(string name, Quaternion quatWorld) //CustromJointRotation function2 - KHB
-    {
-        Transform joint = _transformFromName[name];
-        Transform jointParent = joint.parent;
 
-        joint.localRotation = Quaternion.Inverse(jointParent.rotation) * Quaternion.Inverse(Quaternion.Euler(180.0f, 0.0f, 0.0f)) * quatWorld * new Quaternion(0.0f, 0.0f, 1.0f, 0.0f);//original
-
-        //joint.localRotation = Quaternion.Inverse(jointParent.rotation) * quatWorld;// * new Quaternion(0.0f, 0.0f, 1.0f, 0.0f) * new Quaternion(1.0f, 0.0f, 0.0f, 0.0f);
-
-        return joint.localRotation;
-
-
-    }
     public Vector3 PrintLocalRotation(string name)
     {
         Transform joint = _transformFromName[name];
