@@ -1087,7 +1087,9 @@ public class GenDataLoad : MonoBehaviour
 
     Quaternion RotPelvis(Quaternion smpl_quat)
     {
-    
+        Quaternion data;
+        Quaternion frontValue = EulerToQuat(new Vector3(0, 0, 89.9f));
+
 
         return data;
     }
