@@ -227,14 +227,10 @@ public class playscript : MonoBehaviour
                                                                        CoordinateRotate.x,
                                                                         CoordinateRotate.y,
                                                                         CoordinateRotate.z);
-            //모든 센서의 align 정보를 입력.
-
             coordinate_X[i] = CoordinateRotate.x;
             coordinate_Y[i] = CoordinateRotate.y;
             coordinate_Z[i] = CoordinateRotate.z;
-
         }
-
     }
     public static double ConvertRadiansToDegrees(double radians)
     {
