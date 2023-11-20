@@ -18,6 +18,15 @@ public class Python_net : MonoBehaviour
     NetworkStream stream;
     string load_path= "Assets/Metaverse_BCA/BCA_test_data_label0_datacnt_7.txt";
     float[] ld_bcadata;
+
+
+
+    public bool stream_write = false;
+    public bool is_connect_close = false;
+    public bool is_connect_open = false;
+
+
+
     bool stream_write = false;
     int send_cnt = 0;
     int data_Frm;
