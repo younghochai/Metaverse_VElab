@@ -657,6 +657,29 @@ public class GenDataLoad : MonoBehaviour
 
         cur_act_idx = action_num;
 
+        for (int frame_cnt = frame_stnum; frame_cnt < gen_quat_list[3].Count; frame_cnt++)
+        {
+
+
+
+
+
+
+            smpl_manager.UpdateJointPositions(false);
+
+
+            //elbow_position.Add(smpl_manager.GetJointPositions()[19]);
+
+
+            line_renderer[action_num].SetPosition(frame_cnt, smpl_manager.GetJointPositions()[draw_joint]);
+            //line_gen.SetPosition(frame_cnt, smpl_manager.GetJointPositions()[19]);
+            cur_act_frm = frame_cnt;
+
+            yield return new WaitForSeconds(.025f);
+
+
+        }
+
 
         anim_playing = false;
         yield break;
