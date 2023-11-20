@@ -77,9 +77,12 @@ public class GenDataLoad : MonoBehaviour
         color_Dict.Add(3, new Color(255, 127, 51)); // Crayola's Orange
         color_Dict.Add(4, new Color(255, 0, 102));  // Medium Red-Violet
 
+        for (int j = 0; j < 4; j++)
+        {
 
+            List<List<Vector3>> load_axis_buf = new List<List<Vector3>>();
 
-    }
+        }
 
     // Update is called once per frame
     void Update()
