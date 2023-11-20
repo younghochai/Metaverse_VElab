@@ -985,7 +985,17 @@ public class GenDataLoad : MonoBehaviour
 
 
                 //file.WriteLine(address_joint_idx[0] + ", x, y, z," + address_joint_idx[1] + ", x, y, z," + address_joint_idx[2] + ", x, y, z," + address_joint_idx[3] + ", x, y, z," + address_joint_idx[4] + ", x, y, z," + address_joint_idx[5] + ", x, y, z");
+                for (int frame = 0; frame < Arm_position[repeat][0].Count(); frame++)
+                {
 
+                   
+
+
+
+                    file.WriteLine(builder.ToString());
+
+                    builder.Clear();
+                }
             }
 
     }
