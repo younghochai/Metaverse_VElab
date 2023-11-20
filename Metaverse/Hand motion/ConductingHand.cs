@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class ConductingHand : MonoBehaviour
 {
-    public GameObject handModel;
-    public GameObject line;
+    [SerializeField]
+    GameObject smplxModel, handModel, wrist, middle_dist;
+
+
+    public GameObject[] line;
+    public Vector3[] path;
     LineRenderer lineRenderer;
+    QuatForSMPLX quat4smplX;
+    public Transform center;
 
-    int[] HandJointIdx = { 4, 6, 7, 8 , 11, 12, 13, 16, 17, 18, 21, 22, 23, 25, 26, 27 };
+    int[] HandJointIdx = { 6, 8, 9, 10, 18, 19, 20, 13, 14, 15, 23, 24, 25, 27, 28, 29 };
 
-    string[] RightHandJointNames = new string[] { 
+    string[] RightHandJointNames = new string[] {
         "right_wrist",                                      // [0],
         "right_index1",  "right_index2",  "right_index3",   // [1],  [2],  [3]
         "right_middle1", "right_middle2", "right_middle3",  // [4],  [5],  [6]
@@ -31,24 +41,34 @@ public class ConductingHand : MonoBehaviour
     };
 
     public Dictionary<string, Transform> _transformFromName;
+    public List<List<List<Quaternion>>> L_pose_data = new List<List<List<Quaternion>>>();
+    public List<List<List<Quaternion>>> R_pose_data = new List<List<List<Quaternion>>>();
+
+    List<Vector3> m_CutOff = new List<Vector3>();
 
 
     void Start()
     {
         if (_transformFromName == null)
         {
-            _transformFromName= new Dictionary<string, Transform>();
+            _transformFromName = new Dictionary<string, Transform>();
             Transform[] transforms = handModel.transform.GetComponentsInChildren<Transform>();
 
             for (int i = 0; i < HandJointIdx.Length; i++)
             {
                 _transformFromName.Add(RightHandJointNames[i], transforms[HandJointIdx[i]]);
+                //_transformFromName.Add(RightHandJointNames[i], transforms[i]);
 
-                Debug.Log("_transformFromName = (" + _transformFromName[RightHandJointNames[i]].name + ")");
+                Debug.Log("_transformFromName = (" + RightHandJointNames[i] + ", " + _transformFromName[RightHandJointNames[i]] + ")");
             }
         }
 
-        lineRenderer = line.GetComponent<LineRenderer>();
+
+        //center = GameObject.Find("center").transform;
+
+        quat4smplX = smplxModel.GetComponent<QuatForSMPLX>();
+        L_pose_data = quat4smplX.L_pose_data;
+        R_pose_data = quat4smplX.R_pose_data;
     }
 
     void Update()
@@ -57,24 +77,102 @@ public class ConductingHand : MonoBehaviour
         {
             Debug.Log("Press Tap button");
 
-            PlayPath();
+            GetPathValue(0);
+            StartCoroutine(PlayPath(path));
+            StartCoroutine(PlayMotion(1));
         }
+
     }
 
 
-    IEnumerator PlayPath()
+    // 복제된 라인 오브젝트로 포지션 값 가져오기
+    void GetPathValue(int n)
     {
+        line = GameObject.FindGameObjectsWithTag("Line");
+        lineRenderer = line[n].GetComponent<LineRenderer>();
+
         int frames = lineRenderer.positionCount;
-        Vector3[] path = new Vector3[frames];
+        path = new Vector3[frames];
 
         for (int i = 0; i < frames; i++)
         {
             path[i] = lineRenderer.GetPosition(i);
-            _transformFromName["right_wrist"].transform.position = path[i];
-        
-            yield return new WaitForSeconds(0.025f);
+        }
+
+        m_CutOff = path.ToList();
+
+
+        Vector3 vec;
+        int index = 0;
+
+        for (int i = 0; i < path.Length; i++)
+        {
+            if ((path[i].x != path[index].x) || (path[i].y != path[index].y) || (path[i].z != path[index].z))
+            {
+                vec = path[i] - path[index];
+                index = i;
+
+                Debug.Log("vec = " + vec + ", index: " + index);
+            }
+
+        }
+    }
+
+    // 궤적 따라서 움직이기
+    IEnumerator PlayPath(Vector3[] path)
+    {
+        for (int i = 0; i < path.Length; i++)
+        {    
+            center.transform.position = path[i];
+            
+            yield return new WaitForSeconds(0.0025f);
         }
 
         yield break;
     }
+
+    public IEnumerator PlayMotion(int p)
+    {
+
+        Debug.Log("Motion Start");
+
+
+        float slerp_time = 60.0f;
+
+        for (float t = 0; t <= slerp_time; t++)
+        {
+            float sec = t / slerp_time;
+
+            for (int j = 1; j < HandJointIdx.Length; j++)
+            {
+                //// Left
+                //int l_frame_num = L_pose_data[p][j].Count;
+                //Transform l_joints = _transformFromName[LeftHandJointNames[j]];
+
+
+                //for (int f = 0; f < l_frame_num; f++)
+                //{
+                //    Quaternion old_rot = l_joints.localRotation;
+
+                //    l_joints.localRotation = Quaternion.Slerp(old_rot, L_pose_data[p][j][l_frame_num - 1], 0.5f);
+                //}
+
+
+                // Right
+                Transform joints = _transformFromName[RightHandJointNames[j]];
+
+
+                Quaternion old_rot = joints.localRotation;
+
+                //joints.localRotation = Quaternion.Slerp(old_rot, L_pose_data[p][j][1], 1.0f);
+                joints.localRotation = Quaternion.Slerp(old_rot, L_pose_data[p][j][1]*Quaternion.Euler(0.0f, 0.0f, 90.0f), 1.0f);
+                //joints.localRotation *= Quaternion.Euler(0.0f, -90.0f, 90.0f);
+                //r_joints.localRotation = Quaternion.Slerp(R_pose_data[p][j + 2][f], R_pose_data[p][j + 2][f + 1], 1.0f);
+
+                Debug.Log("eulerAngle[" + j + "] = " + joints.localEulerAngles);
+            }
+            yield return new WaitForSeconds(0.0075f);
+        }
+    }
+
 }
