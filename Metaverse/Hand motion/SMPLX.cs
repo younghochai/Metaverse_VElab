@@ -36,7 +36,7 @@ public class SMPLX : MonoBehaviour
 
     public enum ModelType {Unknown, Female, Neutral, Male};
     public enum HandPose {Flat, Relaxed, Test, AMASS, MANO_mean};
-    public enum BodyPose {T, A};
+
 
     public ModelType modelType = ModelType.Unknown;
 
@@ -63,17 +63,6 @@ public class SMPLX : MonoBehaviour
     public List<List<List<Quaternion>>> L_pose_data, R_pose_data;
 
 
-    public bool is_Coroutine = false;
-
-
-    string[] _bodyJointNames = new string[] { 
-        "pelvis", "left_hip", "right_hip",
-        "spine1", "left_knee", "right_knee",
-        "spine2", "left_ankle","right_ankle",
-        "spine3", "left_foot","right_foot",
-        "neck","left_collar","right_collar",
-        "head","left_shoulder","right_shoulder", "left_elbow",
-        "right_elbow","left_wrist","right_wrist",
         "jaw","left_eye_smplhf","right_eye_smplhf",
         
         "left_index1","left_index2","left_index3",
@@ -104,6 +93,7 @@ public class SMPLX : MonoBehaviour
     };
 
 
+
     float[] _handFlatLeft = new float[] { 0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
     float[] _handFlatRight = new float[] { 0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
     float[] _handRelaxedLeft = new float[] { 0.11167871206998825f, 0.042892176657915115f, -0.41644182801246643f, 0.10881132632493973f, -0.06598567962646484f, -0.7562199831008911f, -0.09639296680688858f, -0.09091565757989883f, -0.18845929205417633f, -0.1180950403213501f, 0.050943851470947266f, -0.529584527015686f, -0.14369840919971466f, 0.055241700261831284f, -0.7048571109771729f, -0.01918291673064232f, -0.09233684837818146f, -0.33791351318359375f, -0.4570329785346985f, -0.1962839514017105f, -0.6254575252532959f, -0.21465237438678741f, -0.06599828600883484f, -0.5068942308425903f, -0.3697243630886078f,   -0.060344625264406204f,  -0.07949022948741913f, -0.1418696939945221f, -0.08585263043642044f, -0.6355282664299011f, -0.3033415973186493f, -0.05788097530603409f, -0.6313892006874084f, -0.17612089216709137f, -0.13209307193756104f, -0.37335458397865295f, 0.8509643077850342f, 0.27692273259162903f, -0.09154807031154633f, -0.4998394250869751f, 0.02655647136271f, 0.05288087576627731f, 0.5355591773986816f, 0.04596104100346565f, -0.2773580253124237f };
@@ -130,30 +120,6 @@ public class SMPLX : MonoBehaviour
        -0.18725790083408356f,  -0.1291208416223526f,    0.03440938517451286f,
        -0.018986323848366737f, -0.0005881433608010411f, 0.29313862323760986f 
     };
-    float[] _handTestRight = new float[] { 
-        0.01326274499297142f,  -0.20413629710674286f,  -0.15937039256095886f,
-       -0.15078474581241608f,  -0.04514279216527939f,  -0.48306483030319214f, 
-        0.10417323559522629f,  -0.1836467832326889f,   -0.10250554978847504f, 
-    
-        0.011679206974804401f, -0.07861433178186417f,  -0.18614766001701355f, 
-        0.08135887235403061f,   0.030331499874591827f, -0.43081870675086975f, 
-       -0.07722432166337967f,  -0.07975051552057266f,  -0.1706584393978119f, 
-        
-        0.13209141790866852f,   0.32395777106285095f,  -0.3861182630062103f, 
-        0.12642964720726013f,  -0.13008570671081543f,  -0.15177564322948456f, 
-        0.021906709298491478f, -0.16517646610736847f,   0.02528587356209755f, 
-        
-        0.06796213984489441f,  -0.025236478075385094f, -0.15547266602516174f, 
-        0.060269180685281754f, -0.02008354291319847f,  -0.4861707091331482f, 
-       -0.01259240135550499f,  -0.1396889090538025f,   -0.17316514253616333f,
-       
-       -0.14130337536334991f,   0.044829096645116806f, -0.2754846215248108f,
-       -0.17891336977481842f,   0.14570343494415283f,  -0.05630068853497505f, 
-       -0.01855561137199402f,   0.043099239468574524f, -0.1657646745443344f 
-    };
-    
-
-    public Dictionary<string, Transform> _transformFromName;
 
     // Joint recalculation
     public static Dictionary<string, Matrix[]> JointMatrices = null;
@@ -181,7 +147,7 @@ public class SMPLX : MonoBehaviour
                 Transform joint = _transformFromName[_bodyJointNames[i]];
                 _jointPositions[i] = joint.position;
             }
-        } 
+
 
         if (_jointRotations == null)
         {
@@ -379,15 +345,6 @@ public class SMPLX : MonoBehaviour
         joint.localRotation = quatLocal;
     }
 
-    public void SetWorld2LocalJointRotation(string name, Quaternion quatWorld) //CustromJointRotation function2 - KHB
-    {
-        Transform joint = _transformFromName[name];
-        Transform jointParent = joint.parent;
-        //joint.localRotation = Quaternion.Inverse(jointParent.rotation) * Quaternion.Inverse(Quaternion.Euler(180.0f, 0.0f, 0.0f)) * quatWorld * new Quaternion(0.0f, 0.0f, 1.0f, 0.0f);
-        
-        joint.localRotation = Quaternion.Inverse(jointParent.rotation) * Quaternion.Inverse(Quaternion.Euler(180.0f, 90.0f, 0.0f)) * quatWorld * new Quaternion(0.0f, 0.0f, 1.0f, 0.0f);
-
-    }
 
 
     public void SetHandPose(HandPose pose)
@@ -632,8 +589,6 @@ public class SMPLX : MonoBehaviour
     {
         if (!usePoseCorrectives)
             UpdatePoseCorrectives();
-    }
-
 
 }
 
@@ -845,6 +800,7 @@ public class SMPLX_Editor : Editor {
                     {
                         _target.SetBodyPose(SMPLX.BodyPose.A);
                     }
+
                     EditorGUILayout.EndHorizontal();
 
                     EditorGUILayout.BeginHorizontal();
@@ -1575,129 +1531,6 @@ public class SMPLX : MonoBehaviour
         StopCoroutine("RotationDelay");
     }
 
-
-    // [p]: pose index    [j]: joint index      [f]: frame index
-    IEnumerator RotationDelay(int p)
-    {
-        Debug.Log("Motion Start: " + p);
-
-        // # of joints
-        int joint_num = _manualLeftJointNames.Count();
-
-
-        if (is_Coroutine)
-        {
-            //ResetBodyPose();
-
-            // Calculating the time parameter of Quaternion slerp function
-            float slerp_time = 60.0f * Random.Range(2.0f, 3.5f);
-
-            Debug.Log("slerp_time = " + slerp_time);
-
-            for (float t = 0; t <= slerp_time; t++)
-            {
-                float sec = t / slerp_time;
-
-                for (int j = 0; j < joint_num; j++)
-                {
-                    // Left
-                    int l_frame_num = L_pose_data[p][j].Count;
-                    Transform l_joints = _transformFromName[_manualLeftJointNames[j]];
-
-
-                    for (int f = 0; f < l_frame_num; f++)
-                    {
-                        Quaternion old_rot = l_joints.localRotation;
-
-                        l_joints.localRotation = Quaternion.Slerp(old_rot, L_pose_data[p][j][l_frame_num - 1], sec);
-                        //l_joints.localRotation = Quaternion.Slerp(L_pose_data[p][j][f], L_pose_data[p][j][f + 1], sec);
-
-
-                        //Debug.Log("start: L_pose_data[" + p + "][" + j + "][" + f + "]" + ", end: L_pose_data[" + p + "][" + j + "][" + (f + 1) + "]");
-                    }
-
-
-                    // Right
-                    int r_frame_num = R_pose_data[p][j].Count;
-                    Transform r_joints = _transformFromName[_manualRightJointNames[j]];
-
-
-                    for (int f = 0; f < r_frame_num; f++)
-                    {
-                        Quaternion old_rot = r_joints.localRotation;
-
-                        r_joints.localRotation = Quaternion.Slerp(old_rot, R_pose_data[p][j][l_frame_num - 1], sec);
-                        //r_joints.localRotation = Quaternion.Slerp(R_pose_data[p][j][f], R_pose_data[p][j][f + 1], sec);
-                    }
-                }
-
-                yield return new WaitForSeconds(0.0075f);
-
-            }
-        }
-
-        is_Coroutine = false;
-    }
-
-    int joint_num = 4;
-
-    if (is_Coroutine)
-    {
-        ResetBodyPose();
-
-        for (int i = 0; i < load_sensor_data.Count() / joint_num; i++)
-        {
-            R_upperArm.rotation = load_sensor_data[i + 2];
-            R_lowerArm.rotation = load_sensor_data[i + 3];
-            L_upperArm.rotation = load_sensor_data[i + 4];
-            L_lowerArm.rotation = load_sensor_data[i + 5];
-
-            yield return new WaitForSeconds(1.0f);
-        }
-
-        is_Coroutine = false;
-    }
-
-
-    int joint_num = _manualLeftJointNames.Count();
-
-    if (is_Coroutine)
-    {
-        ResetBodyPose();
-
-        // joint
-        for (int i = 0; i < joint_num; i++)
-        {
-             frame
-            for (int j = 0; j < L_load_data[i].Count; j++)
-            {
-                string l_name = _manualLeftJointNames[i];
-                SetLocalJointRotation(l_name, L_load_data[i][j]);
-
-                string r_name = _manualRightJointNames[i];
-                SetLocalJointRotation(r_name, R_load_data[i][j]);
-            }
-
-            yield return new WaitForSeconds(1.0f);
-
-        }
-
-        for (int j = (L_load_data.Count() / joint_num) - 1; j >= 0 / joint_num; j--)
-        {
-            for (int i = joint_num - 1; i >= 0; i--)
-            {
-                string l_name = _manualLeftJointNames[i];
-                SetLocalJointRotation(l_name, L_load_data[joint_num * j + i]);
-
-                string r_name = _manualRightJointNames[i];
-                SetLocalJointRotation(r_name, R_load_data[joint_num * j + i]);
-            }
-
-            yield return new WaitForSeconds(1.0f);
-        }
-
-        is_Coroutine = false;
-    }
 }
 */
 

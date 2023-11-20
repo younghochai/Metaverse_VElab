@@ -18,28 +18,49 @@ public class Python_net : MonoBehaviour
     NetworkStream stream;
     string load_path= "Assets/Metaverse_BCA/BCA_test_data_label0_datacnt_7.txt";
     float[] ld_bcadata;
-    bool stream_write = false;
+
+
+
+    public bool stream_write = false;
+    public bool is_connect_close = false;
+    public bool is_connect_open = false;
+
+
+
+    //bool stream_write = false;
     int send_cnt = 0;
     int data_Frm;
     public List<Vector3> cur_plpose_vec = new List<Vector3>();
-
+    public List<float> sendDataQuaternion = new List<float>();
     public bool data_load_Available = false;
 
+    public int predict_label = -1;
+
+    public bool newrecongition = false;
     // Start is called before the first frame update
     void Start()
     {
-        ld_bcadata = ReadBCA_Data(load_path);
-        Debug.Log("The BCA putted array");
+        //ld_bcadata = ReadBCA_Data(load_path);
+        //Debug.Log("The BCA putted array");
 
-        data_Frm = ld_bcadata.Length / 12;
+        //data_Frm = ld_bcadata.Length / 12;
 
-        CheckReceive();
+        //CheckReceive();
     }
     // git test
     // Update is called once per frame
     void Update()
     {
+        if (is_connect_open)
+        {
+            if (!socketReady)
+            {
+                Debug.Log("CheckReceive :" + is_connect_open);
+                CheckReceive();
+                is_connect_open = false;
+            }
 
+        }
         if (socketReady)
         {
 
@@ -50,10 +71,21 @@ public class Python_net : MonoBehaviour
                 stream.Read(receivedBuffer, 0, receivedBuffer.Length); // stream에 있던 바이트배열 내려서 새로 선언한 바이트배열에 넣기
                 string msg = Encoding.UTF8.GetString(receivedBuffer, 0, receivedBuffer.Length); // byte[] to string
                 Debug.Log("recognition Result :" + int.Parse(msg));
-            
+                predict_label = int.Parse(msg);
+                newrecongition = true;
             }
-        
 
+
+            if (is_connect_close)
+            {
+
+                client.Close();
+                CloseSocket();
+
+                is_connect_close = false;
+                socketReady = false;
+            }                
+            
 
 
             if (Input.GetKeyDown(KeyCode.Q))
@@ -75,12 +107,36 @@ public class Python_net : MonoBehaviour
 
         if (stream_write)
         {
-            data_write_frm();
+            //data_write_frm();
+
+            if (sendDataQuaternion.Count > 0)
+            {
+                ld_bcadata = sendDataQuaternion.ToArray();
+                data_Frm = ld_bcadata.Length / 24;
+                //Debug.Log("Read Current Data : " + data_Frm);
+
+                sendDataQuaternion.Clear();
+
+                //Debug.Log("cur frm send : ");
+                var byteArray = new byte[24 * 4];
+                Buffer.BlockCopy(ld_bcadata, 0, byteArray, 0, byteArray.Length);
+
+                //var floatArray2 = new float[byteArray.Length / 4];
+                //Buffer.BlockCopy(byteArray, 0, floatArray2, 0, byteArray.Length);
+                //Debug.Log(floatArray2[0]);
+
+                //var data = Encoding.UTF8.GetBytes("close");
+                stream.Write(byteArray, 0, 24 * 4);
+
+
+            }
+
+
 
         }
 
 
-        caldata_write_frm();
+       // caldata_write_frm();
 
 
     }

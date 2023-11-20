@@ -46,6 +46,8 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
+*.png
+*.mat
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -60,7 +62,6 @@ sysinfo.txt
 *.aab
 *.unitypackage
 *.app
-
 # Crashlytics generated file
 crashlytics-build.properties
 
@@ -70,3 +71,63 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+#JINWOO'S REPO
+*.mp3
+*.wav
+*.ttf
+*.meta
+*.md
+*.csv
+*.json
+*.vsconfig
+/MotionCapture/SMPL_X_UNITY/Assets/Materials/
+/MotionCapture/SMPL_X_UNITY/Assets/Scenes/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX-Validation/
+/MotionCapture/SMPL_X_UNITY/Assets/Standard Assets/
+
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/Scripts/TempScript/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/Scripts/wrap_csharp64/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/Materials/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/Models/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/Plugins/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/prefabs/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/Resources/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/Textures/
+/MotionCapture/SMPL_X_UNITY/Assets/SMPLX/ThirdParty/
+
+
+/MotionCapture/SMPL_X_UNITY/Library/
+/MotionCapture/SMPL_X_UNITY/Logs/
+/MotionCapture/SMPL_X_UNITY/obj/
+/MotionCapture/SMPL_X_UNITY/ProjectSettings/
+/MotionCapture/SMPL_X_UNITY/scripts/
+/MotionCapture/SMPL_X_UNITY/UserSettings/
+/MotionCapture/SMPL_X_UNITY/Temp/
+/MotionCapture/SMPL_X_UNITY/CSV_OUT/
+
+/MotionCapture/SMPLX-Unity_DOT/Library/
+/MotionCapture/SMPLX-Unity_DOT/Logs/
+/MotionCapture/SMPLX-Unity_DOT/obj/
+/MotionCapture/SMPLX-Unity_DOT/ProjectSettings/
+/MotionCapture/SMPLX-Unity_DOT/scripts/
+/MotionCapture/SMPLX-Unity_DOT/UserSettings/
+/MotionCapture/SMPLX-Unity_DOT/build0907/
+
+/MotionCapture/SMPLX-Unity_DOT/Assets/Materials/
+/MotionCapture/SMPLX-Unity_DOT/Assets/Scenes/
+/MotionCapture/SMPLX-Unity_DOT/Assets/SMPLX-Validation/
+/MotionCapture/SMPLX-Unity_DOT/Assets/Standard Assets/
+/MotionCapture/SMPLX-Unity_DOT/AssetsStreamingAssets/
+/MotionCapture/SMPLX-Unity_DOT/Assets/TextMesh Pro/
+
+
+/MotionCapture/SMPLX-Unity_DOT/Assets/SMPLX/Scripts/TempScript/
+/MotionCapture/SMPLX-Unity_DOT/Assets/SMPLX/Scripts/wrap_csharp64/
+/MotionCapture/SMPLX-Unity_DOT/Assets/SMPLX/Materials/
+/MotionCapture/SMPLX-Unity_DOT/Assets/SMPLX/Models/
+/MotionCapture/SMPLX-Unity_DOT/Assets/SMPLX/Plugins/
+/MotionCapture/SMPLX-Unity_DOT/Assets/SMPLX/prefabs/
+/MotionCapture/SMPLX-Unity_DOT/Assets/SMPLX/Resources/
+/MotionCapture/SMPLX-Unity_DOT/Assets/SMPLX/Textures/
+/MotionCapture/SMPLX-Unity_DOT/Assets/SMPLX/ThirdParty/
