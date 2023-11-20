@@ -137,10 +137,6 @@ public class playscript : MonoBehaviour
                 smpldata.GetComponent<SMPLX>().SetWorld2LocalJointRotation(_Senser10JointNames[i],
                     heading_reset * coord * sensorQuatList[i] * sensorQuatCaliList[i] * coord_I * heading_reset_I);
 
-
-
-
-
             }
             if (is_recording)
             {
@@ -148,8 +144,6 @@ public class playscript : MonoBehaviour
                 {
                     tempQuat = new string[24];
                     //tempQuat = new string[18];
-
-
                 }
 
                 tempQuat[4 * i + 0] = final_Input_List[i].w.ToString();
