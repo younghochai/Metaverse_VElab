@@ -632,169 +632,9 @@ public class SMPLX : MonoBehaviour
     {
         if (!usePoseCorrectives)
             UpdatePoseCorrectives();
-   
-
-        //if (Input.GetKeyDown(KeyCode.Comma))
-        //{
-        //    QuatForSMPLX quatForSMPLX;
-        //    quatForSMPLX = GetComponent<QuatForSMPLX>();
-
-
-        //    L_pose_data = quatForSMPLX.L_pose_data;
-        //    R_pose_data = quatForSMPLX.R_pose_data;
-
-        //    //load_sensor_data = readData.sensor_data;
-
-        //    Debug.Log("Read Quaternion data");
-        //}
-
-
-        //int joint_num = _manualLeftJointNames.Count();
-
-        //if (is_Coroutine)
-        //{
-        //    Debug.Log("Motion Start");
-
-        //    ResetBodyPose();
-
-        //    for (int i = 0; i < joint_num; i++)
-        //    {
-        //        string l_name = _manualLeftJointNames[i];
-        //        JointRotationSlerp(l_name, L_load_data[i], L_load_data[joint_num + i]);
-
-        //        string r_name = _manualRightJointNames[i];
-        //        JointRotationSlerp(r_name, R_load_data[i], R_load_data[joint_num + i]);
-        //    }
-
-        //    is_Coroutine = false;
-        //}
-
     }
 
 
-    ///* [p]: pose index    [j]: joint index      [f]: frame index */
-    //IEnumerator RotationDelay(int p)
-    //{
-    //    Debug.Log("Motion Start: " + p);
-        
-    //    // # of joints
-    //    int joint_num = _manualLeftJointNames.Count();
-
-
-    //    if (is_Coroutine)
-    //    {
-    //        //ResetBodyPose();
-            
-    //        // Calculating the time parameter of Quaternion slerp function
-    //        float slerp_time = 60.0f * Random.Range(2.0f, 3.5f);
-
-    //        Debug.Log("slerp_time = " + slerp_time);
-
-    //        for (float t = 0; t <= slerp_time; t++)
-    //        {
-    //            float sec = t / slerp_time;
-
-
-    //            for (int j = 0; j < joint_num; j++)
-    //            {
-    //                // Left
-    //                int l_frame_num = L_pose_data[p][j].Count;
-    //                Transform l_joints = _transformFromName[_manualLeftJointNames[j]];
-
-
-    //                for (int f = 0; f < l_frame_num; f++)
-    //                {
-    //                    Quaternion old_rot = l_joints.localRotation;
-                            
-    //                    l_joints.localRotation = Quaternion.Slerp(old_rot, L_pose_data[p][j][l_frame_num - 1], sec);
-    //                    //l_joints.localRotation = Quaternion.Slerp(L_pose_data[p][j][f], L_pose_data[p][j][f + 1], sec);
-                            
-
-    //                    //Debug.Log("start: L_pose_data[" + p + "][" + j + "][" + f + "]" + ", end: L_pose_data[" + p + "][" + j + "][" + (f + 1) + "]");
-    //                }
-
-
-    //                // Right
-    //                int r_frame_num = R_pose_data[p][j].Count;
-    //                Transform r_joints = _transformFromName[_manualRightJointNames[j]];
-
-
-    //                for (int f = 0; f < r_frame_num; f++)
-    //                {
-    //                    Quaternion old_rot = r_joints.localRotation;
-
-    //                    r_joints.localRotation = Quaternion.Slerp(old_rot, R_pose_data[p][j][l_frame_num - 1], sec);
-    //                    //r_joints.localRotation = Quaternion.Slerp(R_pose_data[p][j][f], R_pose_data[p][j][f + 1], sec);
-    //                }
-    //            }
-
-    //            yield return new WaitForSeconds(0.0075f);
-
-    //        }
-    //    }
-
-    //    is_Coroutine = false;
-    //}
-
-        //int joint_num = 4;
-
-        // if (is_Coroutine)
-        // {
-        //     ResetBodyPose();
-
-        //     for (int i = 0; i < load_sensor_data.Count() / joint_num; i++)
-        //     {
-        //         R_upperArm.rotation = load_sensor_data[i + 2];
-        //         R_lowerArm.rotation = load_sensor_data[i + 3];
-        //         L_upperArm.rotation = load_sensor_data[i + 4];
-        //         L_lowerArm.rotation = load_sensor_data[i + 5];
-
-        //         yield return new WaitForSeconds(1.0f);
-        //     }
-
-        //     is_Coroutine = false;
-        // }
-
-        /*
-        int joint_num = _manualLeftJointNames.Count();
-
-        if (is_Coroutine)
-        {
-            ResetBodyPose();
-
-            // joint
-            for (int i = 0; i < joint_num; i++)
-            {
-                // frame
-                for (int j = 0; j < L_load_data[i].Count; j++)
-                {
-                    string l_name = _manualLeftJointNames[i];
-                    SetLocalJointRotation(l_name, L_load_data[i][j]);
-
-                    string r_name = _manualRightJointNames[i];
-                    SetLocalJointRotation(r_name, R_load_data[i][j]);
-                }
-
-                yield return new WaitForSeconds(1.0f);
-
-            }
-            //for (int j = (L_load_data.Count() / joint_num) - 1; j >= 0 / joint_num; j--)
-            //{
-            //    for (int i = joint_num - 1; i >= 0; i--)
-            //    {
-            //        string l_name = _manualLeftJointNames[i];
-            //        SetLocalJointRotation(l_name, L_load_data[joint_num * j + i]);
-
-            //        string r_name = _manualRightJointNames[i];
-            //        SetLocalJointRotation(r_name, R_load_data[joint_num * j + i]);
-            //    }
-
-            //    yield return new WaitForSeconds(1.0f);
-            //}
-
-            is_Coroutine = false;
-        }
-        */
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1733,6 +1573,130 @@ public class SMPLX : MonoBehaviour
         }
 
         StopCoroutine("RotationDelay");
+    }
+
+
+    // [p]: pose index    [j]: joint index      [f]: frame index
+    IEnumerator RotationDelay(int p)
+    {
+        Debug.Log("Motion Start: " + p);
+
+        // # of joints
+        int joint_num = _manualLeftJointNames.Count();
+
+
+        if (is_Coroutine)
+        {
+            //ResetBodyPose();
+
+            // Calculating the time parameter of Quaternion slerp function
+            float slerp_time = 60.0f * Random.Range(2.0f, 3.5f);
+
+            Debug.Log("slerp_time = " + slerp_time);
+
+            for (float t = 0; t <= slerp_time; t++)
+            {
+                float sec = t / slerp_time;
+
+                for (int j = 0; j < joint_num; j++)
+                {
+                    // Left
+                    int l_frame_num = L_pose_data[p][j].Count;
+                    Transform l_joints = _transformFromName[_manualLeftJointNames[j]];
+
+
+                    for (int f = 0; f < l_frame_num; f++)
+                    {
+                        Quaternion old_rot = l_joints.localRotation;
+
+                        l_joints.localRotation = Quaternion.Slerp(old_rot, L_pose_data[p][j][l_frame_num - 1], sec);
+                        //l_joints.localRotation = Quaternion.Slerp(L_pose_data[p][j][f], L_pose_data[p][j][f + 1], sec);
+
+
+                        //Debug.Log("start: L_pose_data[" + p + "][" + j + "][" + f + "]" + ", end: L_pose_data[" + p + "][" + j + "][" + (f + 1) + "]");
+                    }
+
+
+                    // Right
+                    int r_frame_num = R_pose_data[p][j].Count;
+                    Transform r_joints = _transformFromName[_manualRightJointNames[j]];
+
+
+                    for (int f = 0; f < r_frame_num; f++)
+                    {
+                        Quaternion old_rot = r_joints.localRotation;
+
+                        r_joints.localRotation = Quaternion.Slerp(old_rot, R_pose_data[p][j][l_frame_num - 1], sec);
+                        //r_joints.localRotation = Quaternion.Slerp(R_pose_data[p][j][f], R_pose_data[p][j][f + 1], sec);
+                    }
+                }
+
+                yield return new WaitForSeconds(0.0075f);
+
+            }
+        }
+
+        is_Coroutine = false;
+    }
+
+    int joint_num = 4;
+
+    if (is_Coroutine)
+    {
+        ResetBodyPose();
+
+        for (int i = 0; i < load_sensor_data.Count() / joint_num; i++)
+        {
+            R_upperArm.rotation = load_sensor_data[i + 2];
+            R_lowerArm.rotation = load_sensor_data[i + 3];
+            L_upperArm.rotation = load_sensor_data[i + 4];
+            L_lowerArm.rotation = load_sensor_data[i + 5];
+
+            yield return new WaitForSeconds(1.0f);
+        }
+
+        is_Coroutine = false;
+    }
+
+
+    int joint_num = _manualLeftJointNames.Count();
+
+    if (is_Coroutine)
+    {
+        ResetBodyPose();
+
+        // joint
+        for (int i = 0; i < joint_num; i++)
+        {
+             frame
+            for (int j = 0; j < L_load_data[i].Count; j++)
+            {
+                string l_name = _manualLeftJointNames[i];
+                SetLocalJointRotation(l_name, L_load_data[i][j]);
+
+                string r_name = _manualRightJointNames[i];
+                SetLocalJointRotation(r_name, R_load_data[i][j]);
+            }
+
+            yield return new WaitForSeconds(1.0f);
+
+        }
+
+        for (int j = (L_load_data.Count() / joint_num) - 1; j >= 0 / joint_num; j--)
+        {
+            for (int i = joint_num - 1; i >= 0; i--)
+            {
+                string l_name = _manualLeftJointNames[i];
+                SetLocalJointRotation(l_name, L_load_data[joint_num * j + i]);
+
+                string r_name = _manualRightJointNames[i];
+                SetLocalJointRotation(r_name, R_load_data[joint_num * j + i]);
+            }
+
+            yield return new WaitForSeconds(1.0f);
+        }
+
+        is_Coroutine = false;
     }
 }
 */
