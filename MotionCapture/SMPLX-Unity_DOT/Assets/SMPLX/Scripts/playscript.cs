@@ -285,7 +285,6 @@ public class playscript : MonoBehaviour
 
             Debug.Log("포즈를 취해주십시오...");
             //GET_CALIB_POSE();
-            //comment
 
             for (int i = 0; i < number_of_IMU; i++)
             {
@@ -360,6 +359,7 @@ public class playscript : MonoBehaviour
         {
             GET_SENSOR_QDATA();
 
+            //여기에서 tpsoe 지연시간 추가
             if (is_wait_calibration) 
             {
                 cali_waiting_counter++;
