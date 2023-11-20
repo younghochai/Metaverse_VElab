@@ -781,11 +781,42 @@ public class GenDataLoad : MonoBehaviour
         int pose = int.Parse(frame_num_str);
 
 
-    
+        if (file == 5)
+        {
+            for (int i = 1; i < _bodyJointNames.Length - 3; i++)
+            {
+                if (i == 5)
+                    continue;
+                else if (i == 4)
+                    continue;
+                else if (i == 7)
+                    continue;
+
+                else if (i == 8)
+                    continue;
+                else if (i == 1)
+                    continue;
+                else if (i == 2)
+                    continue;
+                else if (i == 12)
+                    continue;
+                else if (i == 15)
+                    continue;
+
+                else if (i == 10)
+                    continue;
+
+                else if (i == 11)
+                    continue;
+
+                smpl_manager.SetLocalJointRotation(_bodyJointNames[i], gen_quat_list[i][pose]);
+
+            }
+            smpl_manager.UpdateJointPositions(false);
 
 
 
-    }
+        }
     IEnumerator avatar_play()
     {
         //Color c = renderer.material.color;
