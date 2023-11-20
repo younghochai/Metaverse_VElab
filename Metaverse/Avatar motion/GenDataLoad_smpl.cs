@@ -53,6 +53,7 @@ public class GenDataLoad : MonoBehaviour
 
     private List<LineRenderer> line_renderer = new List<LineRenderer>();
 
+    public GameObject beads;
 
     // Start is called before the first frame update
     void Start()
