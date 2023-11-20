@@ -163,7 +163,7 @@ public class ConductingAvatar : MonoBehaviour
         //*** When recording... ***
         Dictionary<int, float> dic = new Dictionary<int, float>();
         dic.Add(n, angle * scalingValue);
-        record.Add(dic);
+        record1.Add(dic);
         //**************************
 
         if (float.IsNaN(angle))
