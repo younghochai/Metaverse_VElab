@@ -1084,6 +1084,15 @@ public class GenDataLoad : MonoBehaviour
         return quat;
     }
 
+
+    Quaternion RotPelvis(Quaternion smpl_quat)
+    {
+    
+
+        return data;
+    }
+
+
 }
 
 
