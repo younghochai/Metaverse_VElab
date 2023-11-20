@@ -988,7 +988,20 @@ public class GenDataLoad : MonoBehaviour
                 for (int frame = 0; frame < Arm_position[repeat][0].Count(); frame++)
                 {
 
-                   
+                    Debug.Log("save test frm cnt : " + Arm_position[repeat][0].Count());
+
+                    for (int joint = 0; joint < Arm_position[repeat].Count(); joint++)
+                    {
+
+                        builder.Append(Arm_position[repeat][joint][frame].x.ToString() + ',');
+                        builder.Append(Arm_position[repeat][joint][frame].y.ToString() + ',');
+                        //builder.Append(Arm_position[repeat][joint][frame].z.ToString() + ',');
+                        if (joint == Arm_position[repeat].Count() - 1)
+                            builder.Append(Arm_position[repeat][joint][frame].z.ToString());
+                        else
+                            builder.Append(Arm_position[repeat][joint][frame].z.ToString() + ',');
+                    }
+
 
 
 
