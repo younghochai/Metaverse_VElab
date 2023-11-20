@@ -53,7 +53,10 @@ public class Python_net : MonoBehaviour
     {
         if (is_connect_open)
         {
+            if (!socketReady)
+            {
 
+            }
 
         }
         if (socketReady)
