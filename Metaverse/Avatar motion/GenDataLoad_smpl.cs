@@ -854,6 +854,21 @@ public class GenDataLoad : MonoBehaviour
 
 
         }
+
+
+
+    }
+    IEnumerator avatar_play_whole(int action_num, int frame_stnum = 0)
+    {
+
+        int save_num = action_num;
+        Debug.Log("check here");
+
+        anim_playing = false;
+        yield break;
+    }
+
+
     IEnumerator avatar_play()
     {
         //Color c = renderer.material.color;
