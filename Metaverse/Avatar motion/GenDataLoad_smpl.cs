@@ -544,6 +544,14 @@ public class GenDataLoad : MonoBehaviour
             load_quat_buf[i].Add(QuatFromRodrigues(load_axis_list[action_label][i][last_quat_idx].x, load_axis_list[action_label][i][last_quat_idx].y, load_axis_list[action_label][i][last_quat_idx].z));
         }
 
+        gen_quat_list = load_quat_buf;
+
+
+        // load_quat_list.Add(gen_quat_list);
+
+        Debug.Log("gen data ");
+        Debug.Log(gen_quat_list[3].Count);
+        Debug.Log(load_quat_buf[3].Count);
 
 
     }
