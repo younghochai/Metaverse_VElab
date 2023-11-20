@@ -863,7 +863,15 @@ public class GenDataLoad : MonoBehaviour
 
         int save_num = action_num;
         Debug.Log("check here");
+        for (int frame_cnt = frame_stnum; frame_cnt < load_axis_list[action_num][0].Count; frame_cnt++)
+        {
 
+            //smpl_manager.Setglobalposition(_bodyJointNames[0], load_axis_list[action_num][0][frame_cnt]);
+
+
+            
+
+        }
         anim_playing = false;
         yield break;
     }
