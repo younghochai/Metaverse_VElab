@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
         JS, HB
     }  // Name of subjects
     public enum Bpm { 
-        느리게, 빠르게
+        slow, fast
     };
 
     public Vector3 elbowGap_rot, wristGap_pos;
@@ -171,12 +171,12 @@ public class Player : MonoBehaviour
             //TXTReader(prefix + "alignpos.txt");
             //TXTReader(prefix + "walking1_stageii_concat_root_body_pose.txt");
 
-            if (subject == Subject.JS && bpm == Bpm.느리게)
+            if (subject == Subject.JS && bpm == Bpm.slow)
             {
                 TXTReader(prefix + subject + "/" + timeSignature + "_60_repeat.txt");
                 CalibTXTReader(prefix + subject + "/CalibIMUData-000-171419.txt");
             }
-            if (subject == Subject.JS && bpm == Bpm.빠르게)
+            if (subject == Subject.JS && bpm == Bpm.fast)
             {
                 TXTReader(prefix + subject + "/" + timeSignature + "_100_repeat.txt");
                 CalibTXTReader(prefix + subject + "/CalibIMUData-000-171419.txt");
