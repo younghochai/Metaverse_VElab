@@ -515,6 +515,24 @@ public class GenDataLoad : MonoBehaviour
             }
 
 
+            for (int frame_cnt = 0; frame_cnt < maxframe; frame_cnt++)
+            {
+                float ratio = ((float)frame_cnt) / maxframe;
+
+                for (int i = 1; i < _bodyJointNames.Length - 3; i++)
+                {
+
+                    //mixed_quat_list[joint_idx].Add(Quaternion.Slerp(pose_list[file_cnt_i][joint_idx], pose_list[file_cnt_j][joint_idx], ratio));
+
+
+                    load_quat_buf[i].Add(Quaternion.Slerp(QuatFromRodrigues(load_axis_list[action_label][i][frame_idx].x, load_axis_list[action_label][i][frame_idx].y, load_axis_list[action_label][i][frame_idx].z),
+                        QuatFromRodrigues(load_axis_list[action_label][i][frame_idx + 1].x, load_axis_list[action_label][i][frame_idx + 1].y, load_axis_list[action_label][i][frame_idx + 1].z), ratio));
+
+
+                }
+
+
+            }
 
             // Debug.Log(frame_idx);
 
