@@ -30,8 +30,6 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public Quaternion oldQuat_elbow, newQuat_elbow, oldQuat_wrist;
 
-    Dictionary<string, Transform> _transformFromName;
-
     public QuatForSMPLX quat4smplX;
     //=================================================================//
 
@@ -259,12 +257,13 @@ public class Player : MonoBehaviour
                 
                 //smpl_module.SetWorld2LocalJointRotation(_bodyCustomJointNames[i], load_quat_list[0][i][frame_cnt]);
             
+            //------------------------ Added by js --------------------------------
+            
                 // Multiple inverse quaternion of an initial pose (js)
                 Quaternion motion_quat = load_quat_list[0][i][frame_cnt];
                 Quaternion init_quat = Quaternion.Inverse(load_init_quat[0][i]);
                 smpl_module.SetWorld2LocalJointRotation(_bodyCustomJointNames[i], motion_quat * init_quat);
 
-            //------------------------ Added by js --------------------------------
                 //StartCoroutine(quat4smplX.calcGapValue());                
                 
                 //oldPos_wrist = _transformFromName["right_wrist"].transform.position;
@@ -281,16 +280,9 @@ public class Player : MonoBehaviour
                 //Debug.Log("new: " + newPos_wrist + ", " + newRot_elbow);
                 //Debug.Log("old_elbow: " + oldQuat_elbow);
                 //Debug.Log("new_elbow: " + newQuat_elbow);
-
-            }
-
-            //Debug.Log("elbow.transform.localEulerAngle = (" + _transformFromName["right_elbow"].transform.localEulerAngles + ")\n" 
-            //    + "elobw.transform.position = (" + _transformFromName["right_elbow"].transform.position + ")\n"
-            //    + "wrist.transform.position = (" + _transformFromName["right_wrist"].transform.position + ")");
-
-            Debug.Log("elobw.transform.position = (" + _transformFromName["right_elbow"].transform.position + ")\n"
-                + "wrist.transform.position = (" + _transformFromName["right_wrist"].transform.position + ")");
+            
             //---------------------------------------------------------------------
+            }
 
             smpl_module.UpdateJointPositions(false);
             yield return new WaitForSeconds(delay_time);
@@ -300,9 +292,10 @@ public class Player : MonoBehaviour
         //------------------------ Added by js --------------------------------
         elbowGap_rot = new Vector3(0.0f, 0.0f, 0.0f);   // Clear the rotation gap between old and new value
         wristGap_pos = new Vector3(0.0f, 0.0f, 0.0f);   // Clear the position gap between old and new value
-                                                        //---------------------------------------------------------------------
+
         //quat4smplX.isDrew = false;
         //Debug.Log(quat4smplX.isDrew);
+        //---------------------------------------------------------------------
 
         yield break;
 
