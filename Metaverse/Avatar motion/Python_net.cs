@@ -109,7 +109,12 @@ public class Python_net : MonoBehaviour
         {
             //data_write_frm();
 
-
+            if (sendDataQuaternion.Count > 0)
+            {
+                ld_bcadata = sendDataQuaternion.ToArray();
+                data_Frm = ld_bcadata.Length / 24;
+               
+            }
 
 
 
