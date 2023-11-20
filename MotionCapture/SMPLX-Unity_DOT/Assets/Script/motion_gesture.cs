@@ -277,7 +277,7 @@ public class motion_gesture : MonoBehaviour
     //         // 5초동안 안흔들면 초기값으로 처음으로 돌아가라
     //    }
 
-    }
+    //}
     void Update()
     {
         //COMMAND_WITH_ARROWS();
