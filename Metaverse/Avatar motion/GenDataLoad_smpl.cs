@@ -81,11 +81,16 @@ public class GenDataLoad : MonoBehaviour
         {
 
             List<List<Vector3>> load_axis_buf = new List<List<Vector3>>();
+            for (int i = 0; i < 2; i++)
+            {
+                load_axis_buf.Add(new List<Vector3>());
+
+            }
 
         }
 
-    // Update is called once per frame
-    void Update()
+        // Update is called once per frame
+        void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
