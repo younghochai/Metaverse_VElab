@@ -51,6 +51,8 @@ public class GenDataLoad : MonoBehaviour
     public Material origin;
     public Material slerp;
 
+    private List<LineRenderer> line_renderer = new List<LineRenderer>();
+
 
     // Start is called before the first frame update
     void Start()
