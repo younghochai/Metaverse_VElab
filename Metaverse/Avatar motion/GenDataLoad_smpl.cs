@@ -491,6 +491,21 @@ public class GenDataLoad : MonoBehaviour
     }
 
 
+    void cal_Slerp_data(int action_label, int[] frame_num)
+    {
+        List<List<Quaternion>> load_quat_buf = new List<List<Quaternion>>();
+
+        for (int i = 0; i < _bodyJointNames.Length; i++)
+        {
+            load_quat_buf.Add(new List<Quaternion>());
+
+        }
+
+
+    }
+
+
+
     IEnumerator avatar_bet_play(int pr_action_num, int frame_ednum, int post_action_num, int frame_stnum)
     {
         int maxframe = Random.Range(10, 20);
