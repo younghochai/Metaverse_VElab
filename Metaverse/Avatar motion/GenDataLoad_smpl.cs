@@ -714,6 +714,20 @@ public class GenDataLoad : MonoBehaviour
     }
 
 
+    IEnumerator avatar_play_gen_beads(int action_num, int frame_stnum = 0)
+    {
+        //LineRenderer temp;
+
+
+
+        cur_act_idx = action_num;
+
+
+
+        anim_playing = false;
+        yield break;
+    }
+
 
     IEnumerator avatar_play()
     {
