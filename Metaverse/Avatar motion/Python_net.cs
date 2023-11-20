@@ -40,12 +40,12 @@ public class Python_net : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ld_bcadata = ReadBCA_Data(load_path);
-        Debug.Log("The BCA putted array");
+        //ld_bcadata = ReadBCA_Data(load_path);
+        //Debug.Log("The BCA putted array");
 
-        data_Frm = ld_bcadata.Length / 12;
+        //data_Frm = ld_bcadata.Length / 12;
 
-        CheckReceive();
+        //CheckReceive();
     }
     // git test
     // Update is called once per frame
