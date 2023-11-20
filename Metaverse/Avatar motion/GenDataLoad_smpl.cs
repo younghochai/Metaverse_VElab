@@ -75,7 +75,7 @@ public class GenDataLoad : MonoBehaviour
         color_Dict.Add(1, Color.green); // : Medium Spring Green
         color_Dict.Add(2, Color.yellow); // Cadmium Yellow
         color_Dict.Add(3, new Color(255, 127, 51)); // Crayola's Orange
-
+        color_Dict.Add(4, new Color(255, 0, 102));  // Medium Red-Violet
 
 
 
