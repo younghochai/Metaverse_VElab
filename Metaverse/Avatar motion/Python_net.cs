@@ -71,7 +71,7 @@ public class Python_net : MonoBehaviour
                 stream.Read(receivedBuffer, 0, receivedBuffer.Length); // stream에 있던 바이트배열 내려서 새로 선언한 바이트배열에 넣기
                 string msg = Encoding.UTF8.GetString(receivedBuffer, 0, receivedBuffer.Length); // byte[] to string
                 Debug.Log("recognition Result :" + int.Parse(msg));
-            
+                predict_label = int.Parse(msg);
             }
         
 
