@@ -121,10 +121,6 @@ public class Python_net : MonoBehaviour
                 var byteArray = new byte[24 * 4];
                 Buffer.BlockCopy(ld_bcadata, 0, byteArray, 0, byteArray.Length);
 
-                //var floatArray2 = new float[byteArray.Length / 4];
-                //Buffer.BlockCopy(byteArray, 0, floatArray2, 0, byteArray.Length);
-                //Debug.Log(floatArray2[0]);
-
             
                 stream.Write(byteArray, 0, 24 * 4);
 
