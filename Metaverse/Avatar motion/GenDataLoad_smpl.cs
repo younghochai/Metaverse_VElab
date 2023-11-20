@@ -86,7 +86,7 @@ public class GenDataLoad : MonoBehaviour
                 load_axis_buf.Add(new List<Vector3>());
 
             }
-
+            Arm_position.Add(load_axis_buf);
         }
 
         // Update is called once per frame
