@@ -107,7 +107,18 @@ public class Python_net : MonoBehaviour
 
         if (stream_write)
         {
-            data_write_frm();
+            //data_write_frm();
+
+
+
+
+
+
+
+
+
+
+
 
         }
 
