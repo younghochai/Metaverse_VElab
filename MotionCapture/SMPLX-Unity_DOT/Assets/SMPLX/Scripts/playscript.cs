@@ -184,7 +184,7 @@ public class playscript : MonoBehaviour
     }
     private void SaveCSV()
     {
-
+       
         DateTime now = DateTime.Now; // 현재 날짜와 시간 가져오기
         string dateTimeString = now.ToString("MM_dd_HH_mm_ss");
         Debug.Log(dateTimeString);
