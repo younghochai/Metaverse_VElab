@@ -133,11 +133,35 @@ public class GenDataLoad : MonoBehaviour
         }
 
 
-       
+        if (connect.newrecongition)
+        {
 
 
-       
-         if (Input.GetKeyDown(KeyCode.X))
+            switch (connect.predict_label)
+            {
+                case 1:
+                    switch_label = 0;
+                    break;
+
+                case 2:
+                    switch_label = 1;
+                    break;
+                case 3:
+                    switch_label = 2;
+                    break;
+
+                case 4:
+                    switch_label = 3;
+                    break;
+                case 5:
+                    switch_label = 4;
+                    break;
+
+            }
+
+
+
+            if (Input.GetKeyDown(KeyCode.X))
         {
             // data_read_csv();
             // data_read_csv_meta75(new string[] { "0", "1", "2", "3", "4", "5" }); // "0", "1", "2", "3",//"4", "5", "6", "7", "8", "9", "10", "11", "12","13", "18","19", "20","21", "22","23", "24","25", "26","27"
