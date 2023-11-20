@@ -27,7 +27,7 @@ public class Python_net : MonoBehaviour
 
 
 
-    bool stream_write = false;
+    //bool stream_write = false;
     int send_cnt = 0;
     int data_Frm;
     public List<Vector3> cur_plpose_vec = new List<Vector3>();
