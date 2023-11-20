@@ -31,6 +31,7 @@ public class GenDataLoad : MonoBehaviour
     int frame_cnt = 0;
 
     int draw_joint = 21;
+    int elbow_joint = 18; // 19 
 
     int switch_label;
 
