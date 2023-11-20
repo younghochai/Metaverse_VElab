@@ -365,7 +365,7 @@ public class playscript : MonoBehaviour
                 cali_waiting_counter++;
                 Debug.Log("자세를 취해주세요.");
             }
-            if (cali_waiting_counter > 180) 
+            if (cali_waiting_counter > 300) 
             {
                 GET_CALIB_POSE();
                 Debug.Log("캘리브레이션 완료!");
