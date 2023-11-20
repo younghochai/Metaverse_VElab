@@ -1091,8 +1091,10 @@ public class GenDataLoad : MonoBehaviour
         Quaternion q;
         float q1, q2, q3, q4, scale;
 
-      
-        
+        angleX = Angle.x * Degree2Radian;
+        angleY = Angle.y * Degree2Radian;
+        angleZ = Angle.z * Degree2Radian;
+
 
         return q;
     }
