@@ -84,12 +84,6 @@ public class XsensManage : MonoBehaviour
         sensors.Add(new XsensDevice("00B438C7")); // 8,
         sensors.Add(new XsensDevice("00B4391F")); // 9,
         sensors.Add(new XsensDevice("00B43926")); // 0,   
-           
-
-          
-          
-          
-    
 
         Debug.Log("Void Start part done!");
         //TestFuncion();
