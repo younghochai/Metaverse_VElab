@@ -879,7 +879,14 @@ public class GenDataLoad : MonoBehaviour
                 //Debug.Log("play this");
             }
             smpl_manager.UpdateJointPositions(false);
+            if (action_num > 2)
+                save_num = action_num - 1;
 
+            Arm_position[save_num][0].Add(smpl_manager.GetJointPositions()[elbow_joint]);
+            Arm_position[save_num][1].Add(smpl_manager.GetJointPositions()[draw_joint]);
+            cur_act_frm = frame_cnt;
+
+            yield return new WaitForSeconds(.025f);
         }
         anim_playing = false;
         yield break;
