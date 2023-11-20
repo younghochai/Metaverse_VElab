@@ -68,7 +68,7 @@ public class GenDataLoad : MonoBehaviour
 
 
 
-
+        connect = PythonConnection.GetComponent<Python_net>();
 
     }
 
