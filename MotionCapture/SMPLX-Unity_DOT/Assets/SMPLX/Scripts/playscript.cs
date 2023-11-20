@@ -159,12 +159,12 @@ public class playscript : MonoBehaviour
                 //tempQuat[4 * i + 1] = q0.x.ToString(); 
                 //tempQuat[4 * i + 2] = q0.y.ToString(); 
                 //tempQuat[4 * i + 3] = q0.z.ToString();
-                ///////////////////////////////////////////////////////////////////////////////
+                /////////////////////////////////////////////////////////////////
                 tempQuat[4 * i + 0] = final_Input_List[i].w.ToString();
                 tempQuat[4 * i + 1] = final_Input_List[i].x.ToString();
                 tempQuat[4 * i + 2] = final_Input_List[i].y.ToString();
                 tempQuat[4 * i + 3] = final_Input_List[i].z.ToString();
-                ///////////////////////////////////////////////////////////////////////////////
+                /////////////////////////////////////////////////////////////////
                 //Transform joint = smpldata.GetComponent<SMPLX>()._transformFromName[_Senser10JointNames[i]];
                 //QuatToEuler.x = joint.localEulerAngles.x;
                 //QuatToEuler.y = joint.localEulerAngles.y;
