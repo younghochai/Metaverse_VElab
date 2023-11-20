@@ -47,6 +47,8 @@ public class GenDataLoad : MonoBehaviour
     public TMP_InputField frame_num;
     public Button play_pose;
 
+    //public Material gen;
+    public Material origin;
 
     // Start is called before the first frame update
     void Start()
