@@ -59,6 +59,9 @@ public class Player : MonoBehaviour
 
     //string[] _bodyCustomJointNames = new string[] { "pelvis" };
 
+    public Dictionary<string, Transform> _transformFromName;
+
+
     void Start()
     {
         _transformFromName = smpl_module._transformFromName;
