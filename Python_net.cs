@@ -7,6 +7,8 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+
+
 public class Python_net : MonoBehaviour
 {
     TcpClient client;
@@ -16,71 +18,142 @@ public class Python_net : MonoBehaviour
     StreamReader reader;
     bool socketReady = false;
     NetworkStream stream;
-    string load_path= "Assets/Metaverse_BCA/BCA_test_data_label0_datacnt_7.txt";
+    string load_path = "Assets/Metaverse_BCA/BCA_test_data_label0_datacnt_7.txt";
     float[] ld_bcadata;
-    bool stream_write = false;
+    public bool stream_write = false;
+    public bool is_connect_close = false;
+    public bool is_connect_open = false;
     int send_cnt = 0;
     int data_Frm;
     public List<Vector3> cur_plpose_vec = new List<Vector3>();
-
     public bool data_load_Available = false;
+    public List<float> sendDataQuaternion = new List<float>();
+    public int bpm_label = -1;
+    public int dynamic_label = -1;
+    public int instruction_label = -1;
+    public float videoTime = 0.0f;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        ld_bcadata = ReadBCA_Data(load_path);
-        Debug.Log("The BCA putted array");
+        //ld_bcadata = ReadBCA_Data(load_path);
+        //Debug.Log("The BCA putted array");
 
-        data_Frm = ld_bcadata.Length / 12;
-
-        CheckReceive();
+        //data_Frm = ld_bcadata.Length / 12;
+        //CheckReceive();
     }
     // git test
     // Update is called once per frame
     void Update()
     {
-
+        if(is_connect_open)
+        {
+            if(!socketReady)
+            {
+                Debug.Log("CheckReceive :" + is_connect_open);
+                CheckReceive();
+                is_connect_open = false;
+            }
+        }
         if (socketReady)
         {
-
-
             if (stream.DataAvailable)
             {
                 receivedBuffer = new byte[100];
-                stream.Read(receivedBuffer, 0, receivedBuffer.Length); // streamø° ¿÷¥¯ πŸ¿Ã∆ÆπËø≠ ≥ª∑¡º≠ ªı∑Œ º±æ«— πŸ¿Ã∆ÆπËø≠ø° ≥÷±‚
+                stream.Read(receivedBuffer, 0, receivedBuffer.Length); // streamÏóê ÏûàÎçò Î∞îÏù¥Ìä∏Î∞∞Ïó¥ ÎÇ¥Î†§ÏÑú ÏÉàÎ°ú ÏÑ†Ïñ∏Ìïú Î∞îÏù¥Ìä∏Î∞∞Ïó¥Ïóê ÎÑ£Í∏∞
                 string msg = Encoding.UTF8.GetString(receivedBuffer, 0, receivedBuffer.Length); // byte[] to string
-                Debug.Log("recognition Result :" + int.Parse(msg));
-            
+                //Debug.Log("recognition Result :" + msg);
+                //string strTemp = Regex.Replace(msg, @"\d", "");//Î¨∏Ïûê Ï∂îÏ∂ú
+                //string strTemp2 = Regex.Replace(msg, @"\D", "");//Ïà´Ïûê Ï∂îÏ∂ú
+
+
+                string[] words = msg.Split(',');
+
+                foreach (string word in words)
+                {
+                    //Debug.Log("word : " + word);
+                    string strTemp = Regex.Replace(word, @"\d", "");//Î¨∏Ïûê Ï∂îÏ∂ú
+                    string strTemp2 = Regex.Replace(word, @"\D", "");//Ïà´Ïûê Ï∂îÏ∂ú
+
+                    if (strTemp.Contains("b"))
+                    {
+                        bpm_label = int.Parse(strTemp2);
+                    }
+
+                    if (strTemp.Contains("d"))
+                    {
+                        dynamic_label = int.Parse(strTemp2);
+
+                    }
+
+                    if (strTemp.Contains("I"))
+                    {
+                        instruction_label = int.Parse(strTemp2);
+
+                    }
+
+                }
+
+
             }
-        
 
 
-
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (is_connect_close)
             {
                 //reader.Close();
                 client.Close();
                 CloseSocket();
+                is_connect_close = false;
+                socketReady = false;
 
             }
-
             if (Input.GetKeyDown(KeyCode.A))
             {
-
                 stream_write = true;
+                Debug.Log("stream_write : " + stream_write);
             }
 
+            if (stream_write)
+            {
+                //data_write_frm();
+                if (sendDataQuaternion.Count > 0)
+                {
 
+                    ld_bcadata = sendDataQuaternion.ToArray();
+                    data_Frm = ld_bcadata.Length / 24;
+                    //Debug.Log("Read Current Data : " + data_Frm);
+
+                    sendDataQuaternion.Clear();
+
+                    byte[] byteTIme = new byte[4];
+                    byteTIme = System.BitConverter.GetBytes((float)videoTime);
+
+                    
+                    //Debug.Log("cur frm send : ");
+                    var byteArray = new byte[24 * 4];
+                    Buffer.BlockCopy(ld_bcadata, 0, byteArray, 0, byteArray.Length);
+
+                    //var floatArray2 = new float[byteArray.Length / 4];
+                    //Buffer.BlockCopy(byteArray, 0, floatArray2, 0, byteArray.Length);
+                    //Debug.Log(floatArray2[0]);
+
+                    //var data = Encoding.UTF8.GetBytes("close");
+
+
+                    byte[] sendByteArray = new byte[byteTIme.Length + byteArray.Length];
+                    Array.Copy(byteTIme, 0, sendByteArray, 0, byteTIme.Length);
+                    Array.Copy(byteArray, 0, sendByteArray, byteTIme.Length, byteArray.Length);
+
+                    stream.Write(sendByteArray, 0, (24 * 4+4));
+                }
+            }
         }
 
-        if (stream_write)
-        {
-            data_write_frm();
-
-        }
 
 
-        caldata_write_frm();
+
+            //caldata_write_frm();
 
 
     }
@@ -89,10 +162,10 @@ public class Python_net : MonoBehaviour
     {
         List<float> buf = new List<float>();
 
-        if (cur_plpose_vec.Count>6)
+        if (cur_plpose_vec.Count > 6)
         {
             Vector3 coordX = (cur_plpose_vec[3] - cur_plpose_vec[0]).normalized;
-            Vector3 coordY = new Vector3(0,1,0);
+            Vector3 coordY = new Vector3(0, 1, 0);
             Vector3 coordZ = Vector3.Cross(coordX, coordY);
 
 
@@ -102,7 +175,7 @@ public class Python_net : MonoBehaviour
             Vector3 LLA = (cur_plpose_vec[5] - cur_plpose_vec[4]).normalized;
 
 
-            buf.Add(Vector3.Angle(coordX, RUA)* Mathf.Deg2Rad);
+            buf.Add(Vector3.Angle(coordX, RUA) * Mathf.Deg2Rad);
             buf.Add(Vector3.Angle(coordY, RUA) * Mathf.Deg2Rad);
             buf.Add(Vector3.Angle(coordZ, RUA) * Mathf.Deg2Rad);
 
@@ -163,7 +236,7 @@ public class Python_net : MonoBehaviour
         if (stream.DataAvailable)
         {
             receivedBuffer = new byte[100];
-            stream.Read(receivedBuffer, 0, receivedBuffer.Length); // streamø° ¿÷¥¯ πŸ¿Ã∆ÆπËø≠ ≥ª∑¡º≠ ªı∑Œ º±æ«— πŸ¿Ã∆ÆπËø≠ø° ≥÷±‚
+            stream.Read(receivedBuffer, 0, receivedBuffer.Length); // streamÏóê ÏûàÎçò Î∞îÏù¥Ìä∏Î∞∞Ïó¥ ÎÇ¥Î†§ÏÑú ÏÉàÎ°ú ÏÑ†Ïñ∏Ìïú Î∞îÏù¥Ìä∏Î∞∞Ïó¥Ïóê ÎÑ£Í∏∞
             string msg = Encoding.UTF8.GetString(receivedBuffer, 0, receivedBuffer.Length); // byte[] to string
             Debug.Log(msg);
             string temp = Regex.Replace(msg, @"\D", "");
@@ -222,7 +295,7 @@ public class Python_net : MonoBehaviour
 
             Debug.Log("cur frm send : " + send_cnt);
             var byteArray = new byte[12 * 4];
-            Buffer.BlockCopy(ld_bcadata, send_cnt * 12*4, byteArray, 0, byteArray.Length);
+            Buffer.BlockCopy(ld_bcadata, send_cnt * 12 * 4, byteArray, 0, byteArray.Length);
 
             var floatArray2 = new float[byteArray.Length / 4];
             Buffer.BlockCopy(byteArray, 0, floatArray2, 0, byteArray.Length);
@@ -232,13 +305,13 @@ public class Python_net : MonoBehaviour
             stream.Write(byteArray, 0, 12 * 4);
             send_cnt++;
         }
-       
+
 
 
 
     }
 
-    
+
 
     void CheckReceive()
     {
@@ -250,7 +323,7 @@ public class Python_net : MonoBehaviour
             if (client.Connected)
             {
                 stream = client.GetStream();
-                Debug.Log("Connect Success");
+                Debug.Log("************ Connect Success");
                 socketReady = true;
             }
 
@@ -292,7 +365,7 @@ public class Python_net : MonoBehaviour
         int joint_num = 4;
         int coord_num = 3;
 
-      
+
 
         for (int line = 0; line < records.Length - 1; line++)
         {
@@ -311,7 +384,7 @@ public class Python_net : MonoBehaviour
                     fields_cnt++;
                 }
 
-  
+
 
 
 
